@@ -1,0 +1,237 @@
+/* default outputs for heyyou.. */
+
+.attachments,
+.hys_gallery { overflow: hidden; list-style: none; list-style-image: none; }
+.attachments li,
+.hys_gallery li { float: left; margin: 2px; list-style: none; list-style-image: none; }
+.attachments li a img,
+.hys_gallery li a img { padding: 3px; border: 1px solid #ccc; }
+
+.hys_alertmsg_holder {
+	display: block;
+	background: #fcf3bb url(../imgs/underconbanner.png) repeat-x;
+	padding-bottom: 1px;
+	overflow: hidden;
+	border-bottom:1px solid #000;
+	line-height: 14px;
+	font-size:14px !important;
+	color: #222 !important;
+	z-index:9999999;
+	margin:0px auto;
+	text-shadow: 1px 1px #fff !important;
+}
+.hys_altertmsg_toggel {
+	height: 20px;
+	margin: 0px auto;
+	text-align: center;
+}
+.hys_altertmsg_toggel:hover {
+	opacity:1;
+}
+.hys_undercon_msg {
+	padding: 10px;
+	margin: 0px auto;
+	width: 1000px;
+	display: none;
+	font-family: Courier, Courier-New, Mono !important;
+	text-shadow: 1px 1px #fff !important;
+}
+.hys_undercon_msgtxt {
+	font-family: Courier, Courier-New, Mono !important;
+	text-shadow: none !important;
+	text-align: left;
+	line-height: 14px;
+	font-size: 14px !important;
+	color: #222 !important;
+	text-shadow: 1px 1px #fff !important;
+}
+.hys_altertmsg_toggel a {
+	color: #222 !important;
+	font-family: Courier;
+	font-size: 14px;
+	text-shadow: none !important;
+	text-shadow: 1px 1px #fff !important;
+	font-family: Courier, Courier-New, Mono !important;
+}
+.hys_altertmsg_toggel a:hover {
+	color: #d60004 !important;
+	cursor: pointer;
+	text-decoration: none;
+}
+.underconclickmsg {
+	background: #fcf3bb; padding: 1px 3px;border-bottom:1px solid #555;
+	border-left:1px solid #555;
+	border-right:1px solid #555;z-index:9999999999;
+	font-style: normal !important;
+	font-family: Courier, Courier-New, Mono !important;
+}
+.underconclickmsg:hover {
+	color: #d60004 !important;
+}
+.hys_fake_link:hover, .hys_fake_link a:hover {
+	cursor: pointer;
+}
+.hys_pagination {
+	margin:0;
+	padding:0;
+	overflow: hidden;
+}
+.hys_pagination ul {
+	margin:0;
+	padding:0;
+	overflow: hidden;
+}
+.hys_pagination ul li {
+	list-style: none;
+	list-style-image: none;
+	float: left;
+	overflow: visiable;
+	padding: 0px 5px 0 0;
+	text-align: left;
+}
+.hys_pagination ul li a {
+	display: block;
+	padding: 0px 3px;
+}
+.hys_pagination ul li.active a,
+.hys_pagination ul li#active a {
+	text-decoration: underline;
+}
+
+
+.hys_post_post { overflow: hidden; }
+
+.hys_block_cat { overflow: hidden; }
+
+
+
+
+.hys_attach {
+		
+}
+ul.photo_gallery, ul.photo_gallery li,
+.hys_attach ul, .hys_attach ul li {
+	margin:0;
+	padding: 0;
+	list-style: none;
+	list-style-image: none;
+}
+ul.photo_gallery li,
+.hys_attach ul li {
+	float: left;
+	display: block;
+}
+img.attachment-thumbnail {
+	padding: 0;
+	margin: 0;
+}
+			
+
+
+
+.hys_social {
+	overflow: visible;
+}
+.hys_facebook {
+	float: left;
+	width: auto;
+	padding-right: 15px;
+}
+.hys_twitter {
+	float: left;
+	width: auto;
+}
+
+
+.hys_readmore, .hys_readless { display: inline-block; margin-bottom: 15px; width: auto; }
+
+
+
+.optional_hysbr { display: none; }
+
+
+
+/*CONTACT FORM 7*/
+
+div.wpcf7 {
+margin: 0;
+padding: 0;
+}
+
+div.wpcf7-response-output {
+margin: 2em 0.5em 1em;
+padding: 0.2em 1em;
+}
+
+div.wpcf7-mail-sent-ok {
+border: 2px solid #398f14;
+}
+
+div.wpcf7-mail-sent-ng {
+border: 2px solid #ff0000;
+}
+
+div.wpcf7-spam-blocked {
+border: 2px solid #ffa500;
+}
+
+div.wpcf7-validation-errors {
+border: 2px solid #f7e700;
+}
+
+span.wpcf7-form-control-wrap {
+position: relative;
+}
+
+span.wpcf7-not-valid-tip {
+position: absolute;
+top: 20%;
+left: 20%;
+z-index: 100;
+background: #fff;
+border: 1px solid #ff0000;
+font-size: 10pt;
+width: 280px;
+padding: 2px;
+}
+
+span.wpcf7-not-valid-tip-no-ajax {
+color: #f00;
+font-size: 10pt;
+display: block;
+}
+
+span.wpcf7-list-item {
+margin-left: 0.5em;
+}
+
+.wpcf7-display-none {
+display: none;
+}
+
+div.wpcf7 img.ajax-loader {
+border: none;
+vertical-align: middle;
+margin-left: 4px;
+}
+
+div.wpcf7 .watermark {
+color: #888;
+}
+
+
+img.alignleft {
+	width: auto;
+	float: left;
+	margin: 0 15px 3px 0;
+}
+img.alignright {
+	width: auto;
+	float: right;
+	margin: 0 0 3px 15px;
+}
+img.aligncenter {
+	margin: 5px auto;
+}
+
+span#numberDisplay { color: #ccc; }
