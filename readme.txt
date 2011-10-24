@@ -11,7 +11,15 @@ Stable tag: 3.0
 
 == Description ==
 
-heyyou adds custom post types (FAQ, News, ect) right INTO any normal Wordpress Page. Easy and Simple.
+1. Add heyyou Posts Directly Into a Page
+Unique & customizable dynamic custom post types, for individual pages
+
+2. Framework for Developers
+heyyou adds settings, functions and other tools for site wide features & Page Configuration defined by the heyyou Settings for individual page options
+
+3. Simplify WordPress
+Simply WordPress for clients by removing things you don’t use in your theme
+
 
 == Installation ==
 
