@@ -6,6 +6,7 @@ Requires at least: 3.0
 Tested up to: 3.0
 Stable tag: 3.0
 
+**WARNING: IN ALPHA STAGE - FOR DEVELOPMENT ONLY - PRE BETA**
 heyyou adds custom post types (FAQ, News, ect) right INTO any normal Wordpress Page. Easy and Simple.
 
 == Description ==
