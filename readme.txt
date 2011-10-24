@@ -6,12 +6,13 @@ Requires at least: 3.0
 Tested up to: 3.0
 Stable tag: 3.0
 
-**WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY **
-heyyou adds custom post types (FAQ, News, ect) right INTO any normal Wordpress Page. Easy and Simple.
+**WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY ** THIS WAS UPLOADED TO WP.ORG FOR OUR TEAM OF DEVELOPERS AND TESTERS. THIS IS A PRE-BETA WITH AN INCOMPLETE WEBSITE/DOCUMENTAION. PLEASE CONTACT @david_sword FOR MORE INFORMATION**
+
 
 == Description ==
 
-...
+**WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY ** THIS WAS UPLOADED TO WP.ORG FOR OUR TEAM OF DEVELOPERS AND TESTERS. THIS IS A PRE-BETA WITH AN INCOMPLETE WEBSITE/DOCUMENTAION. PLEASE CONTACT @david_sword FOR MORE INFORMATION** Add heyyou Posts Directly Into a Page, Unique & customizable dynamic custom post types, for individual pages. A Framework for Developers heyyou adds settings, functions and other tools for site wide features & Page Configuration defined by the heyyou Settings for individual page options. Simplify WordPress for clients by removing things you don’t use in your theme.
+
 
 == Installation ==
 
@@ -19,17 +20,18 @@ heyyou adds custom post types (FAQ, News, ect) right INTO any normal Wordpress P
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Visit "heyyou" Settings in the admin
 4. Go into a Page and use the "heyyou" metabox
-5. Visit 
+
+**WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY ** THIS WAS UPLOADED TO WP.ORG FOR OUR TEAM OF DEVELOPERS AND TESTERS. THIS IS A PRE-BETA WITH AN INCOMPLETE WEBSITE/DOCUMENTAION. PLEASE CONTACT @david_sword FOR MORE INFORMATION**
 
 == Frequently Asked Questions ==
 
 = I don't understand what this is =
 
-Visit http://hey-you.ca/
+Visit http://hey-you.ca/ **WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY ** THIS WAS UPLOADED TO WP.ORG FOR OUR TEAM OF DEVELOPERS AND TESTERS. THIS IS A PRE-BETA WITH AN INCOMPLETE WEBSITE/DOCUMENTAION. PLEASE CONTACT @david_sword FOR MORE INFORMATION**
 
 == Screenshots ==
 
-...
+**WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY ** THIS WAS UPLOADED TO WP.ORG FOR OUR TEAM OF DEVELOPERS AND TESTERS. THIS IS A PRE-BETA WITH AN INCOMPLETE WEBSITE/DOCUMENTAION. PLEASE CONTACT @david_sword FOR MORE INFORMATION**
 
 == Changelog ==
 
