@@ -146,7 +146,7 @@ jQuery(document).ready(function () {
         jQuery('#attachments-list').hide();
     }
     jQuery('span.attachment-delete a').live('click', function () {
-        attachment_parent = jQuery(this).parent().parent().parent();
+        attachment_parent = jQuery(this).parent().parent();
         attachment_parent.slideUp(function () {
             attachment_parent.remove();
             jQuery('#attachments-list ul li').each(function (i, id) {
