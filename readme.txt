@@ -124,8 +124,3 @@ Visit http://hey-you.ca/ **WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY ** THIS WA
 == Upgrade Notice ==
 
 ...
-
-
-== Arbitrary section ==
-
-...
