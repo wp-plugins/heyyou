@@ -450,6 +450,7 @@ function attachments_get_filesize_formatted( $path = NULL )
 {
     global $units;
     $formatted = '0 bytes';
+/*
     if( file_exists( $path ) )
     {
         $bytes      = intval( filesize( $path ) );
@@ -457,6 +458,7 @@ function attachments_get_filesize_formatted( $path = NULL )
         $e          = floor( log( $bytes ) / log( 1024 ) );
         $formatted  = sprintf( '%.2f ' . $s[$e], ( $bytes / pow( 1024, floor( $e ) ) ) );
     }
+*/
     return $formatted;
 }
 
