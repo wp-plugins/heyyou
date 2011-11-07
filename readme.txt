@@ -1,12 +1,12 @@
 === heyyou ===
 Contributors: davidsword.ca, heyshauna.com
 Donate link: http://davidsword.ca/
-Tags: custom post types for pages, page posts, page features, features, faq, news, small news, easy news, easy posts, custom post types
+Tags: custom post types for pages, wordpress developer framework, wordpress simplifier
 Requires at least: 3.0
 Tested up to: 3.0
 Stable tag: 3.0
 
-**WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY ** THIS WAS UPLOADED TO WP.ORG FOR OUR TEAM OF DEVELOPERS AND TESTERS. THIS IS A PRE-BETA WITH AN INCOMPLETE WEBSITE/DOCUMENTAION. PLEASE CONTACT @david_sword FOR MORE INFORMATION**
+**Alpha Plugin Intended for Project Developers Only** heyyou is a framework that adds unique dynamic custom post types directly within a Wordpress Page, below the main content. The plugin also acts as a developers framework housing lots of useful template functions, an options page to include page meta fields and tools like Lightbox, MooTools, and various jQuery scripts, as well as many other features for rapid template development. The framework also serves as a Wordpress simplifier, cleaning up things like the Media library and completely removing unneeded meta boxes from the dashboard / edit screens, and an interface for removing un-used admin menu items.
 
 
 == Description ==
@@ -34,6 +34,26 @@ Visit http://hey-you.ca/ **WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY ** THIS WA
 **WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY ** THIS WAS UPLOADED TO WP.ORG FOR OUR TEAM OF DEVELOPERS AND TESTERS. THIS IS A PRE-BETA WITH AN INCOMPLETE WEBSITE/DOCUMENTAION. PLEASE CONTACT @david_sword FOR MORE INFORMATION**
 
 == Changelog ==
+
+= 0.0.9.14 =
+* added: bulk "change category" for media, category count reflects media count
+* added: when hoving media thumbnails, full file name appears
+* fixed: errors where "captions" wouldn't stick on new attachments until after page/post update/save
+* fixed: when multi-deleting (using checkboxes) media items, meta info (like attachments) is removed aswell, media cat count updated aswell
+* fixed: attachments only show in attachments when the media library item exsists
+
+= 0.0.9.13 =
+* fixed: errors from attachment plugin showing division by 0 for file size when no file exsists
+
+= 0.0.9.12 =
+
+= 0.0.9.11 =
+
+= 0.0.9.10 =
+
+= 0.0.9.9 =
+
+= 0.0.9.8 =
 
 = 0.0.9.7 =
 * added: hys_get_meta() to easily get hys post meta in a single array
@@ -123,4 +143,4 @@ Visit http://hey-you.ca/ **WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY ** THIS WA
 
 == Upgrade Notice ==
 
-...
+Upgrade at your own risk, this is an unstable alpha plugin.

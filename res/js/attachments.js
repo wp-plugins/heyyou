@@ -65,7 +65,7 @@ new_attachments += '		<div class="textfield field_attachment_title" id="field_at
 new_attachments += '			<input type="text" id="attachment_title_'+attachment_index+'" name="attachment_title_'+attachment_index+'" value="'+''+'" size="20" />';
 new_attachments += '		</div>';
 new_attachments += '		<div class="textfield field_attachment_caption" id="field_attachment_caption_'+attachment_index+'">';
-new_attachments += '			<input type="text" id="attachment_caption_'+attachment_index+'" name="attachment_caption_'+attachment_caption+'" value="'+''+'" size="20" />';
+new_attachments += '			<input type="text" id="attachment_caption_'+attachment_index+'" name="attachment_caption_'+attachment_index+'" value="'+''+'" size="20" />';
 new_attachments += '		</div>';
 new_attachments += '	</div>';
 
