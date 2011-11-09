@@ -35,12 +35,16 @@ Visit http://hey-you.ca/ **WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY ** THIS WA
 
 == Changelog ==
 
+= 0.0.9.15 =
+* fixed issue preventing files from being deleted
+
 = 0.0.9.14 =
-* added: bulk "change category" for media, category count reflects media count
-* added: when hoving media thumbnails, full file name appears
+* added: bulk "change category" for media
+* added: when hovering media thumbnails, full file name appears
 * fixed: errors where "captions" wouldn't stick on new attachments until after page/post update/save
-* fixed: when multi-deleting (using checkboxes) media items, meta info (like attachments) is removed aswell, media cat count updated aswell
-* fixed: attachments only show in attachments when the media library item exsists
+* fixed: when multi-deleting (using checkboxes) media items
+* fixed: attachments only show in site or backend when the media library item exists
+* fixed: when doing a update/re-categorize/delete action in media, cat-count updates
 
 = 0.0.9.13 =
 * fixed: errors from attachment plugin showing division by 0 for file size when no file exsists

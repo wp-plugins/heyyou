@@ -3669,7 +3669,7 @@ function hys_get_timezone() {
 								
 							<? } ?>
 						</a>
-						<a class='submitdelete' onclick='return showNotice.warn();' href='<?= wp_nonce_url('post.php?action=delete&amp;post='.$amedia->ID, 'delete-attachment_' . $amedia->ID .'&deletemeta='.$amedia->ID) ?>'>
+						<a class='submitdelete' onclick='return showNotice.warn();' href='<?= wp_nonce_url('post.php?action=delete&amp;post='.$amedia->ID, 'delete-attachment_' . $amedia->ID) ?>'>
 							<img src='<?=$hys['dir']?>/res/imgs/delete.png' alt='' class='hys_admin_ico delete_attach' style='' /></a>
 						<a href='media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit' title='View <?= $attachment['name'] ?>'><img src='<?=$hys['dir']?>/res/imgs/right.png' alt='' class='hys_admin_ico view_attach' style='' /></a>
 						<div class='hys_media_title'><!--<a href="media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit" title="Edit &#8220;home_thumb_3&#8221;">-->
