@@ -17,7 +17,39 @@ function init_attachments_sortable() {
 }
 
 function attachments_handle_attach(title, caption, id, thumb) {
-    attachment_index = jQuery('li.attachments-file', top.document).length;
+	//@heyyou edit: fix the ID of newly attached attachments
+	//if deleting attachment #1 of 1,2,3: attachments 2 and 3 are left,
+	//if re-attaching before hitting "update" the attach count = 2, so the id of 3 is added,
+	//but id 3 already exsists, so an ID conflict occurs and an accidental deletion occurs
+	
+	// get the last id of attachment
+	attachment_index = jQuery('#attachments-list ul li:last .field_attachment_title', top.document).attr('id');
+	
+	// if no attachments exsist, start from 0
+	if (attachment_index == '' || (typeof attachment_index == 'undefined')) {
+		attachment_index = 0;
+	} 
+	
+	//there's already attachments
+	else {
+		
+		var highest = 1;
+		
+		//loop through, find highest id
+        jQuery('#attachments-list ul li').each(function (i, id) {
+            theid = jQuery(this).find('.field_attachment_title').attr('id');
+            gettheid = theid.split('title_');
+			gettheid = parseInt(gettheid[1]);
+			highest = (gettheid > highest) ? gettheid : highest;
+        });
+        
+        attachment_index = highest + 1;
+
+		//gettheid = attachment_index.split('title_');
+		//attachment_index = parseInt(gettheid[1]) + 1
+	}
+	//end @heyyou edit
+	
     new_attachments = '';
     attachment_name = title;
     attachment_caption = caption;
