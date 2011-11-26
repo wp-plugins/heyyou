@@ -3615,6 +3615,9 @@ function hys_get_timezone() {
 	<tbody id="the-list">
 
 	<? 
+	
+	$mediacats = array_reverse($mediacats);
+	
 	foreach ($mediacats as $k => $acat) {
 		$thumbnailsize = 'hys_attachment_size';
 		if ($acat->term_id != '1') { ?>

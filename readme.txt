@@ -35,6 +35,9 @@ Visit http://hey-you.ca/ **WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY ** THIS WA
 
 == Changelog ==
 
+= 0.0.9.17 =
+* Changed: reversed alphabedical order of media cats
+
 = 0.0.9.16 =
 * fixed: attachements: random deleting of attachments after: deleting attachment(s) then attaching new
 
