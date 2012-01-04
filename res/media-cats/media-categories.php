@@ -168,7 +168,7 @@ if (!class_exists('mc')) {
 			$term = term_exists( 'Uncategorized', 'media_category' ); // array is returned if taxonomy is given
 			if($term)
 			{
-				if($this->options['mc_default_media_category'] ==null ||$this->options['mc_default_media_category'] =='')
+				if( isset($this->options['mc_default_media_category']) && ($this->options['mc_default_media_category'] ==null ||$this->options['mc_default_media_category'] ==''))
 				{
 					$this->options['mc_default_media_category'] = $term["term_id"];  
 					$this->saveAdminOptions();
@@ -180,7 +180,7 @@ if (!class_exists('mc')) {
 		function restrict_admin(){
  			global $current_user;
 			get_currentuserinfo();
-
+			
 			//if not admin, die with message
 			if ( $current_user->user_level <  8 ) {
 				$this->isAdmin = false;
@@ -217,11 +217,11 @@ if (!class_exists('mc')) {
 				
 		}
         function admin_menu_link() {
-            add_options_page('Media Category Options', 'Media Cat Optns', $this->optionsmenuRoleCapabilityLevel, basename(__FILE__), array(&$this,'admin_options_page'));
+            add_options_page('Media Category Options', 'Media Cat Optns', 'manage_options', basename(__FILE__), array(&$this,'admin_options_page'));
 			add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array(&$this, 'filter_plugin_actions'), $this->optionsmenuRoleCapabilityLevel, 2 );			
         }
 		public function add_media_category_field($fields, $object) {
-			
+			$html = '';
 			
 			$ignor_this_displaying_of = (isset($_GET['attachbtn']) || (isset($_GET['s']) && !empty($_GET['s']))) ? true : false;
 
@@ -257,10 +257,10 @@ if (!class_exists('mc')) {
 					else
 					{
 						foreach ($categories AS $category) {
-							$select = ($selected_categories[0]->term_id == $category["id"]) ? ' checked="checked"' : '';
+							$select = (@$selected_categories[0]->term_id == $category["id"]) ? ' checked="checked"' : '';
 							$select = (empty($select) && empty($selected_categories[0]->term_id) && $category["id"] == 1) ? ' checked="checked"' : $select;
 	
-							$highlight = ($selected_categories[0]->term_id == $category["id"]) ? ' style="color:#000;"' : '';
+							$highlight = (@$selected_categories[0]->term_id == $category["id"]) ? ' style="color:#000;"' : '';
 							$highlight = (empty($highlight) && empty($selected_categories[0]->term_id) && $category["id"] == 1) ? ' style="color:#000;"' : '';
 							//$html.="<option value='".$category["id"]."'  $select>".$category["name"]."</option>";
 							$html.="							
@@ -492,7 +492,7 @@ if (!class_exists('mc')) {
 					$_attachments = array();
 					
 					
-						$attachmentIds = get_objects_in_term( $term->term_id, 'media_category', $args );
+						$attachmentIds = get_objects_in_term( $categoria->term_id, 'media_category', $args );
 			
 						$args = array(
 								'orderby'         => 'post_date',
@@ -508,7 +508,7 @@ if (!class_exists('mc')) {
 								
 								$_array = array();
 								$_array['id'] = $attachment->ID;
-								$_array['title'] = $row['post_title'];
+								$_array['title'] = @$row['post_title'];
 												
 								if($mime=='image/jpeg'
 									|| $mime=='image/jpg'

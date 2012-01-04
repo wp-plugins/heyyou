@@ -329,7 +329,11 @@ function hys_crontimes( $schedules ) {
 			 @$user[$prefix]['heyyou_subadmin'] == 1  ) {
 			$a_admin = true;
 		} else {
-			$a_admin = false;
+			if ($current_user->caps && ($current_user->caps['administrator'] == 1 || $current_user->caps['heyyou_subadmin'] == 1)) {
+				$a_admin = true;
+			} else {
+				$a_admin = false;
+			}
 		}
 				
 	?>
@@ -824,7 +828,7 @@ function hys_crontimes( $schedules ) {
 	        <td valign=middle><br />
 			<?php
 			
-			$field_types = $hys['metatypes'];
+			$field_types = @$hys['metatypes'];
 			
 			
 			for ($i = 0; $i != 15; $i++) {

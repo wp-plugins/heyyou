@@ -179,7 +179,7 @@
 						$ddrown .= "<option value='{$va}'{$presl}>{$na}</option>";
 					}
 					
-					if (is_array($curconfig) && is_array(unserialize($hys['presets']['blank']))) {
+					if (is_array($curconfig) && isset($hys['presets']['blank']) && is_array(unserialize($hys['presets']['blank']))) {
 						$compar_configs = array_diff($curconfig, unserialize($hys['presets']['blank']));
 						if (count($compar_configs) < 1 || $its_a_preset) {
 							// it's blank or it's a present
@@ -942,7 +942,7 @@
 %attach%
 %attachments%
 %lightbox_gallery%
-%more:moreless% / %less:moreless% / %moreless%
+%moreless:more% / %moreless:less% / %moreless%
 %view_single% / %view_single_link%
 %back%
 

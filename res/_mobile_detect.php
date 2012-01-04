@@ -77,7 +77,7 @@ class Mobile_Detect {
 
     protected function isDevice($device) {
         $var    = "is" . ucfirst($device);
-        $return = $this->$var === null ? (bool) preg_match("/" . $this->devices[$device] . "/i", $this->userAgent) : $this->$var;
+        $return = @$this->$var === null ? (bool) preg_match("/" . $this->devices[$device] . "/i", $this->userAgent) : $this->$var;
 
         if ($device != 'generic' && $return == true) {
             $this->isGeneric = false;

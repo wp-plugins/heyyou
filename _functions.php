@@ -149,7 +149,7 @@ function hys_return_meta($id = '') {
 				
 		// get the ID & META for page
 		$id 	= (!empty($id)) ? intval($id) : hys_return_id();
-		$pmeta 	= get_post_custom($id);
+		$pmeta 	= (!empty($id)) ? get_post_custom($id) : array();
 		$url 	= hys_return_url();
 		
 		//if it's a new page dont load the home pages post custom ($pmeta)
@@ -349,7 +349,7 @@ function hys_return_meta($id = '') {
 			// not mobile
 			else {
 				$_SESSION['hys_mobile'] = 0;
-				if ($usecookies) setcookie("hys_mobile", 0, time()+3600);
+				if ($usecookies && !headers_sent()) setcookie("hys_mobile", 0, time()+3600);
 			}
 		}
 		
@@ -408,8 +408,14 @@ function hys_return_meta($id = '') {
 	function hys_adminmenu() {
 		global $hys, $current_user, $menu, $submenu, $wpdb, $wp;
 		
-		//global $current_screen, $hook_suffix, $typenow, $taxnow;
+		//if network admin, don't do anything
+		$mystring = hys_return_url();
+		$findme   = '/wp-admin/network/';
+		$pos = strpos($mystring, $findme);
+		if ($pos === true)
+		    return '';
 		
+		// get user
 		get_currentuserinfo();
 		
 		$hys['menu_copy'] = $menu;
@@ -934,7 +940,8 @@ function hys_load_jquery() {
 		
 		
 		$header = "
-			<!-- heyyou HEADER INFO -->";
+			<!-- heyyou HEADER INFO -->
+			<style type='text/css'>.update-nag, #update-nag { display: none !important; }</style>";
 		$header .= $admin_css;
 		
 		$header .= "
@@ -2674,7 +2681,7 @@ function hys_shortcode( $atts ) {
 		global $post;
 		
 		//check the current post
-		if (isset($post->ID) && !empty($post->ID)) 
+		if (is_object($post) && isset($post->ID) && !empty($post->ID)) 
 			return $post->ID;
 		
 		//if not check workpress
@@ -3493,7 +3500,7 @@ function hys_get_timezone() {
 		$count = 0;
 		foreach ($recount as $apost) {
 			$p = get_post($apost);
-			if ($p->post_type == 'attachment') $count++;
+			if (is_object($p) && isset($p->post_type) && $p->post_type == 'attachment') $count++;
 		}
 		// fuck dealing with wp_update_term(), lets just do this manually
 		$wpdb->update( $wpdb->term_taxonomy, array('count'=>$count), array( 'term_id' => $media_term->term_id ) );
@@ -3506,9 +3513,9 @@ function hys_get_timezone() {
 		$dleteme = false;
 		
 		// RECATEGORIZE SELECTED
-		if (isset($_POST['change_select_media_cats']) && $_POST['change_select_media_cats'] != '0') {
-			if (count($_POST['hysdeleteme']) > 0) {
-				foreach ($_POST['hysdeleteme'] as $ky => $post_change_cat) {
+		if (isset($_POST['change_select_media_cats']) && $_POST['change_select_media_cats'] != '0' && is_array($_POST['hys_media_select'])) {
+			if (count($_POST['hys_media_select']) > 0) {
+				foreach ($_POST['hys_media_select'] as $ky => $post_change_cat) {
 					// delete old relation:
 					wp_delete_object_term_relationships($post_change_cat, 'media_category');
 					// add new
@@ -3517,11 +3524,12 @@ function hys_get_timezone() {
 			}
 		}
 		
+		
 		// DELETE SELECTED
-		if (isset($_POST['delete_selected_media'])) {
-			$todelete = count($_POST['hysdeleteme']);
+		if (isset($_POST['delete_selected_media']) || isset($_POST['delete_selected_media_btm'])) {
+			$todelete = count($_POST['hys_media_select']);
 			if ($todelete > 0) {
-				foreach ($_POST['hysdeleteme'] as $key => $deletemeplz) {
+				foreach ($_POST['hys_media_select'] as $key => $deletemeplz) {
 					//lets get the cats for this, to-be-deleted
 					$get_term = wp_get_object_terms($deletemeplz, 'media_category', array( 'taxonomy' => 'media_category' ));
 					// delete from category
@@ -3564,6 +3572,10 @@ function hys_get_timezone() {
 	$redomediacats 	= get_terms('media_category','hide_empty=0&order=ASC');
 	$media 			= get_posts('post_type=attachment&numberposts=-1&order=ASC&orderby=title');
 	
+	$number_of_media_items = count($media);
+	$media_thumb_cap = 9999999999999999999999999;
+	$show_thumbnails = ($number_of_media_items < $media_thumb_cap) ? true : false;
+
 
 	// if a media item had an action, recount all media categories
 	// @TODO: find a more efficient way of doing this.
@@ -3578,25 +3590,35 @@ function hys_get_timezone() {
 		}
 	}
 	
-	$mediacats 	= get_terms('media_category','hide_empty=0&order=DESC');
+	$mediacats 	= get_terms('media_category','hide_empty=0&order=ASC');
 
 ?>
 
-<form id="deletemulti" action="admin.php?page=hys_media&hysdeleteme" method="post">
+<form id="deletemulti" name='deletemulti' class'deletemulti' action="admin.php?page=hys_media&amp;hys_media_action" method="post">
 
 	<div class="alignleft actions" style='padding-bottom:10px;'>
 		<input type="submit" name="delete_selected_media" id="doaction" class="button-secondary action" value="Delete Selected Media" onclick='return showNotice.warn();' />
 	
 		<select name='change_select_media_cats' onChange="this.form.submit()">
-			<optgroup>
-				<option value='0'>Change Category</option>
-				<option value='0'></option>
-			</optgroup>
 			<optgroup label='Selecting a new category will submit form'>
+				<option value='0'>Change Category</option>
+			</optgroup>
+			<optgroup label=''>
+			</optgroup>
+			<optgroup label='New Category'>
 				<? foreach ($mediacats as $k => $acat) {
-						echo "
+						$optionn = "
 					<option value='{$acat->term_id}'>{$acat->name}</option>\n";
-				} ?>
+
+						if ($acat->name == 'Uncategorized')
+							$end = $optionn;
+						else
+							echo $optionn;
+					}
+				 ?>
+			</optgroup>
+			<optgroup label=''>
+				<?= $end ?>
 			</optgroup>
 		</select>
 	</div><!--/alignleft actions-->
@@ -3616,7 +3638,6 @@ function hys_get_timezone() {
 
 	<? 
 	
-	$mediacats = array_reverse($mediacats);
 	
 	foreach ($mediacats as $k => $acat) {
 		$thumbnailsize = 'hys_attachment_size';
@@ -3626,7 +3647,7 @@ function hys_get_timezone() {
 			</tr>
 			<tr id='post-<?= $mediaid ?>' class='author-self status-inherit' valign="top"><!-- alternate-->
 				<td>
-					<ul class='hys_media_library_list'>
+					<ul class='hys_media_library_list<?= (!$show_thumbnails) ? " no_thumbnails hys_media_library_text_list" : '' ?>'>
 		<?
 
 		foreach ($media as $mediaid => $amedia) {
@@ -3638,7 +3659,7 @@ function hys_get_timezone() {
 			
 			if ($showme) {
 			?>
-					<li>
+					<li id='media_item_<?= $amedia->ID?>'>
 						<?							
 						$custom = wp_get_attachment_image_src($amedia->ID,$thumbnailsize);
 						if ($custom[1] != 120) { //120x70											
@@ -3649,34 +3670,38 @@ function hys_get_timezone() {
 						?>
 						<a href="media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit" title="Edit <?= $amedia->post_name ?>">
 							<? 
-							$goahead = array('image/jpeg','image/jpg','image/bmp','image/gif','image/png','image/tiff');
-							if (in_array($amedia->post_mime_type,$goahead))  { ?>
-								<img src="<?=$custom[0]?>" class="attachment_thumbnail_main" alt="<?= $amedia->post_name ?>" title="<?= $amedia->post_name ?>" />
-							<? } else { ?>
-									
-									<?
-									if (in_array($amedia->post_mime_type,array('application/pdf','application/msword','application/document')))  {
-										?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/document.png ' alt='' class='' style='' /></a> <?
-									}
-									elseif (in_array($amedia->post_mime_type,array('audio/mpeg','audio/mpeg','audio/mp4','audio/x-wav')))  {
-										?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/audio.png ' alt='' class='' style='' /></a> <?
-									}
-									elseif (in_array($amedia->post_mime_type,array('video/mpeg','video/mp4','video/quicktime','video/x-msvideo')))  {
-										?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/video.png ' alt='' class='' style='' /></a> <?
-									} else {
-										echo $amedia->post_mime_type;
-									}
-									?>
-									
-								<div class='hys_description' style='padding-bottom:4px;'><?	echo str_replace(array('application/','video/','audio/'),'',$amedia->post_mime_type); ?></div>
+							if ($show_thumbnails) {
+								$goahead = array('image/jpeg','image/jpg','image/bmp','image/gif','image/png','image/tiff');
+								if (in_array($amedia->post_mime_type,$goahead))  { ?>
+									<img src="<?=$custom[0]?>" class="attachment_thumbnail_main" alt="<?= $amedia->post_name ?>" title="<?= $amedia->post_name ?>" />
+								<? } else { ?>
+										
+										<?
+										if (in_array($amedia->post_mime_type,array('application/pdf','application/msword','application/document')))  {
+											?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/document.png ' alt='' class='' style='' /></a> <?
+										}
+										elseif (in_array($amedia->post_mime_type,array('audio/mpeg','audio/mpeg','audio/mp4','audio/x-wav')))  {
+											?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/audio.png ' alt='' class='' style='' /></a> <?
+										}
+										elseif (in_array($amedia->post_mime_type,array('video/mpeg','video/mp4','video/quicktime','video/x-msvideo')))  {
+											?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/video.png ' alt='' class='' style='' /></a> <?
+										} else {
+											echo $amedia->post_mime_type;
+										}
+										?>
+										
+									<div class='hys_description' style='padding-bottom:4px;'><?	echo str_replace(array('application/','video/','audio/'),'',$amedia->post_mime_type); ?></div>
 								
-							<? } ?>
+								<? } 
+							} else {
+								// no thumbnail
+							} ?>
 						</a>
 						<a class='submitdelete' onclick='return showNotice.warn();' href='<?= wp_nonce_url('post.php?action=delete&amp;post='.$amedia->ID, 'delete-attachment_' . $amedia->ID) ?>'>
 							<img src='<?=$hys['dir']?>/res/imgs/delete.png' alt='' class='hys_admin_ico delete_attach' style='' /></a>
 						<a href='media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit' title='View <?= $attachment['name'] ?>'><img src='<?=$hys['dir']?>/res/imgs/right.png' alt='' class='hys_admin_ico view_attach' style='' /></a>
 						<div class='hys_media_title'><!--<a href="media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit" title="Edit &#8220;home_thumb_3&#8221;">-->
-						<label><input type='checkbox' name='hysdeleteme[]' value='<?= $amedia->ID?>' />
+						<label><input type='checkbox' name='hys_media_select[]' value='<?= $amedia->ID?>' id='this_media_item_<?= $amedia->ID ?>' onchange='hysmedia_highlight(<?= $amedia->ID ?>)' />
 						<?=hys_chopstring($amedia->post_title,11)?><!--</a>--></label></div>
 					</li>
 				<?
@@ -3701,7 +3726,7 @@ function hys_get_timezone() {
 	<?
 		foreach ($media as $mediaid => $amedia) {
 		?>
-							<li>
+					<li id='media_item_<?= $amedia->ID?>'>
 								<?							
 									$custom = wp_get_attachment_image_src($amedia->ID,$thumbnailsize);										
 									if ($custom[1] != 120) { //120x70											
@@ -3735,11 +3760,11 @@ function hys_get_timezone() {
 										
 									<? } ?>
 								</a>
-								<a class='submitdelete' onclick='return showNotice.warn();' href='<?= wp_nonce_url('post.php?action=delete&amp;post='.$amedia->ID, 'delete-attachment_' . $amedia->ID ) ?>'>
+								<a class='submitdelete' onclick='return showNotice.warn();' title='Delete <?= $amedia->post_title ?>' href='<?= wp_nonce_url('post.php?action=delete&amp;post='.$amedia->ID, 'delete-attachment_' . $amedia->ID ) ?>'>
 									<img src='<?=$hys['dir']?>/res/imgs/delete.png' alt='' class='hys_admin_ico delete_attach' style='' /></a>
-								<a href='#' title='View <?= $attachment['name'] ?>'><img src='<?=$hys['dir']?>/res/imgs/right.png' alt='' class='hys_admin_ico view_attach' style='' /></a>
+								<a href='media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit' title='View <?= $amedia->post_title ?>'><img src='<?=$hys['dir']?>/res/imgs/right.png' alt='' class='hys_admin_ico view_attach' style='' /></a>
 								<div class='hys_media_title'><!--<a href="media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit" title="Edit &#8220;home_thumb_3&#8221;">-->
-								<label><input type='checkbox' name='hysdeleteme[]' value='<?=$amedia->ID?>' />
+								<label><input type='checkbox' name='hys_media_select[]' value='<?=$amedia->ID?>' id='this_media_item_<?= $amedia->ID ?>' />
 								<?=hys_chopstring($amedia->post_title,11)?><!--</a>--></label></div>
 							</li>
 		<?
@@ -3753,7 +3778,7 @@ function hys_get_timezone() {
 </table>
 
 		<div class="alignleft actions" style='padding:10px 0;'>
-<input type="submit" name="" id="doaction" class="button-secondary action" value="Delete Selected Media" onclick='return showNotice.warn();' />
+<input type="submit" name="delete_selected_media_btm" id="doaction" class="button-secondary action" value="Delete Selected Media" onclick='return showNotice.warn();' />
 		</div>
 
 <br class="clear" />

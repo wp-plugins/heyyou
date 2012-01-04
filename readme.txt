@@ -35,6 +35,24 @@ Visit http://hey-you.ca/ **WARNING: ALPHA PLUGIN, FOR DEVELOPERS ONLY ** THIS WA
 
 == Changelog ==
 
+= 0.0.10 =
+ * December 22, 2011
+ * added: updatenag auto removed, no more obstructing update notices 
+ * fixed: bug: in 3.3 where hys_admin usertypes weren't being recconized as full admin's in hys settings
+ * fixed: has_cap/userrole warning/notice for media cats
+ * fixed: undefined index warning for mc_default_media_category
+ * fixed: Undefined property: Mobile_Detect::$isIphone warning
+ * fixed: if in network (super) admin, don't edit menu/navigation as everything is needed
+ * fixed: in token legend for formating, `%moreless:more/less%` was opposite
+ * updated: !headers_sent() check for setting session to make LESS errors incase of a notice/warning
+ * fixed: accient warning about "undefined index" in "post-template.php on line 30"
+ * added: when you select a media item via checkbox: the cell lights up, to eaisly see what's been selected
+ * fixed: media quick view/delete buttons: titles & actions
+ * fixed: issues with "Delete Selected" in media library now fixed: will delete any selected
+ 
+= 0.0.9.18 =
+* fix: issue with "Fatal error: Call to undefined function get_post_thumbnail_id() in .../media.php on line 1336" cause because `add_theme_support('post-thumbnails')` was called in `init` instead of `after_setup_theme` .. changed hys_load to start at `after_setup_theme` instead of `init` .. this may cause unknown issues.
+
 = 0.0.9.17 =
 * Changed: reversed alphabedical order of media cats
 

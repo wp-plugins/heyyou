@@ -1,3 +1,26 @@
+	
+jQuery(document).ready(function() {
+  		
+	jQuery('.hys_media_library_list li input').change(function() { 
+		
+		
+
+		$chcked = jQuery(this).is(':checked');
+		
+		if ( $chcked ) {
+			jQuery(this).parent().parent().parent().css('background','#fffeed')
+		} else {
+			jQuery(this).parent().parent().parent().css('background','#FCFCFC')
+		}
+		
+	});
+		  
+
+});
+
+
+
+
 
 
 	function mediacat_highlight(mainid) {
