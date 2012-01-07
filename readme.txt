@@ -14,7 +14,7 @@ heyyou is a large plugin framework that - in addition to supplying  resources fo
  * Visit: [hey-you.ca](http://hey-you.ca/)
  * Tweet: [@david_sword](http://twitter.com/david_sword/)
 
-The plugin was intended as a developers framework - it's goal to turn Wordpress into more of a CMS by:
+The plugin (currently in alpha version) is intended as a developers framework - it's goal to turn Wordpress into more of a CMS by:
 
 1. Adding (dynamic) Custom Post Types directly within a Wordpress Page - below the pages main content
 2. Developer Framework - housing a wide range of preset, extensive admin settings
