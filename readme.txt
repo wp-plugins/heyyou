@@ -25,26 +25,25 @@ The plugin was intended as a developers framework - it's goal to turn Wordpress 
 In Admin:
 
 * Dynamic Custom Post Types
-	* option on every page to add page-specific custom post types with wide range of configs, and format output using basic %macros% and HTML (useful for: FAQ, Staff Listing, Press Releases, ect.)
-	* built-in per-page pagination for longer lists of posts
-	* Drag and drop ordering
-	* Super customizable, use built in output (easy for beginners - or PHP functions for manual/custom outputs)
+* --- option on every page to add page-specific custom post types with wide range of configs, and format output using basic %macros% and HTML (useful for: FAQ, Staff Listing, Press Releases, ect.)
+* --- built-in per-page pagination for longer lists of posts
+* --- Drag and drop ordering
+* --- Super customizable, use built in output (easy for beginners - or PHP functions for manual/custom outputs)
 * custom media library (grid thumbnails)
 * media library categories
 * Dynamic Page Meta Fields (for things like having a featured image's "Photo Credit" meta field) (Easier to use than Wordpress's custom fields)
 * TinyMCE: simplifier, reduces TinyMCE buttons to single row
-
 * Creates "Sub-Admin" and "Client" user types
 * Options to: 
-	* Add secondary blurb
-	* Add Twitter / Facebook plugin
-	* Configure which metaboxes user types have access to and receive by default (hiding client unnecessary metaboxes like Wordpress News and Plugin Widget Feed)
-	* Adding a (visually attractive) under construction "Notice" banner to site
-	* Edit Admin Menu / Navigations (to remove menu items like "Tools" or "Links" if irrelevant for your theme)
-	* Edit main <meta> keyword/description
-	* Setup database-to-email backup
-	* (TinyMCE) Add dynamic styles to TinyMCE via easy to use GUI (i.e.: add "Blue Italic" to your themes styled drop down)
-	* Include <scripts> via check-box for technologies (like Lightbox, Mootools, Attachments)
+* --- Add secondary blurb
+* --- Add Twitter / Facebook plugin
+* --- Configure which metaboxes user types have access to and receive by default (hiding client unnecessary metaboxes like Wordpress News and Plugin Widget Feed)
+* --- Adding a (visually attractive) under construction "Notice" banner to site
+* --- Edit Admin Menu / Navigations (to remove menu items like "Tools" or "Links" if irrelevant for your theme)
+* --- Edit main <meta> keyword/description
+* --- Setup database-to-email backup
+* --- (TinyMCE) Add dynamic styles to TinyMCE via easy to use GUI (i.e.: add "Blue Italic" to your themes styled drop down)
+* --- Include <scripts> via check-box for technologies (like Lightbox, Mootools, Attachments)
 * *& much much more.. (documentation still being written)*
 
 On Front-End:
