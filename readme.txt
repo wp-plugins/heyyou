@@ -17,9 +17,12 @@ The plugin was intended as a developers framework - it's goal to turn Wordpress 
 2. Developer Framework - housing a wide range of preset, extensive admin settings
 3. Simplifying Wordpress
 
-Elaborating on features, *heyyou*:
+**ABOUT: Elaborating on features, *heyyou*:**
 
-**In Admin:**
+ * Visit: [hey-you.ca](http://hey-you.ca/)
+ * Tweet: [@david_sword](http://twitter.com/david_sword/)
+
+In Admin:
 
 * Dynamic Custom Post Types
 	* option on every page to add page-specific custom post types with wide range of configs, and format output using basic %macros% and HTML (useful for: FAQ, Staff Listing, Press Releases, ect.)
@@ -44,14 +47,14 @@ Elaborating on features, *heyyou*:
 	* Include <scripts> via check-box for technologies (like Lightbox, Mootools, Attachments)
 * *& much much more.. (documentation still being written)*
 
-**On Front-End:**
+On Front-End:
 
 * Cleans up HTML header info outputted by wp_head()
 * Adds .mobile class to <body> when detected
 * Javascript instant-reveal "..read more" replace <!--more--> *see documentation*
 * *& much more.. (documentation still being written)*
 
-**Live Sites powered by *heyyou***
+**SHOWCASE: Live Sites powered by *heyyou***
 
 * [hey-you.ca](http://hey-you.ca/)
 * [heyshauna.com](http://heyshauna.com/)
@@ -74,19 +77,19 @@ Elaborating on features, *heyyou*:
 * *& much more.. (many websites in development / nearing launch)*
 
 
-**External Credit**
+**CREDIT: External Plugins**
 
 * [Jonathan Christopher](http://mondaybynoon.com/)'s [Attachment Plugin](http://wordpress.org/extend/plugins/attachments/) is included directly in the plugin, it's layout altered to simplified thumbnail grid
 * *(Name Missing)* *(Link Missing)* Media Categories was integrated
 * *& 1 more.. (documentation still being written)*
 
-**IMPORTANT NOTICE !!!**
+**NOTICE: Important !!!**
 
 This plugin is a *very large* framework design specifically for development of websites by [heyshauna.com](http://heyshauna.com/) & [davidsword.ca](http://davidsword.ca/). It essentially has the functionality of 30+ plugins. *heyyou* is not likely to be compatible with all themes or plugins and is recommended for intermediate-to-advance users only that are committed to experimenting with this plugin. Always backup your database and files before installing a plugin of this scale. It is recommended that potential users test this plugin in a test environment prior to installing on a live site. Please view the documentation at : [hey-you.ca](http://hey-you.ca/)
 
 *ALL Documentation and plugin are at ALPHA LEVEL, the plugin is currently being developed / written.*
 
-**More Information**
+**SUPPORT: More Information**
 
 [hey-you.ca](http://hey-you.ca/)
 
