@@ -1,21 +1,21 @@
 === heyyou ===
 Contributors: davidsword.ca, heyshauna.com
 Donate link: http://wordpress.org/donate
-Tags: custom post types for pages, wordpress developer framework, wordpress simplifier
+Tags: custom post types for pages, Wordpress developer framework, Wordpress simplifier
 Requires at least: 3.0
 Tested up to: 3.2
 Stable tag: 0.0.10.1
 
-*heyyou* is a large plugin framework that - in addition to supplying  resources for rapid developent - adds unique dynamic custom post types directly within a Wordpress Page
+*heyyou* is a large plugin framework that - in addition to supplying  resources for rapid development - adds unique dynamic custom post types directly within a Wordpress Page
 
 
 == Description ==
 
-The plugin was intended as a developers framework - it's goal to turn wordpress into more of a CMS by:
+The plugin was intended as a developers framework - it's goal to turn Wordpress into more of a CMS by:
 
 1. Adding (dynamic) Custom Post Types directly within a Wordpress Page - below the pages main content
 2. Developer Framework - housing a wide range of preset, extensive admin settings
-3. Simplying Wordpress
+3. Simplifying Wordpress
 
 Elaborating on features, *heyyou*:
 
@@ -28,20 +28,20 @@ Elaborating on features, *heyyou*:
 	* Super customizable, use built in output (easy for beginners - or PHP functions for manual/custom outputs)
 * custom media library (grid thumbnails)
 * media library categories
-* Dynamic Page Meta Feilds (for things like having a featured image's "Photo Credit" meta feild) (Eaiser to use than Wordpress's custom feilds)
+* Dynamic Page Meta Fields (for things like having a featured image's "Photo Credit" meta field) (Easier to use than Wordpress's custom fields)
 * TinyMCE: simplifier, reduces TinyMCE buttons to single row
 
 * Creates "Sub-Admin" and "Client" user types
 * Options to: 
-	* Add seondary blurb
+	* Add secondary blurb
 	* Add Twitter / Facebook plugin
-	* Configure which metaboxes user types have access to and receive by default (hidding client unessisary metaboxes like Wordpress News and Plugin Widget Feed)
+	* Configure which metaboxes user types have access to and receive by default (hiding client unnecessary metaboxes like Wordpress News and Plugin Widget Feed)
 	* Adding a (visually attractive) under construction "Notice" banner to site
-	* Edit Admin Menu / Navigations (to remove menu items like "Tools" or "Links" if unrelevant for your theme)
+	* Edit Admin Menu / Navigations (to remove menu items like "Tools" or "Links" if irrelevant for your theme)
 	* Edit main <meta> keyword/description
 	* Setup database-to-email backup
-	* (TinyMCE) Add dynamic styles to tinymce via easy to use GUI (ie: add "Blue Italic" to your themes styled drop down)
-	* Include <scipts> via check-box for technologies (like Lightbox, Mootools, Attachments)
+	* (TinyMCE) Add dynamic styles to TinyMCE via easy to use GUI (i.e.: add "Blue Italic" to your themes styled drop down)
+	* Include <scripts> via check-box for technologies (like Lightbox, Mootools, Attachments)
 * *& much much more.. (documentation still being written)*
 
 **On Front-End:**
@@ -77,12 +77,12 @@ Elaborating on features, *heyyou*:
 **External Credit**
 
 * [Jonathan Christopher](http://mondaybynoon.com/)'s [Attachment Plugin](http://wordpress.org/extend/plugins/attachments/) is included directly in the plugin, it's layout altered to simplified thumbnail grid
-* *(Name Missing)* *(Link Missing)* Media Categories was intgrated
+* *(Name Missing)* *(Link Missing)* Media Categories was integrated
 * *& 1 more.. (documentation still being written)*
 
 **IMPORTANT NOTICE !!!**
 
-This plugin is a *very large* framework design specifically for development of websites by [heyshauna.com](http://heyshauna.com/) & [davidsword.ca](http://davidsword.ca/). It esentially has the functionality of 30+ plugins. *heyyou* is not likly to be compatible with all themes or plugins and is reccomended for intermidiate-to-advance users only that are commited to eperimenting with this plugin. Always backup your database and files before installing a plugin of this scale. It is reccomened that potentional users test this plugin in a test enviroment prior to installing on a live site. Please view the documentation at : [hey-you.ca](http://hey-you.ca/)
+This plugin is a *very large* framework design specifically for development of websites by [heyshauna.com](http://heyshauna.com/) & [davidsword.ca](http://davidsword.ca/). It essentially has the functionality of 30+ plugins. *heyyou* is not likely to be compatible with all themes or plugins and is recommended for intermediate-to-advance users only that are committed to experimenting with this plugin. Always backup your database and files before installing a plugin of this scale. It is recommended that potential users test this plugin in a test environment prior to installing on a live site. Please view the documentation at : [hey-you.ca](http://hey-you.ca/)
 
 *ALL Documentation and plugin are at ALPHA LEVEL, the plugin is currently being developed / written.*
 
@@ -105,14 +105,14 @@ This plugin is a *very large* framework design specifically for development of w
 
 Dynamic Custom Post Types - ("DCPT")'s - are posts that you can add directly into a Wordpress Page. Unlike a "Post" a DCPT by default only has a title: within that page, there's a configuration form where you can configure that DCPT to whatever required, some options include:
 
- * Adding a blurb and/or a date feild
+ * Adding a blurb and/or a date field
  * Categories / Groupings for the DCPT's
- * Meta feilds for Media items, text, code, URLs
+ * Meta fields for Media items, text, code, URLs
  * & much much more..
 
 = What type of Pages are dynamic custom post types useful for? =
 
-The entire orgin of this project bases from wanting the following within a wordpress page:
+The entire origin of this project bases from wanting the following within a Wordpress page:
 
  * A FAQ listing, simple, directly below a pages content
  * Staff BIO listing
@@ -126,8 +126,8 @@ The entire orgin of this project bases from wanting the following within a wordp
 
 == Screenshots ==
 
-1. Dynamic Custom Post Types added directly to the page the post types will show in. Simplying CTP's for your clients.
-2. Custom post types apear just as they do in the admin - directly below the corrosponding pages main content
+1. Dynamic Custom Post Types added directly to the page the post types will show in. Simplifying CTP's for your clients.
+2. Custom post types appear just as they do in the admin - directly below the corresponding pages main content
 
 
 == Changelog ==
@@ -139,16 +139,16 @@ The entire orgin of this project bases from wanting the following within a wordp
 
 = 0.0.10 =
  * December 22, 2011
- * added: updatenag auto removed, no more obstructing update notices 
- * fixed: bug: in 3.3 where hys_admin usertypes weren't being recconized as full admin's in hys settings
+ * added: update nag auto removed, no more obstructing update notices 
+ * fixed: bug: in 3.3 where hys_admin usertypes weren't being recognized as full admin's in hys settings
  * fixed: has_cap/userrole warning/notice for media cats
  * fixed: undefined index warning for mc_default_media_category
  * fixed: Undefined property: Mobile_Detect::$isIphone warning
  * fixed: if in network (super) admin, don't edit menu/navigation as everything is needed
- * fixed: in token legend for formating, `%moreless:more/less%` was opposite
+ * fixed: in token legend for formatting, `%moreless:more/less%` was opposite
  * updated: !headers_sent() check for setting session to make LESS errors incase of a notice/warning
- * fixed: accient warning about "undefined index" in "post-template.php on line 30"
- * added: when you select a media item via checkbox: the cell lights up, to eaisly see what's been selected
+ * fixed: ancient warning about "undefined index" in "post-template.php on line 30"
+ * added: when you select a media item via checkbox: the cell lights up, to easily see what's been selected
  * fixed: media quick view/delete buttons: titles & actions
  * fixed: issues with "Delete Selected" in media library now fixed: will delete any selected
  
@@ -156,10 +156,10 @@ The entire orgin of this project bases from wanting the following within a wordp
 * fix: issue with "Fatal error: Call to undefined function get_post_thumbnail_id() in .../media.php on line 1336" cause because `add_theme_support('post-thumbnails')` was called in `init` instead of `after_setup_theme` .. changed hys_load to start at `after_setup_theme` instead of `init` .. this may cause unknown issues.
 
 = 0.0.9.17 =
-* Changed: reversed alphabedical order of media cats
+* Changed: reversed alphabetical order of media cats
 
 = 0.0.9.16 =
-* fixed: attachements: random deleting of attachments after: deleting attachment(s) then attaching new
+* fixed: attachments: random deleting of attachments after: deleting attachment(s) then attaching new
 
 = 0.0.9.15 =
 * fixed issue preventing files from being deleted
@@ -173,7 +173,7 @@ The entire orgin of this project bases from wanting the following within a wordp
 * fixed: when doing a update/re-categorize/delete action in media, cat-count updates
 
 = 0.0.9.13 =
-* fixed: errors from attachment plugin showing division by 0 for file size when no file exsists
+* fixed: errors from attachment plugin showing division by 0 for file size when no file exists
 
 = 0.0.9.7 =
 * added: hys_get_meta() to easily get hys post meta in a single array
@@ -205,22 +205,22 @@ The entire orgin of this project bases from wanting the following within a wordp
 * admin: media: if not hys_attach media size, use default thumbnail (as wp defaults "full" cause sloooooow)
 * when editing a *heyyou* post, the order gets fucked
 * turn off auto-save on posts
-* Make dashboard widget not manditory -- maybe a custom text one
-* Dashboard widgets (Side) not sticking in hys_settings -- && google analytics mising
-* quick edit deleteing attachments issue - see if persist
+* Make dashboard widget not mandatory -- maybe a custom text one
+* Dashboard widgets (Side) not sticking in hys_settings -- && google analytics missing
+* quick edit deleting attachments issue - see if persist
 * double uncategorizing happening
 * all metaboxes (in pages) randomly showing up?
 * hys_client's navigation is missing... only dash and profile..
 * $_GET['post_type'] == 'page'
-* a way to disable johnathans attachments plugin
+* a way to disable attachments plugin
 * change ie 6 warning, remove shauna
 * don't disable I/O when inactive
-* trim() on *heyyou* meta fields ** MAY CAUSE ISSUES TO EXSISTING
+* trim() on *heyyou* meta fields ** MAY CAUSE ISSUES TO EXISTING
 * showhide_inline
 * if (!empty($cat_format[0]) && $cat_format[0] != 'Array')
-* editable location of default tinymce.css & favicon.ico ** MAY CAUSE ISSUES
+* editable location of default TinyMCE.css & favicon.ico ** MAY CAUSE ISSUES
 * *heyyou* not putting it's /js/js.js file into site....?
-* in meta type drop down, added "Ritch Blurb" for tinymce isntead of just textarea
+* in meta type drop down, added "Ritch Blurb" for TinyMCE instead of just textarea
 * admin: media: when in pop-up media library, css has been fucked, titles below thumb instead of to-right-of
 
 = 0.0.8 =
@@ -247,7 +247,7 @@ The entire orgin of this project bases from wanting the following within a wordp
 * solved issue with admin conflicts between wp-ecomm & *heyyou* (the "media category" sub-plugin, conflicting jquery)
 * slugs for pages and posts now editable again
 * wp_tiny_mce() vs jquery conflict  resolved
-* Force download has been added to "Download: Hi Res | Low Res" links. anyfile anwhere can force download with the URL query ?hys_download={$fileurl}
+* Force download has been added to "Download: Hi Res | Low Res" links. any file anywhere can force download with the URL query ?hys_download={$fileurl}
 * Regenerating Thumbnails now works with *heyyou*, no more JS conflicts
 * Attachments (photo galleries) facelift: images now tile instead of list, removed clutter & made simpler.
 * Fixed mobile issue was mobile detection wasn't registered until the second page visit
