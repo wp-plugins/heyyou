@@ -246,7 +246,7 @@ Tweet: [@david_sword](http://twitter.com/david_sword/)
 * removed "My Sites" (sub-page of "Dashboard") from *heyyou*_client's admin menu
 * *heyyou* posts now get added to the BOTTOM of a list of posts by default. option added in "*heyyou* page config" > features > "New posts get added to the {top/bottom}" toggle
 * added availability to preview meta fields "media" thumbnail to an admin list of *heyyou* posts for easier visual cues on *heyyou* lists with images as main focus
-* before/after HTML categories added to output formats (for better placing *heyyou* in a <ul><li> output)
+* before/after HTML categories added to output formats (for better placing *heyyou* in a < ul >< li > output)
 * removed auto "theme/js/js.js" import.. may cause conflicts - revisits
 * Added jQuery auto-write "<script src=...>" for jquery + various/common plugin support
 * Support for "---" (dividing titles (bold) & captions (newline & reg.)) added to lightbox.js & jquery.lightbox.js & all auto-lightbox gallery functions
