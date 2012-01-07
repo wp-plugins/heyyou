@@ -11,12 +11,10 @@ Stable tag: 0.0.10.1
 
 == Description ==
 
-The plugin was intended as a developers framework housing lots of useful template functions - it's goal to turn wordpress into more of a CMS by: in-page dynamic custom post types, an extensive admin settings page, auto includes (for things like MooTools, lightbox, favicon.ico), and a wordpress simplifier, as well as many other features for rapid template development.
+The plugin was intended as a developers framework - it's goal to turn wordpress into more of a CMS by:
 
-In short: *heyyou* has three main purposes:
-
-1. Adding (dynamic) Custom Post Types directly within a Wordpress Page, below the pages main content
-2. Developer Framework, housing a wide range of preset, and custom meta values for eaisly creating a template
+1. Adding (dynamic) Custom Post Types directly within a Wordpress Page - below the pages main content
+2. Developer Framework - housing a wide range of preset, extensive admin settings
 3. Simplying Wordpress
 
 Elaborating on features, *heyyou*:
@@ -24,33 +22,36 @@ Elaborating on features, *heyyou*:
 **In Admin:**
 
 * Dynamic Custom Post Types
-	* page-specific configuration of posts with wide range of configs, and format output using basic %macros% and HTML
+	* option on every page to add page-specific custom post types with wide range of configs, and format output using basic %macros% and HTML (useful for: FAQ, Staff Listing, Press Releases, ect.)
 	* built-in per-page pagination for longer lists of posts
 	* Drag and drop ordering
+	* Super customizable, use built in output (easy for beginners - or PHP functions for manual/custom outputs)
 * custom media library (grid thumbnails)
 * media library categories
 * Dynamic Page Meta Feilds (for things like having a featured image's "Photo Credit" meta feild) (Eaiser to use than Wordpress's custom feilds)
 * TinyMCE: simplifier, reduces TinyMCE buttons to single row
-* TinyMCE: GUI for adding dynamic styles to tinymce (ie: add "Blue Italic" to your themes styled drop down)
-* Database-to-email backup
-* Allows check-box addition of technologies (like Lightbox, Mootools, Attachments)
-* Edit main <meta> keyword/description
-* Interface for adding attractive "Notice" banner to site
+
+* Creates "Sub-Admin" and "Client" user types
 * Options to: 
 	* Add seondary blurb
 	* Add Twitter / Facebook plugin
 	* Configure which metaboxes user types have access to and receive by default (hidding client unessisary metaboxes like Wordpress News and Plugin Widget Feed)
-* Creates "Sub-Admin" and "Client" user types with edit-able admin navigations to remove menu items like "Tools" or "Links" if unrelevant for your theme
-* *& much more.. (documentation still being written)*
+	* Adding a (visually attractive) under construction "Notice" banner to site
+	* Edit Admin Menu / Navigations (to remove menu items like "Tools" or "Links" if unrelevant for your theme)
+	* Edit main <meta> keyword/description
+	* Setup database-to-email backup
+	* (TinyMCE) Add dynamic styles to tinymce via easy to use GUI (ie: add "Blue Italic" to your themes styled drop down)
+	* Include <scipts> via check-box for technologies (like Lightbox, Mootools, Attachments)
+* *& much much more.. (documentation still being written)*
 
 **On Front-End:**
 
 * Cleans up HTML header info outputted by wp_head()
 * Adds .mobile class to <body> when detected
-* Javascript instant-reveal "..read more" replace <!--more-->
+* Javascript instant-reveal "..read more" replace <!--more--> *see documentation*
 * *& much more.. (documentation still being written)*
 
-** Live Sites powered by *heyyou* **
+**Live Sites powered by *heyyou***
 
 * [hey-you.ca](http://hey-you.ca/)
 * [heyshauna.com](http://heyshauna.com/)
@@ -73,19 +74,21 @@ Elaborating on features, *heyyou*:
 * *& much more.. (many websites in development / nearing launch)*
 
 
-** External Credit **
+**External Credit**
 
-* [Jonathan Christopher](http://mondaybynoon.com/)'s [Attachment Plugin](http://wordpress.org/extend/plugins/attachments/) is used, it's layout altered to simplified thumbnail grid
-* (Name Missing) (Link Missing) Media Categories was intgrated
+* [Jonathan Christopher](http://mondaybynoon.com/)'s [Attachment Plugin](http://wordpress.org/extend/plugins/attachments/) is included directly in the plugin, it's layout altered to simplified thumbnail grid
+* *(Name Missing)* *(Link Missing)* Media Categories was intgrated
 * *& 1 more.. (documentation still being written)*
 
-**!important notice**
+**IMPORTANT NOTICE !!!**
 
-This plugin is a *very large* framework design specifically for development of websites by heyshauna & David Sword. It esentially has the functionality of 30 or so plugins. *heyyou* is not likly compatible with all themes or plugins and is reccomended for intermidiate-to-advance users only that are commited to eperimenting with this plugin. Always backup your database and files before installing a plugin of this scale. It is reccomened that potentional users test this plugin in a test enviroment prior to installing on a live site. Please view the documentation at : [hey-you.ca](http://hey-you.ca/)
+This plugin is a *very large* framework design specifically for development of websites by [heyshauna.com](http://heyshauna.com/) & [davidsword.ca](http://davidsword.ca/). It esentially has the functionality of 30+ plugins. *heyyou* is not likly to be compatible with all themes or plugins and is reccomended for intermidiate-to-advance users only that are commited to eperimenting with this plugin. Always backup your database and files before installing a plugin of this scale. It is reccomened that potentional users test this plugin in a test enviroment prior to installing on a live site. Please view the documentation at : [hey-you.ca](http://hey-you.ca/)
 
-Documentation and plugin are at ALPHA LEVEL, the plugin is currently being developed.
+*ALL Documentation and plugin are at ALPHA LEVEL, the plugin is currently being developed / written.*
 
-http://hey-you.ca/
+**More Information**
+
+[hey-you.ca](http://hey-you.ca/)
 
 
 == Installation ==
@@ -117,9 +120,8 @@ The entire orgin of this project bases from wanting the following within a wordp
 
 = I still don't understand what this is =
 
-Visit: [hey-you.ca](http://hey-you.ca/)
-
-Tweet: [@david_sword](http://twitter.com/david_sword/)
+ * Visit: [hey-you.ca](http://hey-you.ca/)
+ * Tweet: [@david_sword](http://twitter.com/david_sword/)
 
 
 == Screenshots ==
@@ -172,16 +174,6 @@ Tweet: [@david_sword](http://twitter.com/david_sword/)
 
 = 0.0.9.13 =
 * fixed: errors from attachment plugin showing division by 0 for file size when no file exsists
-
-= 0.0.9.12 =
-
-= 0.0.9.11 =
-
-= 0.0.9.10 =
-
-= 0.0.9.9 =
-
-= 0.0.9.8 =
 
 = 0.0.9.7 =
 * added: hys_get_meta() to easily get hys post meta in a single array
