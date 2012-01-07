@@ -6,7 +6,7 @@ Requires at least: 3.0
 Tested up to: 3.2
 Stable tag: 0.0.10.1
 
-*heyyou* is a large plugin framework that - in addition to supplying  resources for rapid development - adds unique dynamic custom post types directly within a Wordpress Page
+heyyou is a large plugin framework that - in addition to supplying  resources for rapid development - adds unique dynamic custom post types directly within a Wordpress Page
 
 
 == Description ==
