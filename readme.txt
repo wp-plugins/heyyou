@@ -48,10 +48,10 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 	* Configure which metaboxes user types have access to and receive by default (hiding client unnecessary metaboxes like Wordpress News and Plugin Widget Feed)
 	* Adding a (visually attractive) under construction "Notice" banner to site
 	* Edit Admin Menu / Navigations (to remove menu items like "Tools" or "Links" if irrelevant for your theme)
-	* Edit main <meta> keyword/description
+	* Edit main < meta > keyword/description
 	* Setup database-to-email backup
 	* (TinyMCE) Add dynamic styles to TinyMCE via easy to use GUI (i.e.: add "Blue Italic" to your themes styled drop down)
-	* Include <scripts> via check-box for technologies (like Lightbox, Mootools, Attachments)
+	* Include < scripts > via check-box for technologies (like Lightbox, Mootools, Attachments)
 	* Add Featured &or Secondary images for your theme's pages &or posts (no more remebering function)
 	* Add Excerpts on page (no more remebering function)
 * Miscellaneous:
@@ -61,8 +61,8 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 	* *& much much more.. (documentation still being written)*
 	* Cleans up HTML header info outputted by wp_head()
 	* Outputs the dynamic custom post types under their corosponding pages
-	* Adds .mobile class to <body> when detected
-	* Javascript instant-reveal "..read more" replace <!--more--> *see documentation*
+	* Adds .mobile class to < body > when detected
+	* Javascript instant-reveal "..read more" replace <! -- more -- > *see documentation*
 * *& much more.. (documentation still being written)*
 
 ---
@@ -292,7 +292,7 @@ The entire origin of this project bases from wanting the following within a Word
 * added availability to preview meta fields "media" thumbnail to an admin list of *heyyou* posts for easier visual cues on *heyyou* lists with images as main focus
 * before/after HTML categories added to output formats (for better placing *heyyou* in a < ul >< li > output)
 * removed auto "theme/js/js.js" import.. may cause conflicts - revisits
-* Added jQuery auto-write "<script src=...>" for jquery + various/common plugin support
+* Added jQuery auto-write "< script src=... >" for jquery + various/common plugin support
 * Support for "---" (dividing titles (bold) & captions (newline & reg.)) added to lightbox.js & jquery.lightbox.js & all auto-lightbox gallery functions
 * both attach gallery generators (hys_photogallery() for *heyyou* posts, and hys_attach_attachments() for page posts) now share "ul.hys_gallery" class. default properties now set in hys_style.css
 * only add mootools on page that have drag-n-drop list of *heyyou* posts
