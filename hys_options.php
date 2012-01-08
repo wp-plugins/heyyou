@@ -477,7 +477,7 @@ function hys_crontimes( $schedules ) {
 		        	</label><br />
 				     <br />
 				     <br />
-					<h4 style='padding-top:0;margin-top:0'>Generate &lt;header&gt; html:</h4>
+					<h4 style='padding-top:0;margin-top:0'>Generate &lt;head&gt; html:</h4>
 				    
 				    <label>
 					    TinyMCE Stylesheet:<br />

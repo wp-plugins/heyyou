@@ -67,7 +67,7 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 
 ---
 
-**SHOWCASE: Live Sites powered by *heyyou***
+**SHOWCASE: Live sites powered by *heyyou***
 
 * heyshauna sites
 	* [heyshauna.com](http://heyshauna.com/)
@@ -110,11 +110,11 @@ The following plugins are hard coded into the plugin - they were edited enough t
 	* built into heyyou aswell, for adding secondary images in a single click
 
 
-**NOTICE: Important !!!**
+**NOTICE: Important!!!**
 
 This plugin is a *very large* framework design specifically for development of websites by [heyshauna.com](http://heyshauna.com/) & [davidsword.ca](http://davidsword.ca/). It essentially has the functionality of 30+ plugins. *heyyou* is not likely to be compatible with all themes or plugins and is recommended for intermediate-to-advance users only that are committed to experimenting with this plugin. Always backup your database and files before installing a plugin of this scale. It is recommended that potential users test this plugin in a test environment prior to installing on a live site. Please view the documentation at : [hey-you.ca](http://hey-you.ca/)
 
-*ALL Documentation and plugin are at ALPHA LEVEL, the plugin is currently being developed / written.*
+`ALL Documentation and plugin are at ALPHA LEVEL, the plugin is currently being developed / written.`
 
 [hey-you.ca](http://hey-you.ca/)
 
@@ -124,7 +124,7 @@ This plugin is a *very large* framework design specifically for development of w
 1. Upload the `/heyyou/` folder into the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Visit "*heyyou*" Settings in the admin
-4. Go into a Page and use the "*heyyou*" metabox
+4. Go into a Page and use the "*heyyou*" metabox by 'enabling' *heyyou* posts for that page
 
 
 == Frequently Asked Questions ==
@@ -137,6 +137,8 @@ Dynamic Custom Post Types - ("DCPT")'s - are posts that you can add directly int
  * Categories / Groupings for the DCPT's
  * Meta fields for Media items, text, code, URLs
  * & much much more..
+ 
+This is very different then using Wordpress `register_post_type()` method as the posts go directly within 
 
 = What type of Pages are dynamic custom post types useful for? =
 
@@ -161,7 +163,7 @@ The entire origin of this project bases from wanting the following within a Word
 == Changelog ==
 
 = 0.0.11 =
- * January 6, 2012
+ * "Susan" - January 6, 2012
  * added: more to readme.txt
  * added assets banner, 
  * added screenshot-3
@@ -185,7 +187,7 @@ The entire origin of this project bases from wanting the following within a Word
 
 
 = 0.0.10 =
- * December 22, 2011
+ * "Spoken" - December 22, 2011
  * added: update nag auto removed, no more obstructing update notices 
  * fixed: bug: in 3.3 where hys_admin usertypes weren't being recognized as full admin's in hys settings
  * fixed: has_cap/userrole warning/notice for media cats
@@ -212,6 +214,7 @@ The entire origin of this project bases from wanting the following within a Word
 * fixed issue preventing files from being deleted
 
 = 0.0.9.14 =
+* "Greenspace" - September, 2011
 * added: bulk "change category" for media
 * added: when hovering media thumbnails, full file name appears
 * fixed: errors where "captions" wouldn't stick on new attachments until after page/post update/save
@@ -223,6 +226,7 @@ The entire origin of this project bases from wanting the following within a Word
 * fixed: errors from attachment plugin showing division by 0 for file size when no file exists
 
 = 0.0.9.7 =
+* "CVS" - October 22, 2011
 * added: hys_get_meta() to easily get hys post meta in a single array
 * fixed: default image size for auto-lightbox galleries now large instead of undefined (full)
 * fixed: issues with hys_return_url() returning HTTPS instead of HTTP fixed
@@ -238,7 +242,8 @@ The entire origin of this project bases from wanting the following within a Word
 * fixed: attachments: when attaching and using the "search", the "attach" button sticks and doesn't revert back to "insert into.."
 * fixed: media categories: when uploading multiple at same time, you can now select a category for each image, and upon save, each image will go into req. cat:: as expected.
 
-= 0.0.9
+= 0.0.9 =
+* "Interior Acad" - July 30, 2011
 * admin: TILE attachments (css) instead of listing..
 * js: media: when attaching, don't carry title into attach
 * media lib: put cat plugin, into *heyyou*
@@ -271,7 +276,7 @@ The entire origin of this project bases from wanting the following within a Word
 * admin: media: when in pop-up media library, css has been fucked, titles below thumb instead of to-right-of
 
 = 0.0.8 =
-
+* "Ekistics" - June 17, 2011
 * fixed issue where when uploading/inserting media the "Attach" button would appear instead of the "Insert" button (& it's positioning and link options).
 * settings: added "Client Tutorials" ID entry for hiding page from public, viewable to heyyou_client in site, but not available to edit to anyone but Super Admins.
 * admin: CSS changes to *heyyou* posts categories, hover revealer like posts.. & better linning up to not confuse actions with check-all button
@@ -298,6 +303,70 @@ The entire origin of this project bases from wanting the following within a Word
 * Regenerating Thumbnails now works with *heyyou*, no more JS conflicts
 * Attachments (photo galleries) facelift: images now tile instead of list, removed clutter & made simpler.
 * Fixed mobile issue was mobile detection wasn't registered until the second page visit
+
+
+= 0.0.7 =
+* "McGuffin" - April 20, 2011
+* setting - title for ttachments on/off
+* remove sleep() on mobile change... andor add Loading.gif
+* create tile_attachments() function to auto prodce
+* make "enable" onclick='this.form.submit'
+* add 'hide main/page blurb' option, for pages that use heyyou instead of the_content()
+!* !!!important: drag and drop broken (jquery issue?)
+
+
+
+= 0.0.6 = 
+* "Manor" - March 14, 2011
+* !important* blurb still not sticking on new entries... Functions first entry blurb didn't stick
+* !important* drop-n-drag with categories
+* !important* add link button not working in editheyyoupost
+* add 'feild type' and 'comments' to site-meta fields
+* Comments jumpto anchors should categorize & apear above 'before' line
+* add default user-settings.. ie: auto hide comments/author/revisions for hey_client / hys_subadmin
+* make Media Folders magangable in options
+* Notice: Trying to get property of non-object in /Users/davidsword/Sites/clients/Shauna/leisuretravel/wordpress/wp-includes/post-template.php on line 30 because I unset $post on new pages because of pre-loading heyyou
+* TinyMCE CSS: empty
+* make defaults for keywords & twitter default = 1
+* make "Feature Image" & "Seconday Image" a heyyou option
+* default HTML heyyou_post output format to "%title% %blurb%"
+* move pagination to another tab since Page-options are dedicated for things that don't require heyyou turned on.
+* Comments instead of deafilt "title" as main field... make an option for title/name
+* remove "remove flash uploader"
+* turn off revisions completely... useless for non-multiple-blogging
+* *include http:// overflowing
+* if is_int() on first meta, don't show as description sub
+* "cut.....string" on cat lists
+* add "add primary line AFTER heyyou"
+* Add secondary line between categories not working
+* heyyou media organizer (folders & drop-down media select) // popup media: css hack to remove unnecessary/confusing fields
+* switch meta (blurb/media) to dropdown.. saves key's
+* site meta fields for page configuration
+* Meta (Media) to not store full URL. only /y/m/file.ext ... CONTENT_URL.(media) to rebuild on output
+* shortcode [ heyyou ], [ heyyou cat="Category A" ]
+* secondary color
+* Paginate options, use: [] Pages [] more/less reveal
+* pagination with categories (?pg=x&cat=y)
+* cropping thumbnails: find if way to receive proper ratio while cropping
+* if list doesn't have pagination and does have "add line(2) between posts" remove last line as it's not "between" anything
+* Exisiting Backups: make folder for each site (because of networks)
+* ..more only if %blurb% not empty
+* put heyyou preset dropdown in 'page' tab. if empty, disable other tabs
+* css for showing thumbs in list of magage posts mucked up
+* css on edit post for attachments mucked up
+* css issues in navigation
+* add wpautop to meta "x (Blurb)" output/s
+* %if:defined% issues
+* direct domain to ds.me
+* the method of saving cat html override (serializing) doesn't work: can't serialize "%" or other html chars.. either find new place to save html over-ride, or drop category descript and title
+* !important Page Att > Parent not sticking
+* "Auto-Collaps Content" to " Auto-Collaps Blurb"
+* when 'post hv individ page' is on, 'line(2) between posts' doesn't work
+* add %view_individual_page% link token for "more..." link to full pages without using blurb
+* make auto-collapes not possible when individual pages is on
+* Comments add ..more button for "auto collaps content" (personnel in epony)
+* add line conversion support to heyyou
+
 
 = 0.0.3 =
 * KidPiv - build
