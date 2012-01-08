@@ -74,33 +74,32 @@ On Front-End:
 
 **Showcase: Live Sites powered by Wordpress + *heyyou***
 
-* [heyshauna.com](http://heyshauna.com/)
-* [davidsword.ca](http://davidsword.ca/)
-* [pushfestival.ca](http://pushfestival.ca/)
-* [lissavino.com](http://lissavino.com/)
-* [greenspacedesigns.com](http://greenspacedesigns.com/)
-* [kiddpivot.org](http://kiddpivot.org/)
-* [visionselective.org](http://visionselective.org/)
-* [cocoondesigns.ca](http://cocoondesigns.ca/)
-* [eponymous.ca](http://eponymous.ca/)
-* [kiddpivot.org](http://kiddpivot.org/)
-* [leisuretravel2000.ca](http://leisuretravel2000.ca/)
-* [thomascannell.com](http://thomascannell.com/)
-* [wenweidance.ca](http://wenweidance.ca/)
-* [lesliemcguffin.com](http://lesliemcguffin.com/)
-* [trenchgallery.com](http://trenchgallery.com/)
-* [newmusic.org](http://newmusic.org/)
-* [ekistics.ca](http://ekistics.ca/)
-* [playwrightstheatre.com](http://playwrightstheatre.com/)
-* [interioracademy.com](http://interioracademy.com/)
-* [shaunbalbar.ca](http://shaunbalbar.ca/)
-* [createddifferently.com](http://createddifferently.com/
-* [expbc.com](http://expbc.com/)
-* [hey-you.ca](http://hey-you.ca/)
-* *& much more.. (many websites in development / nearing launch)*
-
-
-
+* heyshauna sites
+	* [heyshauna.com](http://heyshauna.com/)
+	* [pushfestival.ca](http://pushfestival.ca/)
+	* [lissavino.com](http://lissavino.com/)
+	* [greenspacedesigns.com](http://greenspacedesigns.com/)
+	* [kiddpivot.org](http://kiddpivot.org/)
+	* [visionselective.org](http://visionselective.org/)
+	* [cocoondesigns.ca](http://cocoondesigns.ca/)
+	* [eponymous.ca](http://eponymous.ca/)
+	* [kiddpivot.org](http://kiddpivot.org/)
+	* [leisuretravel2000.ca](http://leisuretravel2000.ca/)
+	* [thomascannell.com](http://thomascannell.com/)
+	* [wenweidance.ca](http://wenweidance.ca/)
+	* [lesliemcguffin.com](http://lesliemcguffin.com/)
+	* [trenchgallery.com](http://trenchgallery.com/)
+	* [newmusic.org](http://newmusic.org/)
+	* [ekistics.ca](http://ekistics.ca/)
+	* [playwrightstheatre.com](http://playwrightstheatre.com/)
+	* *& much more on the way*
+* David Sword sites
+	* [davidsword.ca](http://davidsword.ca/)
+	* [interioracademy.com](http://interioracademy.com/)
+	* [shaunbalbar.ca](http://shaunbalbar.ca/)
+	* [createddifferently.com](http://createddifferently.com/
+	* [expbc.com](http://expbc.com/)
+	* [hey-you.ca](http://hey-you.ca/)
 
 
 ---
@@ -109,9 +108,12 @@ On Front-End:
 
 The following plugins are hard coded into the plugin - they were edited enough that they are no longer updatable. *heyyou* will print a `function already exsists` error if any of the following plugins are used. If you have money to donate, I highly recommend visiting any of these three sites and pledging there.
 
-* [Jonathan Christopher](http://mondaybynoon.com/)'s [Attachment Plugin](http://wordpress.org/extend/plugins/attachments/) is included directly into the plugins core, it's layout altered to simplified thumbnail grid
-* [Hart Associates (Rick Mead)](http://www.hartinc.com)'s [Media Categories](https://sites.google.com/site/medialibarycategories/) was integrated directly into the plugins core and manipulated to work with plugin more effectivly
+* [Jonathan Christopher](http://mondaybynoon.com/)'s [Attachment Plugin](http://wordpress.org/extend/plugins/attachments/)
+	* included directly into the plugins core- with an option to turn it off - the interface for attachments was majorly altered to a simplified thumbnail grid
+* [Hart Associates (Rick Mead)](http://www.hartinc.com)'s [Media Categories](https://sites.google.com/site/medialibarycategories/)
+	* integrated directly into the plugins core and manipulated to work with plugin more effectivly
 * [Chris Scott](http://vocecommuncations.com/)'s [Multiple Post Thumbnails](http://wordpress.org/extend/plugins/multiple-post-thumbnails/)
+	* built into heyyou aswell, for adding secondary images in a single click
 
 ---
 

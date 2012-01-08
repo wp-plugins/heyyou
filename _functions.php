@@ -2355,12 +2355,12 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 	// for custom "more/less" buttons
 	$title_moreless = "<a class='hys_fake_link'  id='' onclick=\"showhide('moreless{$hyspost->ID}'); ".
 					  "showhide('morelink{$hyspost->ID}');\" class='hys_readmore'>".$post_title."</a>";
-	$self_more = "<a class='hys_fake_link'  id='self_morelink{$hyspost->ID}' ".
+	$self_more = "<a class='hys_fake_link hys_readmore'  id='self_morelink{$hyspost->ID}' ".
 		"onclick=\"showhide('moreless{$hyspost->ID}'); showhideinlineblock('self_morelink{$hyspost->ID}'); ".
-		"showhideinlineblock('self_lesslink{$hyspost->ID}') \" class='hys_readmore'>{$hys['settings']['more']}</a>";
-	$self_less = "<a class='hys_fake_link'  id='self_lesslink{$hyspost->ID}' onclick=\"showhide('moreless{$hyspost->ID}'); ".
+		"showhideinlineblock('self_lesslink{$hyspost->ID}') \">{$hys['settings']['more']}</a>";
+	$self_less = "<a class='hys_fake_link hys_readmore hys_readless'  id='self_lesslink{$hyspost->ID}' onclick=\"showhide('moreless{$hyspost->ID}'); ".
 		"showhideinlineblock('self_morelink{$hyspost->ID}'); showhideinlineblock('self_lesslink{$hyspost->ID}')\" ".
-		"class='hys_readmore' style='display:none;'>{$hys['settings']['less']}</a>";		
+		"style='display:none;'>{$hys['settings']['less']}</a>";		
 	$self_moreless = $self_more.$self_less;
 	
 	// for "Auto-Collaps/Hide Blurb (%blurb%)"
@@ -2542,7 +2542,7 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 	
 	
 	//do it!
-	return  "\n<div class='hys_post_post hys-{$hyspost->ID} hys_post-{$parent}'>\n<a name='hys".($anchors_count-1)."'></a>\n".
+	return  "\n<div class='hys_post_post hys-{$hyspost->ID} hys_post-{$parent}'>\n<div id='hys".($anchors_count-1)."'></div>\n".
 					str_replace(
 						$replace_this,
 						$with_this,

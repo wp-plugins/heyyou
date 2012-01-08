@@ -61,7 +61,7 @@
 .underconclickmsg {
 	background: #fcf3bb; padding: 1px 3px;border-bottom:1px solid #555;
 	border-left:1px solid #555;
-	border-right:1px solid #555;z-index:9999999999;
+	border-right:1px solid #555;z-index: 999;
 	font-style: normal !important;
 	font-family: Courier, Courier-New, Mono !important;
 }
@@ -85,7 +85,7 @@
 	list-style: none;
 	list-style-image: none;
 	float: left;
-	overflow: visiable;
+	overflow: visible;
 	padding: 0px 5px 0 0;
 	text-align: left;
 }
