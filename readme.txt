@@ -1,7 +1,7 @@
 === heyyou ===
-Contributors: davidsword.ca, heyshauna.com
+Contributors: davidsword, heyshauna.com
 Donate link: http://wordpress.org/donate
-Tags: custom post types for pages, Wordpress developer framework, Wordpress simplifier
+Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
 Tested up to: 3.3.1
 Stable tag: 0.0.10.1
@@ -97,7 +97,7 @@ On Front-End:
 	* [davidsword.ca](http://davidsword.ca/)
 	* [interioracademy.com](http://interioracademy.com/)
 	* [shaunbalbar.ca](http://shaunbalbar.ca/)
-	* [createddifferently.com](http://createddifferently.com/
+	* [createddifferently.com](http://createddifferently.com/)
 	* [expbc.com](http://expbc.com/)
 	* [hey-you.ca](http://hey-you.ca/)
 
@@ -106,7 +106,7 @@ On Front-End:
 
 **CREDIT: External Plugins**
 
-The following plugins are hard coded into the plugin - they were edited enough that they are no longer updatable. *heyyou* will print a `function already exsists` error if any of the following plugins are used. If you have money to donate, I highly recommend visiting any of these three sites and pledging there.
+The following plugins are hard coded into the plugin - they were edited enough that they are no longer updatable. *heyyou* will print a **function already exsists** error if any of the following plugins are used. If you have money to donate, I highly recommend visiting any of these three sites and pledging there.
 
 * [Jonathan Christopher](http://mondaybynoon.com/)'s [Attachment Plugin](http://wordpress.org/extend/plugins/attachments/)
 	* included directly into the plugins core- with an option to turn it off - the interface for attachments was majorly altered to a simplified thumbnail grid
