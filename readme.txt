@@ -163,43 +163,43 @@ The entire origin of this project bases from wanting the following within a Word
 == Changelog ==
 
 = 0.0.11 =
- * "Susan" - January 6, 2012
- * added: more to readme.txt
- * added assets banner, 
- * added screenshot-3
- * fixed: "Add a breif description" spelling error in admin
- * added:  initial-scale=1.0 to < meta > view port
- * fixed: duplicate use of class att. in more/less links
- * changed: <a name= anchors changed to <div id= tags
- * fixed: added another check prior to add_theme_support(.. add_thumbs_to_pages
- * fixed: syntax errors in Attachments
- * changed: compressed prototype.js
- * changed: make lightbox display 'medium' sizes at most in lightbox when mobile detected.. note lots of themes use custom lightbox scripts & not heyyou's, so this may not be on all themes
- * fixed: re-enabled chronical link
- * fixed: hi/low res download link text now dynamic via options page
- * added: function hys_get_feature_image_src() for easy retreival of img
- * added: function hys_ids_of_nav_menu() for retrevial of wp menu object id's
- * added: post excerpts option
+* "Susan" - January 6, 2012
+* added: more to readme.txt
+* added assets banner, 
+* added screenshot-3
+* fixed: "Add a breif description" spelling error in admin
+* added:  initial-scale=1.0 to < meta > view port
+* fixed: duplicate use of class att. in more/less links
+* changed: <a name= anchors changed to <div id= tags
+* fixed: added another check prior to add_theme_support(.. add_thumbs_to_pages
+* fixed: syntax errors in Attachments
+* changed: compressed prototype.js
+* changed: make lightbox display 'medium' sizes at most in lightbox when mobile detected.. note lots of themes use custom lightbox scripts & not heyyou's, so this may not be on all themes
+* fixed: re-enabled chronical link
+* fixed: hi/low res download link text now dynamic via options page
+* added: function hys_get_feature_image_src() for easy retreival of img
+* added: function hys_ids_of_nav_menu() for retrevial of wp menu object id's
+* added: post excerpts option
 
 = 0.0.10.1 =
- * January 5, 2012
- * finally fixed: readme.txt documentation
+* January 5, 2012
+* finally fixed: readme.txt documentation
 
 
 = 0.0.10 =
- * "Spoken" - December 22, 2011
- * added: update nag auto removed, no more obstructing update notices 
- * fixed: bug: in 3.3 where hys_admin usertypes weren't being recognized as full admin's in hys settings
- * fixed: has_cap/userrole warning/notice for media cats
- * fixed: undefined index warning for mc_default_media_category
- * fixed: Undefined property: Mobile_Detect::$isIphone warning
- * fixed: if in network (super) admin, don't edit menu/navigation as everything is needed
- * fixed: in token legend for formatting, `%moreless:more/less%` was opposite
- * updated: !headers_sent() check for setting session to make LESS errors incase of a notice/warning
- * fixed: ancient warning about "undefined index" in "post-template.php on line 30"
- * added: when you select a media item via checkbox: the cell lights up, to easily see what's been selected
- * fixed: media quick view/delete buttons: titles & actions
- * fixed: issues with "Delete Selected" in media library now fixed: will delete any selected
+* "Spoken" - December 22, 2011
+* added: update nag auto removed, no more obstructing update notices 
+* fixed: bug: in 3.3 where hys_admin usertypes weren't being recognized as full admin's in hys settings
+* fixed: has_cap/userrole warning/notice for media cats
+* fixed: undefined index warning for mc_default_media_category
+* fixed: Undefined property: Mobile_Detect::$isIphone warning
+* fixed: if in network (super) admin, don't edit menu/navigation as everything is needed
+* fixed: in token legend for formatting, `%moreless:more/less%` was opposite
+* updated: !headers_sent() check for setting session to make LESS errors incase of a notice/warning
+* fixed: ancient warning about "undefined index" in "post-template.php on line 30"
+* added: when you select a media item via checkbox: the cell lights up, to easily see what's been selected
+* fixed: media quick view/delete buttons: titles & actions
+* fixed: issues with "Delete Selected" in media library now fixed: will delete any selected
  
 = 0.0.9.18 =
 * fix: issue with "Fatal error: Call to undefined function get_post_thumbnail_id() in .../media.php on line 1336" cause because `add_theme_support('post-thumbnails')` was called in `init` instead of `after_setup_theme` .. changed hys_load to start at `after_setup_theme` instead of `init` .. this may cause unknown issues.
