@@ -50,7 +50,7 @@ function hys_default_settings() {
             'undercontit' 		=> 'Under Construction',
             'underconmsg' 		=> "Message or notice to apear on site.",
             'meta_keywords' 	=> 'Add 5 keywords/phrases here seperated by comas for better SEO',
-            'meta_description' 	=> 'Add a breif description of your website here for search engine descriptions, and better SEO, limit to 150-200 characters.',
+            'meta_description' 	=> 'Add a brief description of your website here for search engine descriptions, and better SEO, limit to 150-200 characters.',
             'moreless' 			=> 200,
             'viewport' 			=> 480,
             'navview' 			=> '',
@@ -470,6 +470,10 @@ function hys_crontimes( $schedules ) {
 		        	<input type='checkbox' name='hys_options[page_excerpts]' value='1' <?php 
 		        		echo chckchckbox(@$hys['settings']['page_excerpts'])
 		        		?> /> Use "Excerpts" on pages
+		        	</label><br />
+		        	<input type='checkbox' name='hys_options[post_excerpts]' value='1' <?php 
+		        		echo chckchckbox(@$hys['settings']['post_excerpts'])
+		        		?> /> Use "Excerpts" on posts
 		        	</label><br />
 				     <br />
 				     <br />
@@ -1247,7 +1251,20 @@ function hys_crontimes( $schedules ) {
 	        </td>
 	        </tr>
 	        
-	        
+	        <tr valign="top">
+	        <th scope="row">Download Hi/ Low Res Text:</th>
+	        <td>
+	        	<input type="text" name="hys_options[text_hi_res]" value="<?php 
+	        			echo @$hys['settings']['text_hi_res']; 
+	        	?>" class='' /> 
+	        	<span class='hys_description'>"hi res"</span><br />
+	        	
+	        	<input type="text" name="hys_options[text_low_res]" value="<?php 
+	        			echo @$hys['settings']['text_low_res']; 
+	        	?>" class='' /> 
+	        	<span class='hys_description'>"low res"</span><br />
+	        </td>
+	        </tr>
 	        
 	        <tr valign="top">
 	        <th scope="row">"Back" text:</th>

@@ -312,7 +312,7 @@ function attachments_add()
 											<? 
 											$thhtumb = wp_get_attachment_image_src( $attachment['id'], $thumbnailsize); 
 											
-											if ($custom[1] != 120) { //120x70											
+											if ($thhtumb[1] != 120) { //120x70											
 												$thumbnailsize = 'thumbnail';
 												$thhtumb = wp_get_attachment_image_src($attachment['id'],$thumbnailsize);
 											}
@@ -571,14 +571,7 @@ function attachments_get_attachments( $post_id=null )
 
     if( !empty( $existing_attachments ) )
     {
-        try
-        {
-            $legacy_existing_attachments = unserialize( $existing_attachments[0] );
-        }
-        catch( Exception $e )
-        {
-            // unserialization failed
-        }
+            $legacy_existing_attachments = @unserialize( $existing_attachments[0] );
     }
 
     // Check for legacy attachments

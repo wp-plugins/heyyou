@@ -4,7 +4,7 @@ Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 0.0.10.1
+Stable tag: 0.0.11
 
 heyyou is a plugin framework that supplies resources for rapid development & adds unique dynamic custom post types directly in a Wordpress Page
 
@@ -159,6 +159,25 @@ The entire origin of this project bases from wanting the following within a Word
 3. Some of the options in the Settings page to configure what scripts, tools, theme_support, to include on the site; options to change the admin navigation, menu bar, and more.
 
 == Changelog ==
+
+= 0.0.11 =
+ * January 6, 2012
+ * added: more to readme.txt
+ * added assets banner, 
+ * added screenshot-3
+ * fixed: "Add a breif description" spelling error in admin
+ * added:  initial-scale=1.0 to < meta > view port
+ * fixed: duplicate use of class att. in more/less links
+ * changed: <a name= anchors changed to <div id= tags
+ * fixed: added another check prior to add_theme_support(.. add_thumbs_to_pages
+ * fixed: syntax errors in Attachments
+ * changed: compressed prototype.js
+ * changed: make lightbox display 'medium' sizes at most in lightbox when mobile detected.. note lots of themes use custom lightbox scripts & not heyyou's, so this may not be on all themes
+ * fixed: re-enabled chronical link
+ * fixed: hi/low res download link text now dynamic via options page
+ * added: function hys_get_feature_image_src() for easy retreival of img
+ * added: function hys_ids_of_nav_menu() for retrevial of wp menu object id's
+ * added: post excerpts option
 
 = 0.0.10.1 =
  * January 5, 2012

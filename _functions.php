@@ -234,14 +234,18 @@ function hys_return_meta($id = '') {
 		if (@$hys['settings']['page_excerpts'] == 1)	
 		add_post_type_support( 'page', 'excerpt' );
 		
+		if (@$hys['settings']['post_excerpts'] == 1)	
+		add_post_type_support( 'post', 'excerpt' );
+
+		
 		//Add ftr img to PAGES andor POSTS
 		$add_thumbs_to_pages = array();
 		if (@$hys['settings']['page_featured_image'] == 1) $add_thumbs_to_pages[] = 'page';
 		if (@$hys['settings']['post_featured_image'] == 1) $add_thumbs_to_pages[] = 'post';
 		
-		
-		if (isset($add_thumbs_to_pages[0]))
-			 add_theme_support('post-thumbnails', $add_thumbs_to_pages);
+
+		if (isset($add_thumbs_to_pages[0]) && !empty($add_thumbs_to_pages[0])) 
+			add_theme_support('post-thumbnails', $add_thumbs_to_pages);
 		
 		//Add secondary ftr img to PAGES andor POSTS
 		$add_thumbs_to_posts = array();
@@ -1540,25 +1544,17 @@ function hys_load_jquery() {
   Return:	 - none -
 -------------------------------------------------------------*/
 	function hys_clean_wp_head() {
-		remove_action( 'wp_head', 'feed_links_extra', 3 );
-		remove_action( 'wp_head', 'feed_links', 2 );
 		remove_action( 'wp_head', 'rsd_link'); 
 		remove_action( 'wp_head', 'wlwmanifest_link');
 		remove_action( 'wp_head', 'index_rel_link'); 
 		remove_action( 'wp_head', 'parent_post_rel_link');
 		remove_action( 'wp_head', 'start_post_rel_link');
 		remove_action( 'wp_head', 'adjacent_posts_rel_link'); 
-		remove_action( 'wp_head', 'canonical');
-		remove_action( 'wp_head', 'rel_canonical');
 		remove_action( 'wp_head', 'index_rel_link');
 		remove_action( 'wp_head', 'parent_post_rel_link', 10, 0);
 		remove_action( 'wp_head', 'start_post_rel_link', 10, 0);
 		remove_action( 'wp_head', 'adjacent_posts_rel_link', 10, 0);
 		remove_action( 'wp_head', 'wp_generator');
-		add_filter( 'parent_post_rel_link', 	'disable_stuff' );
-		add_filter( 'start_post_rel_link', 		'disable_stuff' );
-		add_filter( 'previous_post_rel_link', 	'disable_stuff' );
-		add_filter( 'next_post_rel_link', 		'disable_stuff' );
 		remove_action( 'wp_print_styles', 'wpcf7_enqueue_styles' );
 	}
 
@@ -1584,7 +1580,7 @@ function hys_load_jquery() {
 		if (@$hys['mobile'] == 1) {
 			$viewport = (@$hys['settings']['viewport']) ? @$hys['settings']['viewport'] : 482;
 			echo "
-	<meta name='viewport' content='width={$viewport}' />";
+	<meta name='viewport' content='width={$viewport},initial-scale=1.0' />";
 		}
 		
 		if (isset($hys['settings']['header_favicon']) && !empty($hys['settings']['header_favicon'])) {
@@ -1866,7 +1862,10 @@ function  hys_attach_attachments($heyyou_post_id) {
 			for ($i = 0; $i < $total_images; $i++) {
 				if (isset($post_images[$i]) && get_post($post_images[$i]['id'])) {
 					$req_size = (!empty($hys['hys_page_config']['img_size'])) ? $hys['hys_page_config']['img_size'] : 'large';
-					$full_download	= wp_get_attachment_image_src( $post_images[$i]['id'], 'full', 1 );
+
+					$size_full = ($hys['mobile'] == 1) ? 'medium' : 'full';
+
+					$full_download	= wp_get_attachment_image_src( $post_images[$i]['id'], $size_full, 1 );
 					$lrg_download 	= wp_get_attachment_image_src( $post_images[$i]['id'], $req_size, 1 );
 					$low_download 	= wp_get_attachment_image_src( $post_images[$i]['id'], 'medium', 1 );
 					$lbtitle = (!empty($post_images[$i]['caption'])) ? str_replace("'",'&rsquo;',$post_images[$i]['caption']) : '';
@@ -1897,12 +1896,14 @@ function  hys_attach_attachments($heyyou_post_id) {
 						\n";
 					}
 					if (@$hys['hys_page_config']['downloadattach'] == 1) {
+						$hi = (isset($hys['settings']['text_hi_res']) && !empty($hys['settings']['text_hi_res'])) ? $hys['settings']['text_hi_res'] : 'Hi Res';
+						$low = (isset($hys['settings']['text_low_res']) && !empty($hys['settings']['text_low_res'])) ? $hys['settings']['text_low_res'] : 'Low Res';
 						$attachments .= "
 					  <div class='attach_download'>
 						<span class='attach_download_title'>Download:</span>
-						<a href='".hys_return_url()."?download={$full_download[0]}' target='_Blank' class='attach_download_hi'>Hi Res</a>
+						<a href='".hys_return_url()."?download={$full_download[0]}' target='_Blank' class='attach_download_hi'>{$hi}</a>
 						<span class='attach_download_seperator'> | </span>
-						<a href='".hys_return_url()."?download={$low_download[0]}' target='_Blank' class='attach_download_low' rel='lightbox[smallgallery{$heyyou_post_id}]'>Low Res</a>
+						<a href='".hys_return_url()."?download={$low_download[0]}' target='_Blank' class='attach_download_low' rel='lightbox[smallgallery{$heyyou_post_id}]'>{$low}</a>
 					  </div>\n";
 					}
 					$attachments .= "
@@ -2200,9 +2201,11 @@ function  hys_attach_attachments($heyyou_post_id) {
 		    	$attachments[$i]['title']      	 = str_replace(array("'"),'&rsquo;',$attachments[$i]['title']);
 		    	$attachments[$i]['caption']      = str_replace(array("'"),'&rsquo;',$attachments[$i]['caption']);
 		    	
+		    	$size_full = ($hys['mobile'] == 1) ? 'medium' : 'large';
+		    	
 		    	//get image urls
 		    	$thumbnail 	= wp_get_attachment_image_src($attachments[$i]['id'], 'thumbnail');
-				$full 		= wp_get_attachment_image_src($attachments[$i]['id'], 'full');
+				$full 		= wp_get_attachment_image_src($attachments[$i]['id'], $size_full);
 				
 				//construct the title(s)
 				$title 		= (!empty($attachments[$i]['caption'])) ? $attachments[$i]['caption'] : '';									
@@ -2353,8 +2356,8 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 	$anchors .= "<a href='#hys".($anchors_count)."'>".($i).". {$hyspost->post_title}</a><br />";
 	
 	// for custom "more/less" buttons
-	$title_moreless = "<a class='hys_fake_link'  id='' onclick=\"showhide('moreless{$hyspost->ID}'); ".
-					  "showhide('morelink{$hyspost->ID}');\" class='hys_readmore'>".$post_title."</a>";
+	$title_moreless = "<a class='hys_fake_link hys_readmore'  id='' onclick=\"showhide('moreless{$hyspost->ID}'); ".
+					  "showhide('morelink{$hyspost->ID}');\" >".$post_title."</a>";
 	$self_more = "<a class='hys_fake_link hys_readmore'  id='self_morelink{$hyspost->ID}' ".
 		"onclick=\"showhide('moreless{$hyspost->ID}'); showhideinlineblock('self_morelink{$hyspost->ID}'); ".
 		"showhideinlineblock('self_lesslink{$hyspost->ID}') \">{$hys['settings']['more']}</a>";
@@ -3876,6 +3879,47 @@ function wt_get_category_count($input = '') {
 	}
 }
 
+
+
+/**
+ * get the object ID of a menu item ID
+ * used when wanting to force-hightlight the "products" page when viewing a single project
+ *
+ * @since 0.1
+ * @author roi_davidsword
+ */	
+	function hys_ids_of_nav_menu($nav_slug, $reverse_array = false) {                              
+	    $terms   = get_terms('nav_menu');
+	    $term_id = '';
+	    foreach ($terms as $aterm) {
+	       if ($aterm->slug == $nav_slug || $aterm->name == $nav_slug)
+	            $term_id = $aterm->term_id;    
+	    }
+	    $items        = get_objects_in_term( $term_id , 'nav_menu' );
+	    $menuids      = array();
+	    foreach ($items as $uselss => $menu_id) {
+	       $realitem                       = get_post($menu_id);
+	       $object_id                      = get_post_meta( $realitem->ID, '_menu_item_object_id', true );
+	       $menuids[$realitem->menu_order] = array('menu_id' => $menu_id, 'object_id' => $object_id );
+	    }
+	    ksort($menuids);
+	    $return = array();
+	    foreach ($menuids as $order => $ids) {
+			if ($reverse_array) {
+				$return[$ids['object_id']] = $ids['menu_id'];
+	    	} else {
+				$return[$ids['menu_id']] = $ids['object_id'];
+	    	}
+	    }
+	    return $return;
+	}
+
+
+
+function hys_get_feature_image_src($id = '',$size = 'full') {
+	$id = (empty($id)) ? get_the_ID() : $id;
+	return wp_get_attachment_image_src( $id , $size );
+}
 
 /*--------------------------------------------------------------------------------------------------------------------
 ====================================================================================================================*/
