@@ -24,20 +24,18 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 
 **Elaborating on some primary features, *heyyou*:**
 
-In /wp-admin/:
-
-* Creation of Dynamic Custom Post Types
+* Creation of Dynamic Custom Post Types:
 	* option on every page to add page-specific custom post types with wide range of preset and meta configuration options
 	* built-in per-page-pagination for longer lists of posts within a page
 	* Drag and drop ordering of posts
 	* Categorizing of posts within a page
 	* outputting: a simple textarea with %macros% placeholders and HTML for formatting the posts output (useful for: FAQ, Staff Listing, Press Releases, ect.)
 	* outputting: can bypass default %macros% output and use PHP in your theme instead
-* Custom Media Library 
+* Custom Media Library :
 	* Media items listed as a simplied grid thumbnails,
 	* Media Categories
 	* Cleaned CSS for showing file information
-* Page Options (Options in setting page to add the following into a pages 'heyyou page settings' metabox)
+* Page Options (Options in setting page to add the following into a pages 'heyyou page settings' metabox):
 	* Add secondary blurb to pages (to use in template)
 	* Add Twitter / Facebook social buttons
 	* Dynamic Page Meta Field(s) (for things like having a featured image's "Photo Credit" meta field - easier to use than Wordpress's custom fields)
@@ -56,23 +54,20 @@ In /wp-admin/:
 	* Include <scripts> via check-box for technologies (like Lightbox, Mootools, Attachments)
 	* Add Featured &or Secondary images for your theme's pages &or posts (no more remebering function)
 	* Add Excerpts on page (no more remebering function)
-* Misc:: 
+* Miscellaneous:
 	* Adds Greeting Widget
 	* TinyMCE gets simplified / limited buttons to a single row, new 'line' button to split content
 	* Creates "Sub-Admin" and "Client" user types
 	* *& much much more.. (documentation still being written)*
-
-On Front-End:
-
-* Cleans up HTML header info outputted by wp_head()
-* Outputs the dynamic custom post types under their corosponding pages
-* Adds .mobile class to <body> when detected
-* Javascript instant-reveal "..read more" replace <!--more--> *see documentation*
+	* Cleans up HTML header info outputted by wp_head()
+	* Outputs the dynamic custom post types under their corosponding pages
+	* Adds .mobile class to <body> when detected
+	* Javascript instant-reveal "..read more" replace <!--more--> *see documentation*
 * *& much more.. (documentation still being written)*
 
 ---
 
-**Showcase: Live Sites powered by Wordpress + *heyyou***
+**SHOWCASE: Live Sites powered by *heyyou***
 
 * heyshauna sites
 	* [heyshauna.com](http://heyshauna.com/)
@@ -102,7 +97,6 @@ On Front-End:
 	* [hey-you.ca](http://hey-you.ca/)
 
 
----
 
 **CREDIT: External Plugins**
 
@@ -115,7 +109,6 @@ The following plugins are hard coded into the plugin - they were edited enough t
 * [Chris Scott](http://vocecommuncations.com/)'s [Multiple Post Thumbnails](http://wordpress.org/extend/plugins/multiple-post-thumbnails/)
 	* built into heyyou aswell, for adding secondary images in a single click
 
----
 
 **NOTICE: Important !!!**
 
@@ -123,13 +116,8 @@ This plugin is a *very large* framework design specifically for development of w
 
 *ALL Documentation and plugin are at ALPHA LEVEL, the plugin is currently being developed / written.*
 
----
-
-**SUPPORT: More Information**
-
 [hey-you.ca](http://hey-you.ca/)
 
----
 
 == Installation ==
 
@@ -168,7 +156,7 @@ The entire origin of this project bases from wanting the following within a Word
 
 1. Dynamic Custom Post Types added directly to the page the post types will show in. Simplifying CTP's for your clients.
 2. Custom post types appear just as they do in the admin - directly below the corresponding pages main content
-
+3. Some of the options in the Settings page to configure what scripts, tools, theme_support, to include on the site; options to change the admin navigation, menu bar, and more.
 
 == Changelog ==
 
