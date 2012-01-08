@@ -3,57 +3,76 @@ Contributors: davidsword.ca, heyshauna.com
 Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, Wordpress simplifier
 Requires at least: 3.0
-Tested up to: 3.2
+Tested up to: 3.3.1
 Stable tag: 0.0.10.1
 
-heyyou is a large plugin framework that - in addition to supplying  resources for rapid development - adds unique dynamic custom post types directly within a Wordpress Page
+heyyou is a plugin framework that supplies resources for rapid development & adds unique dynamic custom post types directly in a Wordpress Page
 
 
 == Description ==
 
- * Visit: [hey-you.ca](http://hey-you.ca/)
- * Tweet: [@david_sword](http://twitter.com/david_sword/)
+* Visit: [hey-you.ca](http://hey-you.ca/)
+* Tweet: [@david_sword](http://twitter.com/david_sword/)
 
-The plugin (currently in alpha version) is intended as a developers framework - it's goal to turn Wordpress into more of a CMS by:
+This plugin (currently in alpha stage) is intended as a developers framework - it's goal to turn Wordpress into more of a CMS by adding a wide range of functionalities, settings, and functions to eaisly:
 
-1. Adding (dynamic) Custom Post Types directly within a Wordpress Page - below the pages main content
-2. Developer Framework - housing a wide range of preset, extensive admin settings
-3. Simplifying Wordpress
+1. Add (dynamic) Custom Post Types directly within a Wordpress Page - below the pages main content
+2. Serve as a Development Framework - housing an assortment of presets with an extensive admin settings page
+3. Simplifying Wordpress, but adding options to cut down unneeded admin items
 
-**ABOUT: Elaborating on features, *heyyou*:**
+---
 
-In Admin:
+**Elaborating on some primary features, *heyyou*:**
 
-* Dynamic Custom Post Types
-* --- option on every page to add page-specific custom post types with wide range of configs, and format output using basic %macros% and HTML (useful for: FAQ, Staff Listing, Press Releases, ect.)
-* --- built-in per-page pagination for longer lists of posts
-* --- Drag and drop ordering
-* --- Super customizable, use built in output (easy for beginners - or PHP functions for manual/custom outputs)
-* custom media library (grid thumbnails)
-* media library categories
-* Dynamic Page Meta Fields (for things like having a featured image's "Photo Credit" meta field) (Easier to use than Wordpress's custom fields)
-* TinyMCE: simplifier, reduces TinyMCE buttons to single row
-* Creates "Sub-Admin" and "Client" user types
-* Options to: 
-* --- Add secondary blurb
-* --- Add Twitter / Facebook plugin
-* --- Configure which metaboxes user types have access to and receive by default (hiding client unnecessary metaboxes like Wordpress News and Plugin Widget Feed)
-* --- Adding a (visually attractive) under construction "Notice" banner to site
-* --- Edit Admin Menu / Navigations (to remove menu items like "Tools" or "Links" if irrelevant for your theme)
-* --- Edit main <meta> keyword/description
-* --- Setup database-to-email backup
-* --- (TinyMCE) Add dynamic styles to TinyMCE via easy to use GUI (i.e.: add "Blue Italic" to your themes styled drop down)
-* --- Include <scripts> via check-box for technologies (like Lightbox, Mootools, Attachments)
-* *& much much more.. (documentation still being written)*
+In /wp-admin/:
+
+* Creation of Dynamic Custom Post Types
+	* option on every page to add page-specific custom post types with wide range of preset and meta configuration options
+	* built-in per-page-pagination for longer lists of posts within a page
+	* Drag and drop ordering of posts
+	* Categorizing of posts within a page
+	* outputting: a simple textarea with %macros% placeholders and HTML for formatting the posts output (useful for: FAQ, Staff Listing, Press Releases, ect.)
+	* outputting: can bypass default %macros% output and use PHP in your theme instead
+* Custom Media Library 
+	* Media items listed as a simplied grid thumbnails,
+	* Media Categories
+	* Cleaned CSS for showing file information
+* Page Options (Options in setting page to add the following into a pages 'heyyou page settings' metabox)
+	* Add secondary blurb to pages (to use in template)
+	* Add Twitter / Facebook social buttons
+	* Dynamic Page Meta Field(s) (for things like having a featured image's "Photo Credit" meta field - easier to use than Wordpress's custom fields)
+	* Hide Wordpress Page title
+	* Hide Wordpress Page Content (.entry-content)
+	* Set a hexidecimal color (for themes that use a different color on every page)
+	* Add Attachments to page
+	* Disable auto placement of attachments
+* Settings Page with options to: 
+	* Configure which metaboxes user types have access to and receive by default (hiding client unnecessary metaboxes like Wordpress News and Plugin Widget Feed)
+	* Adding a (visually attractive) under construction "Notice" banner to site
+	* Edit Admin Menu / Navigations (to remove menu items like "Tools" or "Links" if irrelevant for your theme)
+	* Edit main <meta> keyword/description
+	* Setup database-to-email backup
+	* (TinyMCE) Add dynamic styles to TinyMCE via easy to use GUI (i.e.: add "Blue Italic" to your themes styled drop down)
+	* Include <scripts> via check-box for technologies (like Lightbox, Mootools, Attachments)
+	* Add Featured &or Secondary images for your theme's pages &or posts (no more remebering function)
+	* Add Excerpts on page (no more remebering function)
+* Misc:: 
+	* Adds Greeting Widget
+	* TinyMCE gets simplified / limited buttons to a single row, new 'line' button to split content
+	* Creates "Sub-Admin" and "Client" user types
+	* *& much much more.. (documentation still being written)*
 
 On Front-End:
 
 * Cleans up HTML header info outputted by wp_head()
+* Outputs the dynamic custom post types under their corosponding pages
 * Adds .mobile class to <body> when detected
 * Javascript instant-reveal "..read more" replace <!--more--> *see documentation*
 * *& much more.. (documentation still being written)*
 
-**SHOWCASE: Live Sites powered by *heyyou***
+---
+
+**Showcase: Live Sites powered by *heyyou***
 
 * [hey-you.ca](http://hey-you.ca/)
 * [heyshauna.com](http://heyshauna.com/)
@@ -76,11 +95,17 @@ On Front-End:
 * *& much more.. (many websites in development / nearing launch)*
 
 
+---
+
 **CREDIT: External Plugins**
 
-* [Jonathan Christopher](http://mondaybynoon.com/)'s [Attachment Plugin](http://wordpress.org/extend/plugins/attachments/) is included directly in the plugin, it's layout altered to simplified thumbnail grid
-* *(Name Missing)* *(Link Missing)* Media Categories was integrated
-* *& 1 more.. (documentation still being written)*
+The following plugins are hard coded into the plugin - they were edited enough that they are no longer updatable. *heyyou* will print a `function already exsists` error if any of the following plugins are used. If you have money to donate, I highly recommend visiting any of these three sites and pledging there.
+
+* [Jonathan Christopher](http://mondaybynoon.com/)'s [Attachment Plugin](http://wordpress.org/extend/plugins/attachments/) is included directly into the plugins core, it's layout altered to simplified thumbnail grid
+* [Hart Associates (Rick Mead)](http://www.hartinc.com)'s [Media Categories](https://sites.google.com/site/medialibarycategories/) was integrated directly into the plugins core and manipulated to work with plugin more effectivly
+* [Chris Scott](http://vocecommuncations.com/)'s [Multiple Post Thumbnails](http://wordpress.org/extend/plugins/multiple-post-thumbnails/)
+
+---
 
 **NOTICE: Important !!!**
 
@@ -88,10 +113,13 @@ This plugin is a *very large* framework design specifically for development of w
 
 *ALL Documentation and plugin are at ALPHA LEVEL, the plugin is currently being developed / written.*
 
+---
+
 **SUPPORT: More Information**
 
 [hey-you.ca](http://hey-you.ca/)
 
+---
 
 == Installation ==
 
