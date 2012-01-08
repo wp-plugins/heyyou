@@ -72,27 +72,35 @@ On Front-End:
 
 ---
 
-**Showcase: Live Sites powered by *heyyou***
+**Showcase: Live Sites powered by Wordpress + *heyyou***
 
-* [hey-you.ca](http://hey-you.ca/)
 * [heyshauna.com](http://heyshauna.com/)
 * [davidsword.ca](http://davidsword.ca/)
-* [expbc.com](http://expbc.com/)
-* [leisuretravel2000.ca](http://leisuretravel2000.ca/)
-* [wenweidance.ca](http://wenweidance.ca/)
-* [thomascannell.com](http://thomascannell.com/)
-* [kiddpivot.org](http://kiddpivot.org/)
-* [shaunbalbar.ca](http://shaunbalbar.ca/)
-* [eponymous.ca](http://eponymous.ca/)
-* [lesliemcguffin.com](http://lesliemcguffin.com/)
-* [greenspacedesigns.com](http://greenspacedesigns.com/)
 * [pushfestival.ca](http://pushfestival.ca/)
+* [lissavino.com](http://lissavino.com/)
+* [greenspacedesigns.com](http://greenspacedesigns.com/)
+* [kiddpivot.org](http://kiddpivot.org/)
+* [visionselective.org](http://visionselective.org/)
+* [cocoondesigns.ca](http://cocoondesigns.ca/)
+* [eponymous.ca](http://eponymous.ca/)
+* [kiddpivot.org](http://kiddpivot.org/)
+* [leisuretravel2000.ca](http://leisuretravel2000.ca/)
+* [thomascannell.com](http://thomascannell.com/)
+* [wenweidance.ca](http://wenweidance.ca/)
+* [lesliemcguffin.com](http://lesliemcguffin.com/)
 * [trenchgallery.com](http://trenchgallery.com/)
 * [newmusic.org](http://newmusic.org/)
 * [ekistics.ca](http://ekistics.ca/)
-* [cocoondesigns.ca](http://cocoondesigns.ca/)
 * [playwrightstheatre.com](http://playwrightstheatre.com/)
+* [interioracademy.com](http://interioracademy.com/)
+* [shaunbalbar.ca](http://shaunbalbar.ca/)
+* [createddifferently.com](http://createddifferently.com/
+* [expbc.com](http://expbc.com/)
+* [hey-you.ca](http://hey-you.ca/)
 * *& much more.. (many websites in development / nearing launch)*
+
+
+
 
 
 ---
