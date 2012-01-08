@@ -325,7 +325,7 @@ The entire origin of this project bases from wanting the following within a Word
 * Comments jumpto anchors should categorize & apear above 'before' line
 * add default user-settings.. ie: auto hide comments/author/revisions for hey_client / hys_subadmin
 * make Media Folders magangable in options
-* Notice: Trying to get property of non-object in /Users/davidsword/Sites/clients/Shauna/leisuretravel/wordpress/wp-includes/post-template.php on line 30 because I unset $post on new pages because of pre-loading heyyou
+* Notice: Trying to get property of non-object in /Users/../post-template.php on line 30 because I unset $post on new pages because of pre-loading heyyou
 * TinyMCE CSS: empty
 * make defaults for keywords & twitter default = 1
 * make "Feature Image" & "Seconday Image" a heyyou option
