@@ -3511,7 +3511,7 @@ function hys_get_timezone() {
 
 
 	function hys_media() {
-		global $hys,$wpdb;
+		global $post, $hys,$wpdb;
 		
 		$dleteme = false;
 		
@@ -3547,7 +3547,7 @@ function hys_get_timezone() {
 		}
 		
 		
-		
+		$media_ids_shown = array();
 		
 		
 		?>
@@ -3577,7 +3577,7 @@ function hys_get_timezone() {
 	
 	$number_of_media_items = count($media);
 	$media_thumb_cap = 9999999999999999999999999;
-	$show_thumbnails = ($number_of_media_items < $media_thumb_cap) ? true : false;
+	$show_thumbnails = (@$hys['settings']['media_layout'] != 'list') ? true : false;
 
 
 	// if a media item had an action, recount all media categories
@@ -3638,142 +3638,124 @@ function hys_get_timezone() {
 	</tr>
 	</tfoot>
 	<tbody id="the-list">
-
-	<? 
 	
 	
-	foreach ($mediacats as $k => $acat) {
-		$thumbnailsize = 'hys_attachment_size';
-		if ($acat->term_id != '1') { ?>
+	<?
+	/**
+	============================
+	============================
+	============================
+	============================
+	============================
+	*/
+	
+	
+	// Cycle through categories,
+	foreach ($redomediacats as $acat) {
+		
+		// if not default, print ct and it's inside photos
+		if ($acat->term_id != '1') : ?>
 			<tr>
-				<td class='hys_media_cat_title' style=''><?=$acat->name?> <span style='color:#999;'>(<?= $acat->count ?> files)</span></td>
+				<td class='hys_media_cat_title'><?=$acat->name?> <span style='color:#999;'>(<?= $acat->count ?> files)</span></td>
 			</tr>
 			<tr id='post-<?= $mediaid ?>' class='author-self status-inherit' valign="top"><!-- alternate-->
 				<td>
-					<ul class='hys_media_library_list<?= (!$show_thumbnails) ? " no_thumbnails hys_media_library_text_list" : '' ?>'>
-		<?
+					<ul class='hys_media_library_list <?= ($show_thumbnails) ? 'media_list_thumbnails' : "no_thumbnails media_list_text" ?>'>
+		
+					<?
+					// GET POSTS FOR CAT
+					$args = array(
+						'tax_query' => array(
+							array(
+								'taxonomy' => 'media_category',
+								'field' => 'slug',
+								'terms' => $acat->slug
+							)
+						),
+						'post_type' => 'attachment',
+						'post_status'=>'inherit',
+						'numberposts' => '-1',
+						'order' => 'ASC',
+						'orderby' => 'title'
+					);
+					
+					$ticker = 0;
+					
+					// The Query
+					query_posts( $args );
+					
+					// The Loop
+					while ( have_posts() ) : the_post();
+						hys_media_output_row($post);
+						$media_ids_shown[] = $post->ID;
+						$ticker++;
+					endwhile;
 
-		foreach ($media as $mediaid => $amedia) {
-			$get_term = wp_get_object_terms($amedia->ID, 'media_category', array( 'taxonomy' => 'media_category' ));
-			$showme = false;
-			foreach ($get_term as $n => $media_term)
-				if (is_object($media_term))
-					$showme = (!$showme && $acat->term_id == $media_term->term_id) ? true : false;
-			
-			if ($showme) {
-			?>
-					<li id='media_item_<?= $amedia->ID?>'>
-						<?							
-						$custom = wp_get_attachment_image_src($amedia->ID,$thumbnailsize);
-						if ($custom[1] != 120) { //120x70											
-							$thumbnailsize = 'thumbnail';
-							$custom = wp_get_attachment_image_src($amedia->ID,$thumbnailsize);
-						}
-						$customfull = wp_get_attachment_image_src($amedia->ID,'full');
-						?>
-						<a href="media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit" title="Edit <?= $amedia->post_name ?>">
-							<? 
-							if ($show_thumbnails) {
-								$goahead = array('image/jpeg','image/jpg','image/bmp','image/gif','image/png','image/tiff');
-								if (in_array($amedia->post_mime_type,$goahead))  { ?>
-									<img src="<?=$custom[0]?>" class="attachment_thumbnail_main" alt="<?= $amedia->post_name ?>" title="<?= $amedia->post_name ?>" />
-								<? } else { ?>
-										
-										<?
-										if (in_array($amedia->post_mime_type,array('application/pdf','application/msword','application/document')))  {
-											?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/document.png ' alt='' class='' style='' /></a> <?
-										}
-										elseif (in_array($amedia->post_mime_type,array('audio/mpeg','audio/mpeg','audio/mp4','audio/x-wav')))  {
-											?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/audio.png ' alt='' class='' style='' /></a> <?
-										}
-										elseif (in_array($amedia->post_mime_type,array('video/mpeg','video/mp4','video/quicktime','video/x-msvideo')))  {
-											?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/video.png ' alt='' class='' style='' /></a> <?
-										} else {
-											echo $amedia->post_mime_type;
-										}
-										?>
-										
-									<div class='hys_description' style='padding-bottom:4px;'><?	echo str_replace(array('application/','video/','audio/'),'',$amedia->post_mime_type); ?></div>
-								
-								<? } 
-							} else {
-								// no thumbnail
-							} ?>
-						</a>
-						<a class='submitdelete' onclick='return showNotice.warn();' href='<?= wp_nonce_url('post.php?action=delete&amp;post='.$amedia->ID, 'delete-attachment_' . $amedia->ID) ?>'>
-							<img src='<?=$hys['dir']?>/res/imgs/delete.png' alt='' class='hys_admin_ico delete_attach' style='' /></a>
-						<a href='media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit' title='View <?= $attachment['name'] ?>'><img src='<?=$hys['dir']?>/res/imgs/right.png' alt='' class='hys_admin_ico view_attach' style='' /></a>
-						<div class='hys_media_title'><!--<a href="media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit" title="Edit &#8220;home_thumb_3&#8221;">-->
-						<label><input type='checkbox' name='hys_media_select[]' value='<?= $amedia->ID?>' id='this_media_item_<?= $amedia->ID ?>' onchange='hysmedia_highlight(<?= $amedia->ID ?>)' />
-						<?=hys_chopstring($amedia->post_title,11)?><!--</a>--></label></div>
-					</li>
-				<?
-				$media[$mediaid] = '';
-				unset($media[$mediaid]);
-			} //if $showme				
-		}
+
+		endif; //$acat->term_id != '1'
 	}
-	}
-	$extra = count($media);
 	?>
 					</ul>
 				</td>
 			</tr>
 			<tr>
-				<td class='hys_media_cat_title' >Uncategorized.. <span style='color:#999;'>(<?= $extra ?> files)</span></td>
+				<td class='hys_media_cat_title' >Uncategorized.. <!--<span style='color:#999;'>(<?= $extra ?> files)</span>--></td>
 			</tr>
 			<tr id='post-<?= $mediaid ?>' class='author-self status-inherit' valign="top"><!-- alternate-->
 				
 				<td>
-					<ul class='hys_media_library_list'>
-	<?
-		foreach ($media as $mediaid => $amedia) {
-		?>
-					<li id='media_item_<?= $amedia->ID?>'>
-								<?							
-									$custom = wp_get_attachment_image_src($amedia->ID,$thumbnailsize);										
-									if ($custom[1] != 120) { //120x70											
-										$thumbnailsize = 'thumbnail';
-										$custom = wp_get_attachment_image_src($amedia->ID,$thumbnailsize);
-									}
-									$customfull = wp_get_attachment_image_src($amedia->ID,'full');
-								?>
-								<a href="media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit" title="Edit &#8220;<?= $amedia->post_name ?>&#8221;">
-									<? 
-									$goahead = array('image/jpeg','image/jpg','image/bmp','image/gif','image/png','image/tiff');
-									if (in_array($amedia->post_mime_type,$goahead))  { ?>
-										<img src="<?=$custom[0]?>" class="attachment_thumbnail_main" alt="<?= $amedia->post_name ?>" title="<?= $amedia->post_name ?>" />
-									<? } else { ?>
-											
-											<?
-											if (in_array($amedia->post_mime_type,array('application/pdf','application/msword','application/document')))  {
-												?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/document.png ' alt='' class='' style='' /></a> <?
-											}
-											elseif (in_array($amedia->post_mime_type,array('audio/mpeg','audio/mpeg','audio/mp4','audio/x-wav')))  {
-												?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/audio.png ' alt='' class='' style='' /></a> <?
-											}
-											elseif (in_array($amedia->post_mime_type,array('video/mpeg','video/mp4','video/quicktime','video/x-msvideo')))  {
-												?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/video.png ' alt='' class='' style='' /></a> <?
-											} else {
-												echo $amedia->post_mime_type;
-											}
-											?>
-											
-										<div class='hys_description' style='padding-bottom:4px;'><?	echo str_replace(array('application/','video/','audio/'),'',$amedia->post_mime_type); ?></div>
-										
-									<? } ?>
-								</a>
-								<a class='submitdelete' onclick='return showNotice.warn();' title='Delete <?= $amedia->post_title ?>' href='<?= wp_nonce_url('post.php?action=delete&amp;post='.$amedia->ID, 'delete-attachment_' . $amedia->ID ) ?>'>
-									<img src='<?=$hys['dir']?>/res/imgs/delete.png' alt='' class='hys_admin_ico delete_attach' style='' /></a>
-								<a href='media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit' title='View <?= $amedia->post_title ?>'><img src='<?=$hys['dir']?>/res/imgs/right.png' alt='' class='hys_admin_ico view_attach' style='' /></a>
-								<div class='hys_media_title'><!--<a href="media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit" title="Edit &#8220;home_thumb_3&#8221;">-->
-								<label><input type='checkbox' name='hys_media_select[]' value='<?=$amedia->ID?>' id='this_media_item_<?= $amedia->ID ?>' />
-								<?=hys_chopstring($amedia->post_title,11)?><!--</a>--></label></div>
-							</li>
-		<?
-		}
-	?>
+					<ul class='hys_media_library_list <?= ($show_thumbnails) ? 'media_list_thumbnails' : "no_thumbnails media_list_text" ?>'>
+					<?
+					// GET POSTS FOR CAT
+					$args = array(
+						'tax_query' => array(
+							array(
+								'taxonomy' => 'media_category',
+								'field' => 'id',
+								'terms' => 1
+							)
+						),
+						'post_type' => 'attachment',
+						'post_status'=>'inherit',
+						'numberposts' => '-1',
+						'order' => 'ASC',
+						'orderby' => 'title'
+					);
+					
+					// The Query
+					query_posts( $args );
+					
+					// The Loop
+					while ( have_posts() ) : the_post();
 
+						hys_media_output_row($post);
+						$media_ids_shown[] = $post->ID;
+						
+					endwhile;
+					
+					
+					// UNCATEGORIZED
+					$args = array(
+						'post_type' => 'attachment',
+						'post_status'=>'inherit',
+						'numberposts' => '-1',
+						'order' => 'ASC',
+						'orderby' => 'title'
+					);
+					
+					// The Query
+					query_posts( $args );
+					
+					// The Loop
+					while ( have_posts() ) : the_post();
+						
+						if (!in_array($post->ID,$media_ids_shown))
+						hys_media_output_row($post);
+						
+					endwhile;
+					
+					
+?>
 					</ul>
 				</td>
 			</tr>
@@ -3788,7 +3770,10 @@ function hys_get_timezone() {
 
 </form>
 </div>
-		<?
+
+		<? 
+
+		echo "<small style='color:white'>".get_num_queries()." queries = ".(get_num_queries()/count($media))." per media item</small>";
 	}
 	
 	
@@ -3797,7 +3782,63 @@ function hys_get_timezone() {
 	
 	
 	
-	
+	function hys_media_output_row($amedia) {
+		global $hys;
+		
+		$thumbnailsize = 'hys_attachment_size';
+		$show_thumbnails = (@$hys['settings']['media_layout'] != 'list') ? true : false;
+		
+		?>
+		<li id='media_item_<?= $amedia->ID?>'>
+			<?							
+			$custom = wp_get_attachment_image_src($amedia->ID,$thumbnailsize);
+			if ($custom[1] != 120) { //120x70											
+				$thumbnailsize = 'thumbnail';
+				$custom = wp_get_attachment_image_src($amedia->ID,$thumbnailsize);
+			}
+			?>
+			<a href="media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit" title="Edit <?= $amedia->post_name ?>">
+				<? 
+				if ($show_thumbnails) {
+					$goahead = array('image/jpeg','image/jpg','image/bmp','image/gif','image/png','image/tiff');
+					if (in_array($amedia->post_mime_type,$goahead))  { ?>
+						<img src="<?=$custom[0]?>" class="attachment_thumbnail_main" alt="<?= $amedia->post_name ?>" title="<?= $amedia->post_name ?>" />
+					<? } else { ?>
+							
+							<?
+							if (in_array($amedia->post_mime_type,array('application/pdf','application/msword','application/document')))  {
+								?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/document.png ' alt='' class='' style='' /></a> <?
+							}
+							elseif (in_array($amedia->post_mime_type,array('audio/mpeg','audio/mpeg','audio/mp4','audio/x-wav')))  {
+								?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/audio.png ' alt='' class='' style='' /></a> <?
+							}
+							elseif (in_array($amedia->post_mime_type,array('video/mpeg','video/mp4','video/quicktime','video/x-msvideo')))  {
+								?> <img src='<? bloginfo('wpurl') ?>/wp-includes/images/crystal/video.png ' alt='' class='' style='' /></a> <?
+							} else {
+								echo $amedia->post_mime_type;
+							}
+							?>
+							
+						<div class='hys_description' style='padding-bottom:4px;'><?	echo str_replace(array('application/','video/','audio/'),'',$amedia->post_mime_type); ?></div>
+					
+					<? } 
+				} ?>
+			</a>
+			<a class='submitdelete' onclick='return showNotice.warn();' href='<?= wp_nonce_url('post.php?action=delete&amp;post='.$amedia->ID, 'delete-attachment_' . $amedia->ID) ?>'>
+				<img src='<?=$hys['dir']?>/res/imgs/delete.png' alt='' class='hys_admin_ico delete_attach' style='' /></a>
+			<a href='media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit' title='View <?= $amedia->post_title ?>'><img src='<?=$hys['dir']?>/res/imgs/right.png' alt='' class='hys_admin_ico view_attach' style='' /></a>
+			<? if (!$show_thumbnails) : ?>
+			<a href='media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit' title='Edit <?= $amedia->post_title ?>'><img src='<?=$hys['dir']?>/res/imgs/pencil.png' alt='' class='hys_admin_ico view_attach' style='' /></a>
+				<div id='mag_holder_<?= $amedia->ID ?>' class='mag_holder'><img src='<?=$hys['dir']?>/res/imgs/magnifier.png' class='hys_admin_ico preview_attach magnifier' />
+				<div class='magnifi_me' id='magnifi_me_<?= $amedia->ID ?>' rel='<?=$custom[0]?>'><img src='<?=$hys['dir']?>/res/imgs/magnifier.png' width='120' height='70' alt='' /></div>
+				</div>
+			<? endif ?>
+			<div class='hys_media_title'><!--<a href="media.php?attachment_id=<?= $amedia->ID ?>&amp;action=edit" title="Edit &#8220;home_thumb_3&#8221;">-->
+			<label><input type='checkbox' name='hys_media_select[]' value='<?= $amedia->ID?>' id='this_media_item_<?= $amedia->ID ?>' onchange='hysmedia_highlight(<?= $amedia->ID ?>)' />
+			<?= ($show_thumbnails) ? hys_chopstring($amedia->post_title,11) : $amedia->post_title; ?><!--</a>--></label></div>
+		</li>
+		<?
+	}
 	
 	
 	

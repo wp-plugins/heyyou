@@ -276,7 +276,7 @@ if (!class_exists('mc')) {
 					'label' => $label,
 					'input' => 'html',
 					'html' =>  $html,
-					'value' => (!empty($selected_categories)) ? $selected_categories->term_id : '',
+					'value' => (!empty($selected_categories) && is_object($selected_categories)) ? $selected_categories->term_id : '',
 					'helps' => ''
 				); 
 				

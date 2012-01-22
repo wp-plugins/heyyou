@@ -334,8 +334,8 @@ body#media-upload.attachments-media-upload div.media-item a.del-link { display:n
 ul.hys_media_library_list { overflow: hidden;  }
 ul.hys_media_library_list li { width: 130px !important; float: left; border: 1px solid #ddd; margin: 5px 5px 5px 5px !important; background: #fcfcfc; text-align: center; padding: 5px; position: relative; margin: 5px; }
 ul.hys_media_library_list li img.attachment_thumbnail_main { display: block; width: 120px !important; height: 70px !important; margin: 1px; border: 1px solid #999	; outline:1px solid white; }
-ul.hys_media_library_list li img.delete_attach { height: 16px; width: 16px; display: inline-block; opacity: 0.1; position: absolute; top:15px;right:15px; }
-ul.hys_media_library_list li img.view_attach { height: 16px; width: 16px; display: inline-block; opacity: 0.1; position: absolute; top:45px;right:15px;  }
+ul.hys_media_library_list.media_list_thumbnails li img.delete_attach { height: 16px; width: 16px; display: inline-block; opacity: 0.1; position: absolute; top:15px;right:15px; }
+ul.hys_media_library_list.media_list_thumbnails li img.view_attach { height: 16px; width: 16px; display: inline-block; opacity: 0.1; position: absolute; top:45px;right:15px;  }
 ul.hys_media_library_list li .hys_media_title { font-weight: bold; }
 ul.hys_media_library_list li .hys_description { padding: 0; margin: 0; line-height: auto; }
 ul.hys_media_library_list li:hover .hys_media_title a { color: #d94d21 !important; }
@@ -343,14 +343,23 @@ ul.hys_media_library_list li:hover img.delete_attach,
 ul.hys_media_library_list li:hover img.view_attach { opacity: 1 }
 
 
-ul.hys_media_library_list.hys_media_library_text_list li { width: 100% !important; float: none; border: 1px solid #ddd; margin: 0 !important; background: #fcfcfc; text-align: center; padding: 2px; position: relative; margin: 0px; text-align: left; }
+ul.hys_media_library_list.media_list_text { overflow: visible; }
+ul.hys_media_library_list.media_list_text li { width: 100% !important; float: none; border: 1px solid #ddd; margin: 0 !important; background: #fcfcfc; text-align: center; padding: 2px; position: relative; margin: 0px; text-align: left; font-weight: normal !important; overflow: visible !important;  }
 
+ul.hys_media_library_list.media_list_text li .hys_admin_ico { float: left; }
+ul.hys_media_library_list.media_list_text li img { opacity: 0.3; margin-right: 4px; }
+ul.hys_media_library_list.media_list_text li img.magnifier { opacity: 0.9 }
+ul.hys_media_library_list.media_list_text li:hover img { opacity: 1; }
+ul.hys_media_library_list.media_list_text li .hys_media_title { font-weight: normal; }
 
-
-
-
-
-
+.mag_holder { width: 16px; height: 16px; float: left; position: relative; display: inline-block; }
+.mag_holder .magnifi_me { position: absolute; bottom: -80px; right: -180px; display: inline-block; background: white; padding: 5px; width: auto; height: auto; color: #333; display: none; z-index: 999; line-height:  0 !important;
+-webkit-box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.3);
+-moz-box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.3);
+box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.3);
+ }
+ .mag_holder .magnifi_me,
+ .mag_holder .magnifi_me img { margin-right:  0 !important; opacity: 1 !important; }
 
 
 .wp-admin .PENIS, .wp-admin .PENIS a, .wp-admin .PENIS p a { height: 200px !important; color: red !important; border: 1px solid green !important }

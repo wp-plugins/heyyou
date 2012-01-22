@@ -1346,6 +1346,38 @@ function hys_crontimes( $schedules ) {
 			</td>
 			</tr>
 			
+			
+			
+	        <tr valign="top">
+	        <th colspan="2"><hr /><h3>Media Library</h3></td>
+	        </tr>
+			<tr>
+	        	<td valign=top>
+	        		Display Media Items as:
+	        	</td>
+				<td>
+					<? $media_layout = (@$hys['settings']['media_layout'] == 'list') ? 1 : 0; ?>
+					<label><input type="radio" name="hys_options[media_layout]" value="grid" <?= ($media_layout != 1 ) ? ' CHECKED' : ''; ?> /> Thumb Tile Grid </label><br />
+					<label><input type="radio" name="hys_options[media_layout]" value="list"  <?= ($media_layout == 1 ) ? ' CHECKED' : ''; ?> /> Text List <span class="description">recommended for >70 images</span>
+				</td>
+			</tr>
+			
+			<tr>
+	        	<td valign=top>
+	        		heyyou Library:
+	        	</td>
+				<td>
+					<label>
+					<input type='checkbox' name='hys_options[dont_use_heyyou_media_library]' value='1' <?php 
+	        			if (isset($hys['settings']['dont_use_heyyou_media_library']))
+		        		echo chckchckbox($hys['settings']['dont_use_heyyou_media_library'])
+	    	    		?> />  Dont use <em>heyyou</em> media library<br /> 
+	    	    		&nbsp; &nbsp; &nbsp;<span class="description">(reverts to core Wordpress Media Library)</span>
+	        		</label><br />
+	        	</td>
+			</tr>
+			
+			
 				      
     <?php 
 	if (!$a_admin) {

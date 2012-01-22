@@ -4,7 +4,7 @@ Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 0.0.10.1
+Stable tag: 0.0.12
 
 heyyou is a plugin framework that supplies resources for rapid development & adds unique dynamic custom post types directly in a Wordpress Page
 
@@ -20,9 +20,9 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 2. Serve as a Development Framework - housing an assortment of presets with an extensive admin settings page
 3. Simplifying Wordpress, but adding options to cut down unneeded admin items
 
----
 
-**Elaborating on some primary features, *heyyou*:**
+
+= Elaborating on some primary features, heyyou: =
 
 * Creation of Dynamic Custom Post Types:
 	* option on every page to add page-specific custom post types with wide range of preset and meta configuration options
@@ -65,9 +65,8 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 	* Javascript instant-reveal "..read more" replace <! -- more -- > *see documentation*
 * *& much more.. (documentation still being written)*
 
----
 
-**SHOWCASE: Live sites powered by *heyyou***
+= SHOWCASE: Live sites powered by heyyou =
 
 * heyshauna sites
 	* [heyshauna.com](http://heyshauna.com/)
@@ -98,7 +97,7 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 
 
 
-**CREDIT: External Plugins**
+= CREDIT: External Plugins =
 
 The following plugins are hard coded into the plugin - they were edited enough that they are no longer updatable. *heyyou* will print a **function already exsists** error if any of the following plugins are used. If you have money to donate, I highly recommend visiting any of these three sites and pledging there.
 
@@ -110,7 +109,7 @@ The following plugins are hard coded into the plugin - they were edited enough t
 	* built into heyyou aswell, for adding secondary images in a single click
 
 
-**NOTICE: Important!!!**
+= NOTICE: Important!!! =
 
 This plugin is a *very large* framework design specifically for development of websites by [heyshauna.com](http://heyshauna.com/) & [davidsword.ca](http://davidsword.ca/). It essentially has the functionality of 30+ plugins. *heyyou* is not likely to be compatible with all themes or plugins and is recommended for intermediate-to-advance users only that are committed to experimenting with this plugin. Always backup your database and files before installing a plugin of this scale. It is recommended that potential users test this plugin in a test environment prior to installing on a live site. Please view the documentation at : [hey-you.ca](http://hey-you.ca/)
 
@@ -162,8 +161,15 @@ The entire origin of this project bases from wanting the following within a Word
 
 == Changelog ==
 
+= 0.0.12 =
+* "Hey Jude" - January 22, 2012
+* fixed: bug where new media items that were uncategorized weren't showing up in library
+
 = 0.0.11 =
 * "Susan" - January 6, 2012
+* fixed: speed boost for library: reduce number of queries by 90%
+* added: option to view library in Thumbnail Grid or Text list
+* added: option to revert back to Wordpress's library isntead of heyyou library
 * added: more to readme.txt
 * added assets banner, 
 * added screenshot-3
