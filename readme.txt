@@ -4,7 +4,7 @@ Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 0.0.12
+Stable tag: 0.0.12.0
 
 heyyou is a plugin framework that supplies resources for rapid development & adds unique dynamic custom post types directly in a Wordpress Page
 
@@ -161,6 +161,8 @@ The entire origin of this project bases from wanting the following within a Word
 
 == Changelog ==
 
+= 0.0.12.0 =
+* not sure why wordpress plugin page isn't updating..
 
 = 0.0.12 =
 * "Hey Jude" - January 22, 2012

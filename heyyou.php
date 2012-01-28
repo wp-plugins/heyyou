@@ -10,7 +10,7 @@
                                             Plugin Name:    heyyou
                                             Plugin URI:     http://hey-you.ca/
                                             Description:    heyyou puts posts into pages - easily.
-                                            Version:        0.0.12
+                                            Version:        0.0.12.0
                                             Author:         David Sword
                                             Author URI:     http://davidsword.ca/
                                             License:        GPL2
@@ -36,7 +36,7 @@
 /*===================================================================================================================
     =heyyou
 --------------------------------------------------------------------------------------------------------------------*/
-    
+     
     // !include library of functions for entire plugin
     
     include('_functions.php');                                  # functions
