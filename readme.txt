@@ -12,7 +12,7 @@ heyyou is a plugin framework that supplies resources for rapid development & add
 == Description ==
 
 * Visit: [hey-you.ca](http://hey-you.ca/)
-* Tweet: [@david_sword](http://twitter.com/david_sword/)
+* Tweet: [@david_sword](http://twitter.com/david_sword/#)
 
 This plugin (currently in alpha stage) is intended as a developers framework - it's goal to turn Wordpress into more of a CMS by adding a wide range of functionalities, settings, and functions to eaisly:
 
@@ -160,6 +160,7 @@ The entire origin of this project bases from wanting the following within a Word
 3. Some of the options in the Settings page to configure what scripts, tools, theme_support, to include on the site; options to change the admin navigation, menu bar, and more.
 
 == Changelog ==
+
 
 = 0.0.12 =
 * "Hey Jude" - January 22, 2012
