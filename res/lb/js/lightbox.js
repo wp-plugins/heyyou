@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------------
 //
-//	Lightbox v2.04
+//	Lightbox v2.05
 //	by Lokesh Dhakar - http://www.lokeshdhakar.com
-//	Last Modification: 2/9/08
+//	Last Modification: 3/18/11
 //
 //	For more information, visit:
 //	http://lokeshdhakar.com/projects/lightbox2/
@@ -14,38 +14,6 @@
 //  Thanks: Scott Upton(uptonic.com), Peter-Paul Koch(quirksmode.com), and Thomas Fuchs(mir.aculo.us) for ideas, libs, and snippets.
 //  		Artemy Tregubenko (arty.name) for cleanup and help in updating to latest ver of proto-aculous.
 //
-// -----------------------------------------------------------------------------------
-/*
-
-    Table of Contents
-    -----------------
-    Configuration
-
-    Lightbox Class Declaration
-    - initialize()
-    - updateImageList()
-    - start()
-    - changeImage()
-    - resizeImageContainer()
-    - showImage()
-    - updateDetails()
-    - updateNav()
-    - enableKeyboardNav()
-    - disableKeyboardNav()
-    - keyboardAction()
-    - preloadNeighborImages()
-    - end()
-    
-    Function Calls
-    - document.observe()
-   
-*/
-// -----------------------------------------------------------------------------------
-
-//
-//  Configurationl
-//
-
 // -----------------------------------------------------------------------------------
 
 var Lightbox = Class.create();
@@ -197,7 +165,7 @@ Lightbox.prototype = {
         this.imageArray = [];
         var imageNum = 0;       
 
-        if ((imageLink.rel == 'lightbox')){
+        if ((imageLink.getAttribute("rel") == 'lightbox')){
             // if image is NOT part of a set, add single image to imageArray
             this.imageArray.push([imageLink.href, imageLink.title]);         
         } else {
@@ -240,10 +208,12 @@ Lightbox.prototype = {
         var imgPreloader = new Image();
         
         // once image is preloaded, resize image container
-
-
         imgPreloader.onload = (function(){
             this.lightboxImage.src = this.imageArray[this.activeImage][0];
+            /*Bug Fixed by Andy Scott*/
+            this.lightboxImage.width = imgPreloader.width;
+            this.lightboxImage.height = imgPreloader.height;
+            /*End of Bug Fix*/
             this.resizeImageContainer(imgPreloader.width, imgPreloader.height);
         }).bind(this);
         imgPreloader.src = this.imageArray[this.activeImage][0];
@@ -472,7 +442,7 @@ Lightbox.prototype = {
 			windowWidth = document.body.clientWidth;
 			windowHeight = document.body.clientHeight;
 		}	
-		
+
 		// for small pages with total height less then height of the viewport
 		if(yScroll < windowHeight){
 			pageHeight = windowHeight;

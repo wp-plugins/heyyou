@@ -161,8 +161,13 @@ The entire origin of this project bases from wanting the following within a Word
 
 == Changelog ==
 
-= 0.0.12.0 =
-* not sure why wordpress plugin page isn't updating..
+
+
+= 0.0.13 =
+* February 4th, 2012
+* Updated: lightbox from 2.04 to 2.05 for IE9 compat..... awh IE..... 
+* updated: updater for pre-alpha versions of heyyou to convert "hys_%feature%" post types into "hys_post" and be reconized as enabled
+* fixed: numberposts issue in hys_media library that may of cause "disapearing" and "uncategorizing" media items
 
 = 0.0.12 =
 * "Hey Jude" - January 22, 2012
@@ -387,5 +392,10 @@ The entire origin of this project bases from wanting the following within a Word
 * PTC - build
 
 == Upgrade Notice ==
+
+= 0.0.13 =
+* Lightbox title/caption'ing may be out of wack
+
+= Pre 0.0.13 =
 
 Upgrade at your own risk, this is an unstable alpha plugin.

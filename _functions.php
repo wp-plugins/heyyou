@@ -98,6 +98,8 @@ function hys_return_meta($id = '') {
 			$wpdb->query("UPDATE {$wpdb->prefix}postmeta SET meta_key = 'hys_page_config' WHERE meta_key = 'hys_page_feature'");
 			$wpdb->query("UPDATE {$wpdb->prefix}postmeta SET meta_key = 'hys_usrpg_config' WHERE meta_key = 'hys_usrpg_config'");
 			
+			//@TODO, turn  'hys_page_config[preset] == custom' where heyyou is already active..
+			
 			//move post > meta > post_parent to post > post_parent
 			$myrows = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = 'feature_parent'");
 			$i = 1;
@@ -107,6 +109,7 @@ function hys_return_meta($id = '') {
 				$wpdb->print_error();
 				$i++; //86
 			}
+			
 			
 			//lets do the opposite...
 			$myrows = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}posts WHERE post_parent = '0'");
@@ -205,11 +208,9 @@ function hys_return_meta($id = '') {
 		$hys['config'] = $preset;
 		
 		//..pre 0.1 heyyou.. convert..
-		if (isset($pmeta['hys_page_feature']) && !isset($pmeta['hys_page_config'])) {
-			$old_config = unserialize($pmeta['hys_page_feature'][0]);
-			#$old_preset = $old_config['feature'];
-			$hys['hys_page_config'] = $old_config;
+		if (isset($hys['hys_page_config']['feature']) && !empty($hys['hys_page_config']['feature'])) {
 			$hys['config'] = 'custom';	
+			$hys['hys_page_config']['preset'] = 'custom';	
 		}
 
 		
@@ -3674,7 +3675,7 @@ function hys_get_timezone() {
 						),
 						'post_type' => 'attachment',
 						'post_status'=>'inherit',
-						'numberposts' => '-1',
+						'posts_per_page' => '-1',
 						'order' => 'ASC',
 						'orderby' => 'title'
 					);
@@ -3717,7 +3718,7 @@ function hys_get_timezone() {
 						),
 						'post_type' => 'attachment',
 						'post_status'=>'inherit',
-						'numberposts' => '-1',
+						'posts_per_page' => '-1',
 						'order' => 'ASC',
 						'orderby' => 'title'
 					);
@@ -3738,7 +3739,7 @@ function hys_get_timezone() {
 					$args = array(
 						'post_type' => 'attachment',
 						'post_status'=>'inherit',
-						'numberposts' => '-1',
+						'posts_per_page' => '-1',
 						'order' => 'ASC',
 						'orderby' => 'title'
 					);
