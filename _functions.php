@@ -1915,7 +1915,7 @@ function  hys_attach_attachments($heyyou_post_id) {
 					//Add "%lightbox_gallery%" Lightbox Link
 					if (empty($lightbox_links_first)) {
 						$lb_text = @ trim($hys['settings']['lightbox_gallery_link']);
-						$lb_text = (empty($lb_text)) ? 'View Gallery' : $lb_text;
+						$lb_text = (empty($lb_text)) ? 'View Photo Gallery' : $lb_text;
 						$lightbox_links_first = "<a href='{$lrg_download[0]}' rel='lightbox[hidden_attach{$heyyou_post_id}]' title='{$lbtitle}'>{$lb_text}</a>";
 					} else {
 						$lightbox_links .= "<a href='{$lrg_download[0]}' rel='lightbox[hidden_attach{$heyyou_post_id}]' style='display:none;' title='{$lbtitle}'></a>";
@@ -2432,7 +2432,7 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 		$the_date,
 		$post_content,
 		$i,
-		'[-DEPRECIATED-]','[-DEPRECIATED-]',
+		'[-DEPRECIATED-]',$lb_first.$lb_links,
 		hys_lines(1), hys_lines(2),
 		$back_link,
 		$prev_link, $next_link,
