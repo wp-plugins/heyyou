@@ -1813,25 +1813,8 @@ if(@$hys['settings']['mootools'] == 1)
 						?>
 					</div>
 				</div>	
-		<?php endif; ?>
+		<?php endif;
 		
-		
-		<?php if (@$hys['settings']['ie6msg'] == 1) : ?>
-		<!--[if IE 6]>
-		<div class='hys_alertmsg_holder' > 
-			<div class='hys_altertmsg_toggel'> 
-				<a class='hys_readmore hys_fake_link underconclickmsg'> WARNING! BROWSER COMPATIBILITY ERROR!</a>
-			</div> 
-			<div id='hys_undercon_msg' class='hys_moreless hys_undercon_msg' style='display:block !important;'>
-				<p class='hys_undercon_msgtxt' style='padding:45px 0;'>
-You are currently using INTERNET EXPLORER 6 "IE6" to view this webpage. This browser is considered an obsolete browser..! Following <a href='http://googleenterprise.blogspot.com/2010/01/modern-browsers-for-modern-applications.html' target='_Blank'>Googles</a> official drop of IE6 , this website will also not be developed for this decade old browser. Please take a few moments to upgrade your browser (it's free) to something more up-to-date. Some suggestions: <a href='http://www.google.com/chrome' target='_Blank'>Google Chrome</a>, <a href='http://www.mozilla.com/en-US/firefox/firefox.html' target='_Blank'>Firefox</a>, or the latest <a href='http://www.microsoft.com/windows/internet-explorer/' target='_Blank'>Internet Explorer</a>. 						
-				</p>						
-			</div>
-		</div>	
-		<![endif]-->
-		<?php endif; ?>
-		
-		<?php
 	}
 /*-------------------------------------------------------------
  Name:      hys_attach_attachments
