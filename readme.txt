@@ -4,7 +4,7 @@ Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 0.0.13.1
+Stable tag: 0.0.13.2
 
 heyyou is a plugin framework that supplies resources for rapid development & adds unique dynamic custom post types directly in a Wordpress Page
 
@@ -161,8 +161,10 @@ The entire origin of this project bases from wanting the following within a Word
 
 == Changelog ==
 
-= 0.0.14 =
+= 0.0.13.2 =
 * February 18th, 2012
+* issue were media cat items may apear in their set cat as well as uncategorized.. (as media items can have multi-cats, and "1" uncat is set as default..)
+* fixed: same bug in hey_media library from before in media dropdown (slow due to large # of queries)
 * removed: initial-scale=1.0 from mobile detection
 * fixed: bug where when attaching 1 img, gallery doesn't show. ($y > 0 && isset($x[0]['id']))
 

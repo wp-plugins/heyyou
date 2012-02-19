@@ -3115,26 +3115,48 @@ function hys_shortcode( $atts ) {
 		foreach ($getattch as $k=>$attch) {
 			$fullimage = wp_get_attachment_image_src($attch->ID,'full');
 			$filetitle = hys_chopstring($attch->post_title, $choplen);
-			$catid = wp_get_object_terms( $attch->ID, 'media_category' );
-			$catid = (isset($catid) && is_array($catid) && isset($catid[0])) ? $catid[0]->term_id : '';
 			$array_of_files[] = array(
 				'id' 	=> $attch->ID,
 				'title' => $filetitle,
 				'type' 	=> str_replace(array('/pdf','image/','audio/','jpeg','application.'),array('.PDF','.','.','jpg','.'),$attch->post_mime_type),
-				'cat'	=> $catid
 			);
 		}
 		
+				
+		
 		foreach ($get_categories as $category) {
 			if ($category->name != 'Uncategorized') {
-				$return .= "<optgroup label='{$category->name}'>";
-				foreach ($array_of_files as $kk => $afile) {
-					if ($afile['cat'] == $category->term_id) {
-						$sel = ($afile['id'] == $preselect) ? " selected='selected'" : '';
-						$return .= "<option value='{$afile['id']}'{$sel}>{$afile['title']}".$afile['type']."</option>";
+				$return .= "<optgroup label='{$category->name}'>";				
+					// GET POSTS FOR CAT
+					$args = array(
+						'tax_query' => array(
+							array(
+								'taxonomy' => 'media_category',
+								'field' => 'slug',
+								'terms' => $category->slug
+							)
+						),
+						'post_type' => 'attachment',
+						'post_status'=>'inherit',
+						'posts_per_page' => '-1',
+						'order' => 'ASC',
+						'orderby' => 'title'
+					);
+					
+					$ticker = 0;
+					
+					// The Query
+					query_posts( $args );
+					
+					// The Loop
+					while ( have_posts() ) : the_post();
+						$sel = (get_the_ID() == $preselect) ? " selected='selected'" : '';
+						$return .= "<option value='".get_the_ID()."'{$sel}>".get_the_title()."</option>";
 						unset($array_of_files[$kk]);
-					}
-				}
+					endwhile;
+
+				
+				
 				$return .= "</optgroup>";
 			}
 		}
@@ -3711,7 +3733,8 @@ function hys_get_timezone() {
 					
 					// The Loop
 					while ( have_posts() ) : the_post();
-
+					
+						if (!in_array($post->ID,$media_ids_shown))
 						hys_media_output_row($post);
 						$media_ids_shown[] = $post->ID;
 						
