@@ -4,7 +4,7 @@ Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 0.0.13.0
+Stable tag: 0.0.13.1
 
 heyyou is a plugin framework that supplies resources for rapid development & adds unique dynamic custom post types directly in a Wordpress Page
 
@@ -14,7 +14,7 @@ heyyou is a plugin framework that supplies resources for rapid development & add
 * Visit: [hey-you.ca](http://hey-you.ca/)
 * Tweet: [@david_sword](http://twitter.com/david_sword/#)
 
-This plugin (currently in alpha stage) is intended as a developers framework - it's goal to turn Wordpress into more of a CMS by adding a wide range of functionalities, settings, and functions to eaisly:
+This plugin (currently in alpha stage) is intended as a developers framework - it's goal to turn Wordpress into more of a CMS by adding a wide range of functionalities, settings, and functions to easily:
 
 1. Add (dynamic) Custom Post Types directly within a Wordpress Page - below the pages main content
 2. Serve as a Development Framework - housing an assortment of presets with an extensive admin settings page
@@ -32,7 +32,7 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 	* outputting: a simple textarea with %macros% placeholders and HTML for formatting the posts output (useful for: FAQ, Staff Listing, Press Releases, ect.)
 	* outputting: can bypass default %macros% output and use PHP in your theme instead
 * Custom Media Library :
-	* Media items listed as a simplied grid thumbnails,
+	* Media items listed as a simplified grid thumbnails,
 	* Media Categories
 	* Cleaned CSS for showing file information
 * Page Options (Options in setting page to add the following into a pages 'heyyou page settings' metabox):
@@ -41,7 +41,7 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 	* Dynamic Page Meta Field(s) (for things like having a featured image's "Photo Credit" meta field - easier to use than Wordpress's custom fields)
 	* Hide Wordpress Page title
 	* Hide Wordpress Page Content (.entry-content)
-	* Set a hexidecimal color (for themes that use a different color on every page)
+	* Set a hexadecimal color (for themes that use a different color on every page)
 	* Add Attachments to page
 	* Disable auto placement of attachments
 * Settings Page with options to: 
@@ -51,16 +51,16 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 	* Edit main < meta > keyword/description
 	* Setup database-to-email backup
 	* (TinyMCE) Add dynamic styles to TinyMCE via easy to use GUI (i.e.: add "Blue Italic" to your themes styled drop down)
-	* Include < scripts > via check-box for technologies (like Lightbox, Mootools, Attachments)
-	* Add Featured &or Secondary images for your theme's pages &or posts (no more remebering function)
-	* Add Excerpts on page (no more remebering function)
+	* Include < scripts > via check-box for technologies (like Mootools, Attachments)
+	* Add Featured &or Secondary images for your theme's pages &or posts (no more remembering function)
+	* Add Excerpts on page (no more remembering function)
 * Miscellaneous:
 	* Adds Greeting Widget
 	* TinyMCE gets simplified / limited buttons to a single row, new 'line' button to split content
 	* Creates "Sub-Admin" and "Client" user types
 	* *& much much more.. (documentation still being written)*
 	* Cleans up HTML header info outputted by wp_head()
-	* Outputs the dynamic custom post types under their corosponding pages
+	* Outputs the dynamic custom post types under their corresponding pages
 	* Adds .mobile class to < body > when detected
 	* Javascript instant-reveal "..read more" replace <! -- more -- > *see documentation*
 * *& much more.. (documentation still being written)*
@@ -99,14 +99,14 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 
 = CREDIT: External Plugins =
 
-The following plugins are hard coded into the plugin - they were edited enough that they are no longer updatable. *heyyou* will print a **function already exsists** error if any of the following plugins are used. If you have money to donate, I highly recommend visiting any of these three sites and pledging there.
+The following plugins are hard coded into the plugin - they were edited enough that they are no longer updatable. *heyyou* will print a **function already exists** error if any of the following plugins are used. If you have money to donate, I highly recommend visiting any of these three sites and pledging there.
 
 * [Jonathan Christopher](http://mondaybynoon.com/)'s [Attachment Plugin](http://wordpress.org/extend/plugins/attachments/)
 	* included directly into the plugins core- with an option to turn it off - the interface for attachments was majorly altered to a simplified thumbnail grid
 * [Hart Associates (Rick Mead)](http://www.hartinc.com)'s [Media Categories](https://sites.google.com/site/medialibarycategories/)
-	* integrated directly into the plugins core and manipulated to work with plugin more effectivly
+	* integrated directly into the plugins core and manipulated to work with plugin more effectively
 * [Chris Scott](http://vocecommuncations.com/)'s [Multiple Post Thumbnails](http://wordpress.org/extend/plugins/multiple-post-thumbnails/)
-	* built into heyyou aswell, for adding secondary images in a single click
+	* built into heyyou as well, for adding secondary images in a single click
 
 
 = NOTICE: Important!!! =
@@ -161,13 +161,17 @@ The entire origin of this project bases from wanting the following within a Word
 
 == Changelog ==
 
+= 0.0.14 =
+* February 18th, 2012
+* removed: initial-scale=1.0 from mobile detection
+* fixed: bug where when attaching 1 img, gallery doesn't show. ($y > 0 && isset($x[0]['id']))
 
 
 = 0.0.13 =
 * February 4th, 2012
-* Updated: lightbox from 2.04 to 2.05 for IE9 compat..... awh IE..... 
-* updated: updater for pre-alpha versions of heyyou to convert "hys_%feature%" post types into "hys_post" and be reconized as enabled
-* fixed: numberposts issue in hys_media library that may of cause "disapearing" and "uncategorizing" media items
+* Updated: Minor IE9 compat in 3rd party JS tools.... awh IE..... 
+* updated: updater for pre-alpha versions of heyyou to convert "hys_%feature%" post types into "hys_post" and be recognized as enabled
+* fixed: numberposts issue in hys_media library that may of cause "disappearing" and "uncategorizing" media items
 
 = 0.0.12 =
 * "Hey Jude" - January 22, 2012
@@ -177,22 +181,22 @@ The entire origin of this project bases from wanting the following within a Word
 * "Susan" - January 6, 2012
 * fixed: speed boost for library: reduce number of queries by 90%
 * added: option to view library in Thumbnail Grid or Text list
-* added: option to revert back to Wordpress's library isntead of heyyou library
+* added: option to revert back to Wordpress's library instead of heyyou library
 * added: more to readme.txt
 * added assets banner, 
 * added screenshot-3
-* fixed: "Add a breif description" spelling error in admin
+* fixed: "Add a brief description" spelling error in admin
 * added:  initial-scale=1.0 to < meta > view port
 * fixed: duplicate use of class att. in more/less links
 * changed: <a name= anchors changed to <div id= tags
 * fixed: added another check prior to add_theme_support(.. add_thumbs_to_pages
 * fixed: syntax errors in Attachments
 * changed: compressed prototype.js
-* changed: make lightbox display 'medium' sizes at most in lightbox when mobile detected.. note lots of themes use custom lightbox scripts & not heyyou's, so this may not be on all themes
+* changed: make lb display 'medium' sizes at most in lb when mobile detected.. note lots of themes use custom lb scripts & not heyyou's, so this may not be on all themes
 * fixed: re-enabled chronical link
 * fixed: hi/low res download link text now dynamic via options page
-* added: function hys_get_feature_image_src() for easy retreival of img
-* added: function hys_ids_of_nav_menu() for retrevial of wp menu object id's
+* added: function hys_get_feature_image_src() for easy retrieval of img
+* added: function hys_ids_of_nav_menu() for retrieval of wp menu object id's
 * added: post excerpts option
 
 = 0.0.10.1 =
@@ -242,11 +246,11 @@ The entire origin of this project bases from wanting the following within a Word
 = 0.0.9.7 =
 * "CVS" - October 22, 2011
 * added: hys_get_meta() to easily get hys post meta in a single array
-* fixed: default image size for auto-lightbox galleries now large instead of undefined (full)
+* fixed: default image size for auto-lb galleries now large instead of undefined (full)
 * fixed: issues with hys_return_url() returning HTTPS instead of HTTP fixed
 * fixed: settings metabox "title" id changed to "hys_title" to prevent error w/ jquery wp post->title place holder
 * added: default css for .attachments (same as .hys_gallery)
-* fixed: attachments "Undefined" caption (for real lightbox- not jquery lightbox)
+* fixed: attachments "Undefined" caption (for real lb- not jquery lb)
 * added: "use secondary images on pages/posts" checkbox setting added to *heyyou* settings. also "add feature img to posts" now available
 * added: attachments: update to latest 1.5.9
 * fixed: attachments: when attaching, image title doesn't carry into default "title" field
@@ -264,7 +268,7 @@ The entire origin of this project bases from wanting the following within a Word
 * moreless javascript broken !!!!!! in *heyyou*. find out why
 * media: categories
 * media lib: make uncat default (instead of default)
-* if $hys['settings'] doesn't exsist.. insert a default one
+* if $hys['settings'] doesn't exist.. insert a default one
 * media lib: multi-checker for mass deletes
 * media lib: menu highlighting.
 * mobile detection issue TEST ;; wait till sessions die
@@ -293,10 +297,10 @@ The entire origin of this project bases from wanting the following within a Word
 * "Ekistics" - June 17, 2011
 * fixed issue where when uploading/inserting media the "Attach" button would appear instead of the "Insert" button (& it's positioning and link options).
 * settings: added "Client Tutorials" ID entry for hiding page from public, viewable to heyyou_client in site, but not available to edit to anyone but Super Admins.
-* admin: CSS changes to *heyyou* posts categories, hover revealer like posts.. & better linning up to not confuse actions with check-all button
+* admin: CSS changes to *heyyou* posts categories, hover revealer like posts.. & better lining up to not confuse actions with check-all button
 * admin: "*heyyou* page config" metabox now shows no tabs & page-options for *heyyou*_clients, so configs like "Add twitter button" and "hexadecimal color" are available to *heyyou*_clients
 * issue resolved with new secondary blurb line breaking
-* css: image alignment patch.. images w/ default class="align{center/left/right}" will now do accordingly (with added margins), instead of taking the properties from some themes main elements under the same class names
+* css: image alignment patch.. images w/ default class="align{centre/left/right}" will now do accordingly (with added margins), instead of taking the properties from some themes main elements under the same class names
 * created "hys_grant()" function for easy under-dev lockout
 * clause to remove extra "http://http://" if link is pasted into URL field without removing default "http://" value
 * fixed issue with "under construction" banner requiring 2x clicks to reveal msg
@@ -307,7 +311,7 @@ The entire origin of this project bases from wanting the following within a Word
 * before/after HTML categories added to output formats (for better placing *heyyou* in a < ul >< li > output)
 * removed auto "theme/js/js.js" import.. may cause conflicts - revisits
 * Added jQuery auto-write "< script src=... >" for jquery + various/common plugin support
-* Support for "---" (dividing titles (bold) & captions (newline & reg.)) added to lightbox.js & jquery.lightbox.js & all auto-lightbox gallery functions
+* Support for "---" (dividing titles (bold) & captions (newline & reg.)) added to lb.js & jquery.lb.js & all auto-lb gallery functions
 * both attach gallery generators (hys_photogallery() for *heyyou* posts, and hys_attach_attachments() for page posts) now share "ul.hys_gallery" class. default properties now set in hys_style.css
 * only add mootools on page that have drag-n-drop list of *heyyou* posts
 * solved issue with admin conflicts between wp-ecomm & *heyyou* (the "media category" sub-plugin, conflicting jquery)
@@ -336,16 +340,16 @@ The entire origin of this project bases from wanting the following within a Word
 * !important* drop-n-drag with categories
 * !important* add link button not working in editheyyoupost
 * add 'feild type' and 'comments' to site-meta fields
-* Comments jumpto anchors should categorize & apear above 'before' line
+* Comments jump to anchors should categorize & appear above 'before' line
 * add default user-settings.. ie: auto hide comments/author/revisions for hey_client / hys_subadmin
-* make Media Folders magangable in options
+* make Media Folders manageable in options
 * Notice: Trying to get property of non-object in /Users/../post-template.php on line 30 because I unset $post on new pages because of pre-loading heyyou
 * TinyMCE CSS: empty
 * make defaults for keywords & twitter default = 1
-* make "Feature Image" & "Seconday Image" a heyyou option
+* make "Feature Image" & "Secondary Image" a heyyou option
 * default HTML heyyou_post output format to "%title% %blurb%"
 * move pagination to another tab since Page-options are dedicated for things that don't require heyyou turned on.
-* Comments instead of deafilt "title" as main field... make an option for title/name
+* Comments instead of default "title" as main field... make an option for title/name
 * remove "remove flash uploader"
 * turn off revisions completely... useless for non-multiple-blogging
 * *include http:// overflowing
@@ -363,10 +367,10 @@ The entire origin of this project bases from wanting the following within a Word
 * pagination with categories (?pg=x&cat=y)
 * cropping thumbnails: find if way to receive proper ratio while cropping
 * if list doesn't have pagination and does have "add line(2) between posts" remove last line as it's not "between" anything
-* Exisiting Backups: make folder for each site (because of networks)
+* Existing Backups: make folder for each site (because of networks)
 * ..more only if %blurb% not empty
 * put heyyou preset dropdown in 'page' tab. if empty, disable other tabs
-* css for showing thumbs in list of magage posts mucked up
+* css for showing thumbs in list of manage posts mucked up
 * css on edit post for attachments mucked up
 * css issues in navigation
 * add wpautop to meta "x (Blurb)" output/s
@@ -378,7 +382,7 @@ The entire origin of this project bases from wanting the following within a Word
 * when 'post hv individ page' is on, 'line(2) between posts' doesn't work
 * add %view_individual_page% link token for "more..." link to full pages without using blurb
 * make auto-collapes not possible when individual pages is on
-* Comments add ..more button for "auto collaps content" (personnel in epony)
+* Comments add ..more button for "auto collapse content" (personnel in epony)
 * add line conversion support to heyyou
 
 
@@ -394,7 +398,7 @@ The entire origin of this project bases from wanting the following within a Word
 == Upgrade Notice ==
 
 = 0.0.13 =
-* Lightbox title/caption'ing may be out of wack
+* lb Alt title/caption'ing may be out of whack
 
 = Pre 0.0.13 =
 

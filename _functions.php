@@ -1581,7 +1581,7 @@ function hys_load_jquery() {
 		if (@$hys['mobile'] == 1) {
 			$viewport = (@$hys['settings']['viewport']) ? @$hys['settings']['viewport'] : 482;
 			echo "
-	<meta name='viewport' content='width={$viewport},initial-scale=1.0' />";
+	<meta name='viewport' content='width={$viewport}' />";
 		}
 		
 		if (isset($hys['settings']['header_favicon']) && !empty($hys['settings']['header_favicon'])) {
@@ -2194,7 +2194,7 @@ function  hys_attach_attachments($heyyou_post_id) {
 		$total_att 		= count($attachments);
 		$return 		= '';
 		
-		if( $total_att > 1 ) {
+		if ($total_att > 0 && isset($attachments[0]['id'])) {
 		    $return .= '<ul class="photo_gallery hys_gallery" id="gallery_'.$id.'">';
 		    for ($i=0; $i < $total_att; $i++) {
 				
