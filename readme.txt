@@ -161,6 +161,10 @@ The entire origin of this project bases from wanting the following within a Word
 
 == Changelog ==
 
+= 0.0.0.0.1 =
+* April 6th, 2012
+* REMOVED lightbox from plugin to comply with GPL, I'm sorry for this misunderstanding of GPL, please contact me for info on how to fix your heyyou website if it was using the lightbox features; no charge,
+
 = 0.0.13.2 =
 * February 18th, 2012
 * issue were media cat items may apear in their set cat as well as uncategorized.. (as media items can have multi-cats, and "1" uncat is set as default..)

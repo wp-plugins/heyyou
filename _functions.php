@@ -1661,18 +1661,18 @@ function hys_load_jquery() {
 //LIGHTBOX...		
 if (@$hys['settings']['lightbox'] == 1) {
 		echo "
-	<link rel='stylesheet' href='{$hys['dir']}/res/lb/css/lightbox.css' type='text/css' media='screen' />
-	<script src='{$hys['dir']}/res/lb/js/prototype.js' type='text/javascript'></script>
-	<script src='{$hys['dir']}/res/lb/js/scriptaculous.js?load=effects,builder' type='text/javascript'></script>
-	<script src='{$hys['dir']}/res/lb/js/lightbox.js' type='text/javascript'></script>";
+	<link rel='stylesheet' href='".str_replace('/heyyou','/hylb',$hys['dir'])."/css/lightbox.css' type='text/css' media='screen' />
+	<script src='".str_replace('/heyyou','/hylb',$hys['dir'])."/js/prototype.js' type='text/javascript'></script>
+	<script src='".str_replace('/heyyou','/hylb',$hys['dir'])."/js/scriptaculous.js?load=effects,builder' type='text/javascript'></script>
+	<script src='".str_replace('/heyyou','/hylb',$hys['dir'])."/js/lightbox.js' type='text/javascript'></script>";
 			
 	if (@$hys['settings']['lightboxcustom'] != 1) {
 		echo "
 	<script type='text/javascript'>
 		<!--
 		LightboxOptions = Object.extend({
-		    fileLoadingImage:        '{$hys['dir']}/res/lb/images/loading.gif',     
-		    fileBottomNavCloseImage: '{$hys['dir']}/res/lb/images/closelabel.gif',
+		    fileLoadingImage:        '".str_replace('/heyyou','/hylb',$hys['dir'])."/images/loading.gif',     
+		    fileBottomNavCloseImage: '".str_replace('/heyyou','/hylb',$hys['dir'])."/images/closelabel.gif',
 		    overlayOpacity: 0.8, animate: true, resizeSpeed: 8, borderSize: 10,					
 			labelImage: 'Image', labelOf: 'of'
 		}, window.LightboxOptions || {});
