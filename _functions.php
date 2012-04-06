@@ -3971,11 +3971,21 @@ function hys_get_feature_image_src($id = '',$size = 'full') {
 
 
 
-
+/**
+ * warn users of removed lightbox, provide solution on how to fix
+ *
+ * @since 0.0.0.0.1
+ * @author roi_davidsword
+ */	
 function showAdminMessages() {
 	global $hys;
-	if (   !is_dir(  WP_CONTENT_DIR.'/plugins/hylb'  )    ) {
-   echo '<div id="message" class="error" style="padding:10px;">'."<strong>ATTENTION:</strong> a recent <em>heyyou</em> update requires the manual exteneral installation of LightBox to your website. please notify heyyou@davidsword.ca or support@heyshauna.com for immediate assistance."."</div>";
+    if( isset( $_GET['dismiss_lb_notice'] ) )
+        update_option( 'dismiss_lb_notice', 1 );
+		$dismiss_lb_notice = get_option( 'dismiss_lb_notice' );
+	if (   !is_dir(  WP_CONTENT_DIR.'/plugins/hylb'  )  && $dismiss_lb_notice != 1 ) {
+   echo '<div id="message" class="error" style="padding:10px;">'."<strong>ATTENTION:</strong> a recent <em>heyyou</em> update requires the manual exteneral installation of LightBox to your website. please notify heyyou@davidsword.ca or support@heyshauna.com for immediate assistance.<br />
+   <br />
+   <a href='?dismiss_lb_notice'>Dismiss</a>"."</div>";
    }
 }
 add_action('admin_notices', 'showAdminMessages');
