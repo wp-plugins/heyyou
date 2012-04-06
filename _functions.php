@@ -3969,6 +3969,30 @@ function hys_get_feature_image_src($id = '',$size = 'full') {
 	return wp_get_attachment_image_src( $id , $size );
 }
 
+
+
+
+ function showMessage($message, $errormsg = false)
+{
+	if ($errormsg) {
+		echo '<div id="message" class="error">';
+	}
+	else {
+		echo '<div id="message" class="updated fade">';
+	}
+
+	echo "<p><strong>$message</strong></p></div>";
+}    
+function showAdminMessages()
+{
+    // Shows as an error message. You could add a link to the right page if you wanted.
+    showMessage("<strong>ATTENTION:</strong> a recent <em>heyyou</em> update requires the manual exteneral installation of LightBox to your website. please notify heyyou@davidsword.ca or support@heyshauna.com for immediate assistance.", true);
+}
+add_action('admin_notices', 'showAdminMessages');
+
+
+
+
 /*--------------------------------------------------------------------------------------------------------------------
 ====================================================================================================================*/
 ?>
