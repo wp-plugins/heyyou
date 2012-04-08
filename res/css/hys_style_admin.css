@@ -148,16 +148,16 @@ a.blacklink { color: #111 !important; }
 									  border-top:1px solid #ccc; 
 									  border-right:1px solid #ccc; 
 									  border-left:1px solid #ccc; 
-									  border-bottom: 1px solid white; }
+									  border-bottom: 1px solid #F8F8F8; }
 									  
 									  
 .heyyou_tabs li a.disabled_tab	{ color: #999; }
 									  
 .heyyou_tabs li a:hover 			{ cursor: pointer; }
-.heyyou_tabs li.heyyou_tab_current  { border-bottom: 1px solid white; }
+.heyyou_tabs li.heyyou_tab_current  { border-bottom: 1px solid #F8F8F8; }
 .heyyou_tabs li.heyyou_tab_current a{ border-top:1px solid #888; 
 									  border-right:1px solid #888; 
-									  border-bottom:1px solid white; 
+									  border-bottom:1px solid #F8F8F8; 
 									  border-left:1px solid #888; 
 									  color: #f97200 !important; }
 
@@ -361,5 +361,10 @@ box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.3);
  .mag_holder .magnifi_me,
  .mag_holder .magnifi_me img { margin-right:  0 !important; opacity: 1 !important; }
 
+li#wp-admin-bar-comments,
+li#wp-admin-bar-new-content { display: none !important; }
+.attachments li a, .hys_gallery li a { line-height: 0 !important; }
+
+.update-nag, #update-nag { display: none !important; }
 
 .wp-admin .PENIS, .wp-admin .PENIS a, .wp-admin .PENIS p a { height: 200px !important; color: red !important; border: 1px solid green !important }

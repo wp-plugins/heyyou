@@ -445,6 +445,7 @@ function hys_crontimes( $schedules ) {
 		        	</label><br />
 		        	<br />
 		        	
+		        			        	
 					<h4 style='padding-top:0;margin-top:0'>Wordpress Options:</h4>
 		        	<label>
 		        	<input type='checkbox' name='hys_options[page_featured_image]' value='1' <?php 
@@ -475,6 +476,7 @@ function hys_crontimes( $schedules ) {
 		        		echo chckchckbox(@$hys['settings']['post_excerpts'])
 		        		?> /> Use "Excerpts" on posts
 		        	</label><br />
+		        	
 				     <br />
 				     <br />
 					<h4 style='padding-top:0;margin-top:0'>Generate &lt;head&gt; html:</h4>
@@ -504,16 +506,21 @@ function hys_crontimes( $schedules ) {
 				  </td>
 				  <td>
 				  
-					<h4 style='padding-top:0;margin-top:0'>Exceptions:</h4>
+					<h4 style='padding-top:0;margin-top:0'>Exceptions &amp; Customization:</h4>
 		        	<label>
 		        	<input type='checkbox' name='hys_options[not_heyshauna]' value='1' <?php 
 		        		echo chckchckbox(@$hys['settings']['not_heyshauna'])
-		        		?> /> This is <u>not</u> a heyshauna website
+		        		?> /> Hide heyshauna welcome note
 		        	</label><br />
 		        	<label>
 		        	<input type='checkbox' name='hys_options[no_attachments]' value='1' <?php 
 		        		echo chckchckbox(@$hys['settings']['no_attachments'])
-		        		?> /> This site does <u>not</u> use Attachments
+		        		?> /> Do not include use Attachments
+		        	</label><br />
+		        	<label>
+		        	<input type='checkbox' name='hys_options[animated_moreless]' value='1' <?php 
+		        		echo chckchckbox(@$hys['settings']['animated_moreless'])
+		        		?> /> Use jQuery more/less slide up/down animation 
 		        	</label><br />
 					<br />
 					<h4 style='padding-top:0;margin-top:0'>Navigation:</h4>
@@ -633,10 +640,12 @@ function hys_crontimes( $schedules ) {
 		        	 	<span class='hys_description'>- Title of textarea (ie: Right Column)</span><br />
 		        	</label>
 		        	
+		       			<? hys_space() ?>
+		        	
 		        	<label>
 		        	<input type='checkbox' name='hys_options[show_opt_fb]' value='1' <?php 
 		        		echo chckchckbox(@$hys['settings']['show_opt_fb'])
-		        		?> /> Facebook "Like" button
+		        		?> /> Share on Facebook button
 		        	</label><br />
 		        	
 		        	<label>
@@ -644,6 +653,15 @@ function hys_crontimes( $schedules ) {
 		        		echo chckchckbox(@$hys['settings']['show_opt_tw'])
 		        		?> /> Share on Twitter button
 		        	</label><br />
+
+		        	<label>
+		        	<input type='checkbox' name='hys_options[show_opt_gp]' value='1' <?php 
+		        		echo chckchckbox(@$hys['settings']['show_opt_gp'])
+		        		?> /> Share on Google+ button
+		        	</label><br />
+		        	
+		        	<label>
+
 		        	
 		       			<? hys_space() ?>
 		        	
@@ -678,6 +696,12 @@ function hys_crontimes( $schedules ) {
 		        	<input type='checkbox' name='hys_options[show_pg_img]' value='1' <?php 
 		        		echo chckchckbox(@$hys['settings']['show_pg_img'])
 		        		?> /> Add image gallery/attachments to page
+		        	</label><br />
+		        	
+		        	<label>
+		        	<input type='checkbox' name='hys_options[show_pt_img]' value='1' <?php 
+		        		echo chckchckbox(@$hys['settings']['show_pt_img'])
+		        		?> /> Add image gallery/attachments to posts
 		        	</label><br />
 		        	
 		        	<label>
@@ -1113,12 +1137,6 @@ function hys_crontimes( $schedules ) {
 	        		echo chckchckbox($hys['settings']['undercon_cook'])
 	        		?> /> Show $_COOKIE in banner (for developing)
 	        	</label><br />
-	        	<label>
-	        	<input type='checkbox' name='hys_options[ie6msg]' value='1' <?php 
-	        		if (isset($hys['settings']['ie6msg']))
-	        		echo chckchckbox($hys['settings']['ie6msg'])
-	        		?> /> Show IE6 debunker banner (when viewed with IE6)
-	        	</label>
 	    <?php 
 	    	if (!$a_admin) {
 	    		echo "</div>";
@@ -1371,7 +1389,7 @@ function hys_crontimes( $schedules ) {
 					<input type='checkbox' name='hys_options[dont_use_heyyou_media_library]' value='1' <?php 
 	        			if (isset($hys['settings']['dont_use_heyyou_media_library']))
 		        		echo chckchckbox($hys['settings']['dont_use_heyyou_media_library'])
-	    	    		?> />  Dont use <em>heyyou</em> media library<br /> 
+	    	    		?> />  Don't use <em>heyyou</em> media library<br /> 
 	    	    		&nbsp; &nbsp; &nbsp;<span class="description">(reverts to core Wordpress Media Library)</span>
 	        		</label><br />
 	        	</td>

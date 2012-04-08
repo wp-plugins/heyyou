@@ -231,7 +231,7 @@ if (!class_exists('mc')) {
 				$categories = $this->get_category_hierarchical_terms();
 				$selected_categories = (array)wp_get_object_terms($object->ID, 'media_category');
 				
-				$html .= "<div class='hys_media_select_categorys' id='hys_media_select_categorys'>";
+				$html .= "<div class='hys_media_select_categorys' id='hys_media_select_categorys-{$object->ID}'>";
 				
 				//$html='<select id="media-category"  multiple="multiple" style="height:100px;">';
 						
@@ -293,8 +293,7 @@ if (!class_exists('mc')) {
 				foreach ($_POST['media-category'] as $attach_id => $attach_wants_cat) {
 					$termID = (empty($attach_wants_cat)) ? 1 : $attach_wants_cat;
 					$term = get_term( $termID, 'media_category' );
-					array_push($terms, $term->name);
-					wp_set_object_terms($attach_id, $terms, 'media_category', false); 
+					wp_set_object_terms($attach_id, $term->name, 'media_category', false); 
 				}
 			} else {
 				if ( $attachment && (count($attachment['media-categories'])>0)) {
@@ -302,12 +301,12 @@ if (!class_exists('mc')) {
 					{
 						$termID = (empty($_POST['media-category'])) ? 1 : $_POST['media-category'];
 						$term = get_term( $termID, 'media_category' );
-						array_push($terms, $term->name);
+						$terms = $term->name;
 					}
 				} else {			
 					$termID = (empty($_POST['media-category'])) ? 1 : $_POST['media-category'];
 					$term = get_term( $termID, 'media_category' );
-					array_push($terms, $term->name);
+					$terms = $term->name;
 				}
 				//push the new values for this attachment
 				wp_set_object_terms($post['ID'], $terms, 'media_category', false); 
@@ -363,7 +362,7 @@ if (!class_exists('mc')) {
 					'taxonomy'        =>  $taxonomy,
 					'name'            =>  'media_category',
 					'orderby'         =>  'name',
-					'selected'        =>  $wp_query->query['term'],
+					'selected'        =>  @$wp_query->query['term'],
 					'hierarchical'    =>  true,
 					'depth'           =>  3,
 					'show_count'      =>  true, // Show # listings in parens

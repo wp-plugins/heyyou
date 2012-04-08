@@ -4,7 +4,7 @@ Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 0.0.13.2
+Stable tag: 0.0.0.2
 
 heyyou is a plugin framework that supplies resources for rapid development & adds unique dynamic custom post types directly in a Wordpress Page
 
@@ -161,7 +161,37 @@ The entire origin of this project bases from wanting the following within a Word
 
 == Changelog ==
 
-= 0.0.0.0.1 =
+= 0.0.0.2 =
+* April 7th, 2012
+* REMOVED "+NEW" and "COMMENTS" tabs from new Wordpress Admin Tool Bar.. solves issue where sites w/out posts don't find +post
+* REMOVED: "uncategorized" post heading page categories aren't turned on
+* REMOVED: ie6 debunker message and option
+* UPDATED: hys_attach_attachments() depreciated, now auto uses: hys_photo_gallery()
+* UPDATED: compressed: hys_style.css & js.js
+* UPDATED: metabox's in page revisited: new "heyyou Page Options" pulled client editable features from "heyyou Page Configuration", config only for admins now
+* UPDATED: changed hys_list_media() WP_Query to get_posts() to ensure no error happens w/ redeclaring the loop
+* UPDATED: media library category item counter replaced with same as actual cat output, counting should now be more accurate 
+* FIXED: bug: when a category is assigned and posts and categorized, if admin turns off categories, posts also uncategorize: categories only show when categories are turned on
+* FIXED: lightbox title/captions issues..
+* FIXED: jquery include now working properly,
+* FIXED: bug where drop-n-drag didn't work if a middle category was empty (cat count was -x)
+* FIXED: bug where page config > HTML Output Formats, weren't auto expanded if content was entered and/or could be entered
+* FIXED: if default meta keyword/description is in use, do not output it
+* FIXED: 3rd issue with Media Categories: cats displaying in unspecified categories, sometimes as if they moved, others as if they duplicated
+* ADDED: option to "add image gallery/attachments to POST" in heyyou settings
+* ADDED: "disable lightbox scripts on this page" override to global "add lightbox" script.. reduce load times when unused
+* ADDED: Message when changing media items cats in admin
+* NEW: "Page" meta type, primiarly for "redirect to.." page meta feild, but also avaliable in hys_post's meta
+* NEW: "Checkbox" meta type
+* NEW: "Use jQuery more/less slide up/down animation" option for animated more/less
+* NEW: added hys_make_moreless() function
+* NEW: Share on Google+ and Pinterest buttons added to options
+* NEW: hys_social() function and [social] shortcode, configure which social btn's to use in settings, output via checkbox in pg options or w/ shortcode
+* NEW: option to use Wordpress's default media library isntead of heyyou's
+
+
+
+= 0.0.0.1 =
 * April 6th, 2012
 * REMOVED lightbox from plugin to comply with GPL, I'm sorry for this misunderstanding of GPL, please contact me for info on how to fix your heyyou website if it was using the lightbox features; no charge,
 
@@ -171,7 +201,6 @@ The entire origin of this project bases from wanting the following within a Word
 * fixed: same bug in hey_media library from before in media dropdown (slow due to large # of queries)
 * removed: initial-scale=1.0 from mobile detection
 * fixed: bug where when attaching 1 img, gallery doesn't show. ($y > 0 && isset($x[0]['id']))
-
 
 = 0.0.13 =
 * February 4th, 2012
@@ -208,7 +237,6 @@ The entire origin of this project bases from wanting the following within a Word
 = 0.0.10.1 =
 * January 5, 2012
 * finally fixed: readme.txt documentation
-
 
 = 0.0.10 =
 * "Spoken" - December 22, 2011
@@ -328,7 +356,6 @@ The entire origin of this project bases from wanting the following within a Word
 * Attachments (photo galleries) facelift: images now tile instead of list, removed clutter & made simpler.
 * Fixed mobile issue was mobile detection wasn't registered until the second page visit
 
-
 = 0.0.7 =
 * "McGuffin" - April 20, 2011
 * setting - title for ttachments on/off
@@ -336,9 +363,7 @@ The entire origin of this project bases from wanting the following within a Word
 * create tile_attachments() function to auto prodce
 * make "enable" onclick='this.form.submit'
 * add 'hide main/page blurb' option, for pages that use heyyou instead of the_content()
-!* !!!important: drag and drop broken (jquery issue?)
-
-
+* !!!important: drag and drop broken (jquery issue?)
 
 = 0.0.6 = 
 * "Manor" - March 14, 2011
@@ -391,7 +416,6 @@ The entire origin of this project bases from wanting the following within a Word
 * Comments add ..more button for "auto collapse content" (personnel in epony)
 * add line conversion support to heyyou
 
-
 = 0.0.3 =
 * KidPiv - build
 
@@ -402,6 +426,9 @@ The entire origin of this project bases from wanting the following within a Word
 * PTC - build
 
 == Upgrade Notice ==
+
+= 0.0.0.0.1 =
+* jQuery $() may be undefined.. using wp_enqueue_scripts now including actual script..
 
 = 0.0.13 =
 * lb Alt title/caption'ing may be out of whack

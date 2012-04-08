@@ -436,7 +436,7 @@ function attachments_save($post_id)
     }
 
     // Check permissions
-    if( 'page' == $_POST['post_type'] )
+    if( 'page' == @$_POST['post_type'] )
     {
         if( !current_user_can( 'edit_page', $post_id ) )
         {

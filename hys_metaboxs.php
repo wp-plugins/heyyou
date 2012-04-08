@@ -16,8 +16,9 @@
 		global $hys;
 		
 		if ( current_user_can('manage_options') ) {
-			add_meta_box( 'myplugin_sectionid', 'heyyou page config', 'hys_metabox_output', 'page','side');
-			
+			add_meta_box( 'myplugin_sectionid', 'heyyou Page Configuration', 'hys_metabox_output', 'page','side');
+			add_meta_box( 'hys_metabox_page_options', 'heyyou Page Options', 'hys_metabox_page_options_output', 'page','side');
+
 			if (@$hys['hys_page_config']['sec_blurb'] == 1 || @$hys['settings']['secondary_blurbs'] == 1) {
 				$hys['settings']['secondary_blurb_title'] = (empty($hys['settings']['secondary_blurb_title'])) ? 'Secondary Blurb' : $hys['settings']['secondary_blurb_title'];
 				add_meta_box( 'secondary_blurb_box_id', __( $hys['settings']['secondary_blurb_title'], 'heyyou_sec_blurb' ), 'secondary_blurb_box', 'page' );
@@ -131,6 +132,290 @@
  Receive:   - none -
  Return:	- none -
 -------------------------------------------------------------*/
+	function hys_metabox_page_options_output() {
+		global $hys;
+		?>
+		<div class='hys_metabox_output'>
+			<!-- hide output -->
+				<? if(@$hys['settings']['show_opt_hide'] == 1):?>
+							<label>
+								<input type='checkbox' name='hys_page_config[hideoutput]' value=1 
+								<?php 
+									if (isset($hys['hys_page_config']['hideoutput'])) 
+									  echo chckchckbox($hys['hys_page_config']['hideoutput']); 
+								?> /> 
+								Hide <em>heyyou</em> output
+							</label>
+				<? endif; ?>
+
+			<!--  Hide Title -->
+				<? if(@$hys['settings']['show_opt_titlehide'] == 1): ?>
+							<label>
+								<input type='checkbox' name='hys_page_config[hidetitle]' value=1 
+								<?php 
+									if (isset($hys['hys_page_config']['hidetitle'])) 
+									  echo chckchckbox($hys['hys_page_config']['hidetitle']); 
+								?> /> 
+								Hide Page Title On Site
+							</label>
+				<? endif; ?>
+				<? if(@$hys['settings']['show_opt_blurbhide'] == 1): ?>
+							<label>
+								<input type='checkbox' name='hys_page_config[hideblurb]' value=1 
+								<?php 
+									if (isset($hys['hys_page_config']['hideblurb'])) 
+									  echo chckchckbox($hys['hys_page_config']['hideblurb']); 
+								?> /> 
+								Disable page main blurb
+							</label>
+				<? endif; ?>
+				<? if(@$hys['settings']['show_opt_sec_blurb'] == 1 || @$hys['settings']['secondary_blurbs'] == 1): ?>
+							<label>
+								<input type='checkbox' name='hys_page_config[sec_blurb]' value=1 <?= @($hys['settings']['secondary_blurbs'] == 1) ? "CHECKED disabled='disabled'" : "" ?>
+								<?php 
+									if (isset($hys['hys_page_config']['sec_blurb'])) 
+									  echo chckchckbox($hys['hys_page_config']['sec_blurb']); 
+								?> /> 
+								<?= @($hys['settings']['secondary_blurbs'] == 1) ? "<span style='color:#666'>" : ''; ?>
+								Add secondary Blurb
+								<?= @($hys['settings']['secondary_blurbs'] == 1) ? "</span>" : ''; ?>
+							</label>
+				<? endif; ?>
+				
+		       			<? hys_space() ?>
+
+
+			<!-- Facebook -->
+				<? if(@$hys['settings']['show_opt_fb'] == 1):?>
+							<label>
+								<input type='checkbox' name='hys_page_config[facebooklike]' value=1 
+								<?php 
+									if (isset($hys['hys_page_config']['facebooklike'])) 
+									  echo chckchckbox($hys['hys_page_config']['facebooklike']); 
+								?> /> 
+								Add Facebook "Like" Button
+							</label>
+				<? endif; ?>
+			<!-- Twitter -->
+				<? if(@$hys['settings']['show_opt_tw'] == 1):?>
+							<label>
+								<input type='checkbox' name='hys_page_config[twitter]' value=1 
+								<?php 
+									if (isset($hys['hys_page_config']['twitter'])) 
+									  echo chckchckbox($hys['hys_page_config']['twitter']); 
+								?> /> 
+								Add Twitter "Tweet" Button
+							</label>
+				<? endif; ?>
+			<!-- Google + -->
+				<? if(@$hys['settings']['show_opt_gp'] == 1):?>
+							<label>
+								<input type='checkbox' name='hys_page_config[googleplus]' value=1 
+								<?php 
+									if (isset($hys['hys_page_config']['googleplus'])) 
+									  echo chckchckbox($hys['hys_page_config']['googleplus']); 
+								?> /> 
+								Add Google+ Share Button
+							</label>
+				<? endif; ?>
+				
+		       			<? hys_space() ?>
+				
+				
+				<? if(@$hys['settings']['lightbox'] == 1):?>
+							<label>
+								<input type='checkbox' name='hys_page_config[disable_lightbox]' value=1 
+								<?php 
+									if (isset($hys['hys_page_config']['disable_lightbox'])) 
+									  echo chckchckbox($hys['hys_page_config']['disable_lightbox']); 
+								?> /> 
+								Disable Lightbox scripts on this page
+							</label>
+				<? endif; ?>
+
+			<!-- Page Photo/Image Gallery (attachments plugin) -->
+				<? if(@$hys['settings']['show_pg_img'] == 1 && @$hys['settings']['no_attachments'] != 1):
+					
+				?>
+							<label>
+								<input type='checkbox' name='hys_page_config[show_pg_img]' value=1 
+								<?php 
+									if (isset($hys['hys_page_config']['show_pg_img'])) 
+									  echo chckchckbox($hys['hys_page_config']['show_pg_img']); 
+								?> /> 
+								Add Photo Gallery to Page
+							</label>
+							
+							<label title='Turn off auto placement: of the image gallery. Instead use custom theme or %gallery% token in output format'>
+								&nbsp;&nbsp;&nbsp;&nbsp;  <input type='checkbox' name='hys_page_config[show_pg_img_autoplaceoff]' value=1 
+								<?php 
+									if (isset($hys['hys_page_config']['show_pg_img_autoplaceoff'])) 
+									  echo chckchckbox($hys['hys_page_config']['show_pg_img_autoplaceoff']); 
+								?> /> 
+								 Turn <b>off</b> auto placement of Gallery
+							</label>							
+				<? endif;  ?>
+				
+				
+		       			<? hys_space() ?>
+				
+						<table cellpadding="1" cellspacing="2" border="0" style='width:100%;'>
+						
+						
+			<!-- FEATURE TITLE -->
+				<? if(@$hys['settings']['show_opt_title'] == 1):?>
+							<tr>
+								<td valign="top">
+									<label for="hys_title">heyyou Title:</label> 
+								</td>
+								<td>
+									<input type='text' name='hys_page_config[title]' id='hys_title'
+										value='<?= @$hys['hys_page_config']['title'] ?>' style='width:150px' />
+								</td>
+							</tr>
+				<? endif; ?>
+												
+			<!-- BANNER -->
+				<? if(@$hys['settings']['show_opt_banner'] == 1):?>
+							<tr>
+								<td valign="top">
+									<label for="banner_credit">Banner (URL):</label> 
+								</td>
+								<td>
+								 <select name='hys_page_config[banner]' style='width:150px'> 
+								 	<?= hys_listmedia( @$hys['hys_page_config']['banner'], 10); ?>
+								 </select>
+								</td>
+							</tr>
+				<? endif; ?>
+							
+			<!-- Credit -->
+				<? if(@$hys['settings']['show_opt_banner_credit'] == 1):?>
+							<tr>
+								<td valign="top">
+									<label for="banner_credit">Photo Credit:</label> 
+								</td>
+								<td>
+									<input type="text" id="banner_credit" name="hys_usrpg_config[banner_credit]" value="<?= @$banner_credit ?>" style='width:150px' />
+								</td>
+							</tr>
+				<? endif; ?>
+							
+			<!-- Main Color -->
+				<? if(@$hys['settings']['show_opt_color'] == 1):?>
+							<tr>
+								<td valign="top">
+									<label for="color">Main color:</label> 
+								</td>
+								<td>
+									<code>#</code><input type='text' name='hys_page_config[color]' id='color' value='<?= @$hys['hys_page_config']['color']; ?>' class='code' size='6' maxlength='6' />
+									  <label>
+										&nbsp; &nbsp; <input type='checkbox' name='hys_page_config[ignorcolor]' value=1 
+										<?php 
+											if (isset($hys['hys_page_config']['ignorcolor'])) 
+											  echo chckchckbox($hys['hys_page_config']['ignorcolor']); 
+										?> /> 
+										ignore in <code>#content</code>
+									</label>
+								</td>
+							</tr>
+				<? endif; ?>
+				
+				
+			<!-- Secondary Color -->
+				<? if(@$hys['settings']['show_opt_sec_color'] == 1):?>
+							<tr>
+								<td valign="top">
+									<label for="sec_color">Secondary color:</label> 
+								</td>
+								<td>
+									<code>#</code><input type='text' name='hys_page_config[sec_color]' id='sec_color' value='<?= @$hys['hys_page_config']['sec_color']; ?>' class='code' size='6' maxlength='6' />
+								</td>
+							</tr>
+				<? endif; ?>
+				
+				<tr>
+				<td colspan=2><h4></h4><br /></td>
+				</tr>
+				
+				
+			<!-- Site meta fields -->
+				<? if (is_array(@$hys['settings']['meta'])) : ?>
+
+						<?
+						$numofmeta = count($hys['settings']['meta']);
+				
+						foreach ($hys['settings']['meta'] as $k => $sitemetavalue) {
+							if (!empty($hys['settings']['meta'][$k])) {
+							
+							
+								$mname = strtolower($hys['settings']['meta'][$k]);
+								$mtype = @$hys['settings']['meta_type'][$k];
+								$vmeta = @$hys['hys_page_config']['meta_'.hys_url_friendly($sitemetavalue)];
+								$fname = "hys_page_config[meta_".hys_url_friendly($sitemetavalue)."]";
+								$minfo = @$hys['settings']['meta_blurb'][$k];
+								  
+								if (strpos($mname,'(media)') || $mtype == 'media') {
+									$metafeild = "<select name='{$fname}'>".hys_listmedia($vmeta,10)."</select>";
+								}
+								elseif ($mtype == 'page') {
+									$metafeild = "<select name='{$fname}'>";
+									$metafeild .= "<option></option><optgroup label=\"Page\">";
+										$pagess = get_pages();
+										foreach ($pagess as $apage) {
+											$preselpg = ($vmeta == $apage->ID) ? " selected='selected'" : '';
+											$metafeild .= "<option value='{$apage->ID}'{$preselpg}>".hys_chopstring($apage->post_title,25)."</option>";
+										}
+									$metafeild .= "</optgroup>";
+									$metafeild .= "</select>";
+								}
+								elseif (strpos($mname,'(blurb)') || $mtype == 'blurb') {
+									$metafeild = "<textarea name='{$fname}' style='height:75px !important;font-size:10px;'>{$vmeta}</textarea>";
+								}
+								elseif (strpos($mname,'(code)')  || $mtype == 'code'){
+									$metafeild = "<textarea name='{$fname}' class='code' style='height:75px !important;font-size:10px;'>{$vmeta}</textarea>";
+								}
+								elseif (strpos($mname,'(checkbox)')  || $mtype == 'checkbox'){
+									$metafeild = "<input type='checkbox' value='1' name='{$fname}' ".chckchckbox($vmeta)." />";
+								}			
+								elseif (strpos($mname,'(url)')  || $mtype == 'url') {
+									$vmeta = (empty($vmeta)) ? 'http://' : $vmeta;
+									$metafeild = "<input type='text' name='{$fname}' value='{$vmeta}' style='width:150px' class='code hys_url_meta_feild' id='url_feild_{$k}' ".
+												 "onblur='change_url_color(0, \"url_feild_{$k}\")' onfocus='change_url_color(1, \"url_feild_{$k}\")' /> ";
+												 												 
+								}
+								else {
+									$metafeild = "<input type='text' name='{$fname}' value='{$vmeta}' style='width:150px' />";
+								}
+								
+								//if textarea, utilize space with colspan=2
+								if ((strpos($mname,'(blurb)') || $mtype == 'blurb') || (strpos($mname,'(code)')  || $mtype == 'code')) {
+									echo "<tr> <td colspan=2> ".str_replace(':','',$sitemetavalue).":<br />";
+								} else {
+									echo  "<tr>"."<td valign=top>".$sitemetavalue.":</td>"."<td>";
+								}
+							
+							
+								echo "<!--<input name='hys_page_config[meta_".hys_url_friendly($sitemetavalue)."]' type='text' value='".$vmeta."'  />-->{$metafeild}";
+								echo (!empty($minfo)) ? "<div class='description hys_meta_feild_instructions'>{$minfo}</div>" : '';
+								echo "</td></tr>";
+							}
+						} 
+						echo "</table>";
+						
+						?>
+			<!-- Site meta fields -->
+		</div><!--/hys_metabox_output-->
+				<? endif;
+
+	}
+	
+	
+	
+	
+	
+	
+	
 	function hys_metabox_output() {	
 		global $post,$hys,$current_user;
 		
@@ -256,238 +541,8 @@
 				<label style='padding:2px 0 5px 0;'><input type='radio' name='hys_page_config[preset]' value='custom' <?php echo (@$hys['hys_page_config']['preset'] == 'custom') ? "CHECKED ": ''; ?> onclick='this.form.submit();'> enabled</label>
 
 <? if ($hys['user'] == 'heyyou_client') { echo "</div><!--/display:none;-->"; } ?>
-		
-		<h4>Page Options</h4>
-
-			<!--  Hide Title -->
-				<? if(@$hys['settings']['show_opt_titlehide'] == 1): ?>
-							<label>
-								<input type='checkbox' name='hys_page_config[hidetitle]' value=1 
-								<?php 
-									if (isset($hys['hys_page_config']['hidetitle'])) 
-									  echo chckchckbox($hys['hys_page_config']['hidetitle']); 
-								?> /> 
-								Hide Page Title On Site
-							</label>
-				<? endif; ?>
-				<? if(@$hys['settings']['show_opt_blurbhide'] == 1): ?>
-							<label>
-								<input type='checkbox' name='hys_page_config[hideblurb]' value=1 
-								<?php 
-									if (isset($hys['hys_page_config']['hideblurb'])) 
-									  echo chckchckbox($hys['hys_page_config']['hideblurb']); 
-								?> /> 
-								Disable page main blurb
-							</label>
-				<? endif; ?>
-				<? if(@$hys['settings']['show_opt_sec_blurb'] == 1 || @$hys['settings']['secondary_blurbs'] == 1): ?>
-							<label>
-								<input type='checkbox' name='hys_page_config[sec_blurb]' value=1 <?= @($hys['settings']['secondary_blurbs'] == 1) ? "CHECKED disabled='disabled'" : "" ?>
-								<?php 
-									if (isset($hys['hys_page_config']['sec_blurb'])) 
-									  echo chckchckbox($hys['hys_page_config']['sec_blurb']); 
-								?> /> 
-								<?= @($hys['settings']['secondary_blurbs'] == 1) ? "<span style='color:#666'>" : ''; ?>
-								Add secondary Blurb
-								<?= @($hys['settings']['secondary_blurbs'] == 1) ? "</span>" : ''; ?>
-							</label>
-				<? endif; ?>
-			<!-- hide output -->
-				<? if(@$hys['settings']['show_opt_hide'] == 1):?>
-							<label>
-								<input type='checkbox' name='hys_page_config[hideoutput]' value=1 
-								<?php 
-									if (isset($hys['hys_page_config']['hideoutput'])) 
-									  echo chckchckbox($hys['hys_page_config']['hideoutput']); 
-								?> /> 
-								Hide <em>heyyou</em> output
-							</label>
-				<? endif; ?>
-			<!-- Facebook -->
-				<? if(@$hys['settings']['show_opt_fb'] == 1):?>
-							<label>
-								<input type='checkbox' name='hys_page_config[facebooklike]' value=1 
-								<?php 
-									if (isset($hys['hys_page_config']['facebooklike'])) 
-									  echo chckchckbox($hys['hys_page_config']['facebooklike']); 
-								?> /> 
-								Add Facebook "Like" Button
-							</label>
-				<? endif; ?>
-			<!-- Twitter -->
-				<? if(@$hys['settings']['show_opt_tw'] == 1):?>
-							<label>
-								<input type='checkbox' name='hys_page_config[twitter]' value=1 
-								<?php 
-									if (isset($hys['hys_page_config']['twitter'])) 
-									  echo chckchckbox($hys['hys_page_config']['twitter']); 
-								?> /> 
-								Add Twitter "Tweet" Button
-							</label>
-				<? endif; ?>
-
-			<!-- Page Photo/Image Gallery (attachments plugin) -->
-				<? if(@$hys['settings']['show_pg_img'] == 1 && @$hys['settings']['no_attachments'] != 1):
-					
-				?>
-							<label>
-								<input type='checkbox' name='hys_page_config[show_pg_img]' value=1 
-								<?php 
-									if (isset($hys['hys_page_config']['show_pg_img'])) 
-									  echo chckchckbox($hys['hys_page_config']['show_pg_img']); 
-								?> /> 
-								Add Photo Gallery to Page
-							</label>
-							
-							<label title='Turn off auto placement: of the image gallery. Instead use custom theme or %gallery% token in output format'>
-								&nbsp;&nbsp;&nbsp;&nbsp;  <input type='checkbox' name='hys_page_config[show_pg_img_autoplaceoff]' value=1 
-								<?php 
-									if (isset($hys['hys_page_config']['show_pg_img_autoplaceoff'])) 
-									  echo chckchckbox($hys['hys_page_config']['show_pg_img_autoplaceoff']); 
-								?> /> 
-								 Turn <b>off</b> auto placement of Gallery
-							</label>							
-				<? endif; ?>
-				
-				
-
-						<table cellpadding="1" cellspacing="2" border="0">
-						
-						
-			<!-- FEATURE TITLE -->
-				<? if(@$hys['settings']['show_opt_title'] == 1):?>
-							<tr>
-								<td valign="top">
-									<label for="hys_title">heyyou Title:</label> 
-								</td>
-								<td>
-									<input type='text' name='hys_page_config[title]' id='hys_title'
-										value='<?= @$hys['hys_page_config']['title'] ?>' style='width:175px' />
-								</td>
-							</tr>
-				<? endif; ?>
-												
-			<!-- BANNER -->
-				<? if(@$hys['settings']['show_opt_banner'] == 1):?>
-							<tr>
-								<td valign="top">
-									<label for="banner_credit">Banner (URL):</label> 
-								</td>
-								<td>
-								 <select name='hys_page_config[banner]' style='width:175px'> 
-								 	<?= hys_listmedia( @$hys['hys_page_config']['banner']); ?>
-								 </select>
-								</td>
-							</tr>
-				<? endif; ?>
-							
-			<!-- Credit -->
-				<? if(@$hys['settings']['show_opt_banner_credit'] == 1):?>
-							<tr>
-								<td valign="top">
-									<label for="banner_credit">Photo Credit:</label> 
-								</td>
-								<td>
-									<input type="text" id="banner_credit" name="hys_usrpg_config[banner_credit]" value="<?= @$banner_credit ?>" style='width:175px' />
-								</td>
-							</tr>
-				<? endif; ?>
-							
-			<!-- Main Color -->
-				<? if(@$hys['settings']['show_opt_color'] == 1):?>
-							<tr>
-								<td valign="top">
-									<label for="color">Main color:</label> 
-								</td>
-								<td>
-									<code>#</code><input type='text' name='hys_page_config[color]' id='color' value='<?= @$hys['hys_page_config']['color']; ?>' class='code' size='6' maxlength='6' />
-									  <label>
-										&nbsp; &nbsp; <input type='checkbox' name='hys_page_config[ignorcolor]' value=1 
-										<?php 
-											if (isset($hys['hys_page_config']['ignorcolor'])) 
-											  echo chckchckbox($hys['hys_page_config']['ignorcolor']); 
-										?> /> 
-										ignore in <code>#content</code>
-									</label>
-								</td>
-							</tr>
-				<? endif; ?>
-				
-				
-			<!-- Secondary Color -->
-				<? if(@$hys['settings']['show_opt_sec_color'] == 1):?>
-							<tr>
-								<td valign="top">
-									<label for="sec_color">Sndry color:</label> 
-								</td>
-								<td>
-									<code>#</code><input type='text' name='hys_page_config[sec_color]' id='sec_color' value='<?= @$hys['hys_page_config']['sec_color']; ?>' class='code' size='6' maxlength='6' />
-								</td>
-							</tr>
-				<? endif; ?>
-				
-				<tr>
-				<td colspan=2><h4></h4><br /></td>
-				</tr>
-				
-				
-			<!-- Site meta fields -->
-				<? if (is_array(@$hys['settings']['meta'])) :
-				
-						$numofmeta = count($hys['settings']['meta']);
-				
-						foreach ($hys['settings']['meta'] as $k => $sitemetavalue) {
-							if (!empty($hys['settings']['meta'][$k])) {
-							
-							
-								$mname = strtolower($hys['settings']['meta'][$k]);
-								$mtype = @$hys['settings']['meta_type'][$k];
-								$vmeta = @$hys['hys_page_config']['meta_'.hys_url_friendly($sitemetavalue)];
-								$fname = "hys_page_config[meta_".hys_url_friendly($sitemetavalue)."]";
-								$minfo = @$hys['settings']['meta_blurb'][$k];
-								  
-								if (strpos($mname,'(media)') || $mtype == 'media') {
-									$metafeild = "<select name='{$fname}'>".hys_listmedia($vmeta,10)."</select>";
-								}
-								elseif (strpos($mname,'(blurb)') || $mtype == 'blurb') {
-									$metafeild = "<textarea name='{$fname}' style='height:75px !important;font-size:10px;'>{$vmeta}</textarea>";
-								}
-								elseif (strpos($mname,'(code)')  || $mtype == 'code'){
-									$metafeild = "<textarea name='{$fname}' class='code' style='height:75px !important;font-size:10px;'>{$vmeta}</textarea>";
-								}
-								elseif (strpos($mname,'(url)')  || $mtype == 'url') {
-									$vmeta = (empty($vmeta)) ? 'http://' : $vmeta;
-									$metafeild = "<input type='text' name='{$fname}' value='{$vmeta}' size=30 class='code hys_url_meta_feild' id='url_feild_{$k}' ".
-												 "onblur='change_url_color(0, \"url_feild_{$k}\")' onfocus='change_url_color(1, \"url_feild_{$k}\")' /> ";
-												 												 
-								}
-								else {
-									$metafeild = "<input type='text' name='{$fname}' value='{$vmeta}' size=30 />";
-								}
 								
-								//if textarea, utilize space with colspan=2
-								if ((strpos($mname,'(blurb)') || $mtype == 'blurb') || (strpos($mname,'(code)')  || $mtype == 'code')) {
-									echo "<tr> <td colspan=2> {$sitemetavalue}:<br />";
-								} else {
-									echo  "<tr>"."<td valign=top>".$sitemetavalue.":</td>"."<td>";
-								}
-							
-							
-								echo "<!--<input name='hys_page_config[meta_".hys_url_friendly($sitemetavalue)."]' type='text' value='".$vmeta."'  />-->{$metafeild}";
-								echo (!empty($minfo)) ? "<div class='description hys_meta_feild_instructions'>{$minfo}</div>" : '';
-								echo "</td></tr>";
-							}
-						} 
-						
-						?>
-						
-				<? endif; ?>
-				
-				
-				
-				
-				
-						</table>
+
 							
 			
 		
@@ -592,7 +647,7 @@
 							echo chckchckbox($hys['hys_page_config']['include_attach']); 
 					?> /> Use Images Attachments
 				</label>	
-				
+						
 						<label title='Checking this add the images TITLE and CAPTION under the image on the page'>
 						&nbsp; &nbsp; &nbsp; 
 							<input type='checkbox' name='hys_page_config[show_pg_img_printlabel]' value=1 
@@ -600,7 +655,7 @@
 								if (isset($hys['hys_page_config']['show_pg_img_printlabel'])) 
 								  echo chckchckbox($hys['hys_page_config']['show_pg_img_printlabel']); 
 							?> /> 
-							 Turn <b>on</b> title+caption labeling
+							 Print title+caption labels
 						</label>
 				
 					<!-- USE ATTACHMENTS AS IMAGE GALLERY -->
@@ -871,9 +926,11 @@
 						</table>
 				
 			<h4>HTML Output Formats</h4>
-						
-			<h5><a class='<?=(!empty($hys['hys_page_config']['before_heyyou'])) ? "blacklink" : '' ?>' id='' onclick="showhide('beforeafter_output_format');" >Before / After heyyou Output</a></h5>
-			<div id='beforeafter_output_format' <?=(empty($hys['hys_page_config']['before_heyyou'])) ? "style='display:none;'" : '' ?>>
+			<?
+				$ba_output = @$hys['hys_page_config']['before_heyyou'].@$hys['hys_page_config']['after_heyyou'];
+			?>
+			<h5><a class='<?=(!empty($ba_output)) ? "blacklink" : '' ?>' id='' onclick="showhide('beforeafter_output_format');" >Before / After heyyou Output</a></h5>
+			<div id='beforeafter_output_format' <?=(empty($ba_output)) ? "style='display:none;'" : '' ?>>
 				<textarea name='hys_page_config[before_heyyou]'  class='code' style='width:100%;height:44px !important;font-size:10px;'><?php echo @$hys['hys_page_config']['before_heyyou'];?></textarea>
 				<div>-</div>
 				<textarea name='hys_page_config[after_heyyou]' class='code' style='width:100%;height:44px !important;font-size:10px;'><?php echo @$hys['hys_page_config']['after_heyyou'];?></textarea>
@@ -882,9 +939,12 @@
 			</div><!--/beforeafter_output_format-->	
 			
 			
+			<?
+				$ba_output = @$hys['hys_page_config']['before_cats_heyyou'].@$hys['hys_page_config']['after_cats_heyyou'];
+			?>
 			
-			<h5><a class='<?=(!empty($hys['hys_page_config']['before_cats_heyyou'])) ? "blacklink" : '' ?>' id='' onclick="showhide('beforeaftercat_output_format');" >Before / After heyyou Categories</a></h5>
-			<div id='beforeaftercat_output_format' <?=(empty($hys['hys_page_config']['before_cats_heyyou'])) ? "style='display:none;'" : '' ?>>
+			<h5><a class='<?=(!empty($ba_output)) ? "blacklink" : '' ?>' id='' onclick="showhide('beforeaftercat_output_format');" >Before / After heyyou Categories</a></h5>
+			<div id='beforeaftercat_output_format' <?=(empty($ba_output)) ? "style='display:none;'" : '' ?>>
 				<textarea name='hys_page_config[before_cats_heyyou]'  class='code' style='width:100%;height:44px !important;font-size:10px;'><?php echo @$hys['hys_page_config']['before_cats_heyyou'];?></textarea>
 				<div>-</div>
 				<textarea name='hys_page_config[after_cats_heyyou]' class='code' style='width:100%;height:44px !important;font-size:10px;'><?php echo @$hys['hys_page_config']['after_cats_heyyou'];?></textarea>
@@ -894,11 +954,10 @@
 			
 					
 			
-			
 			<?php  if (isset($hys['hys_page_config']['include_cats'])) {  ?>
 			<h5><a class='<?=(!empty($hys['hys_page_config']['include_cats'])) ? "blacklink" : '' ?>' id='' onclick="showhide('cat_output_format');" >Category HTML output format</a></h5>
 			
-				<div id='cat_output_format' <?=(empty($hys['hys_page_config']['cat_format'])) ? "style='display:none;'" : '' ?>>
+				<div id='cat_output_format' <?=(@$hys['hys_page_config']['include_cats'] != 1) ? "style='display:none;'" : '' ?>>
 				<label>
 						<textarea name='hys_page_config[cat_format]' 
 										style='width:100%;height:44px !important;font-size:10px;'><?php 
@@ -922,7 +981,7 @@
 			<!-- Blocks HTML Output format -->
 
 					<h5><a class='<?=(!empty($hys['hys_page_config']['singleformat'])) ? "blacklink" : '' ?>' id='' onclick="showhide('single_output_format');" >Single Page (hypg) HTML output format</a></h5>
-					<div id='single_output_format' <?=(empty($hys['hys_page_config']['singleformat'])) ? "style='display:none;'" : '' ?>>
+					<div id='single_output_format' <?=(@$hys['hys_page_config']['singleformat'] != 1) ? "style='display:none;'" : '' ?>>
 					<textarea name='hys_page_config[singleformat]' class='code'
 					  style='width:100%;height:300px;font-size:10px;'><?php 
 					  echo @$hys['hys_page_config']['singleformat'];
@@ -1188,19 +1247,23 @@ for ($i = 0; $i != 15; $i++) {
 					$parent_term_id = $cat->term_id;
 			}
 			
-			//run though the posts, build into an array for move up/down locating //@TODO simplify this since dropdrag
-			$feature_post_arr = array();	
-			foreach ($myterms as $k => $cat) { //cycle through cats	
-				if ($cat->parent == $parent_term_id) { // if the cat is in the parent (the feature code)
-					foreach($get_feature_posts_copy as $k => $f_post) {
-						$custom_fields =  get_post_meta($f_post->ID, 'meta');	
-						$custom_fields = (isset($custom_fields[0])) ? $custom_fields[0] : array();
-						if (isset($custom_fields['hys_post_cat']) && $custom_fields['hys_post_cat'] == $cat->term_id) {
-							$feature_post_arr[] = array(
-								'id'	=> $f_post->ID,
-								'tit'	=> $f_post->post_title,
-								'order'	=> $f_post->menu_order);
-							unset($get_feature_posts_copy[$k]); //to not be repeated in "uncategorized"
+			$using_categories = (isset($hys['hys_page_config']['include_cats']) && $hys['hys_page_config']['include_cats'] == 1) ? true : false;
+			
+			if ($using_categories) {
+				//run though the posts, build into an array for move up/down locating //@TODO simplify this since dropdrag
+				$feature_post_arr = array();	
+				foreach ($myterms as $k => $cat) { //cycle through cats	
+					if ($cat->parent == $parent_term_id) { // if the cat is in the parent (the feature code)
+						foreach($get_feature_posts_copy as $k => $f_post) {
+							$custom_fields =  get_post_meta($f_post->ID, 'meta');	
+							$custom_fields = (isset($custom_fields[0])) ? $custom_fields[0] : array();
+							if (isset($custom_fields['hys_post_cat']) && $custom_fields['hys_post_cat'] == $cat->term_id) {
+								$feature_post_arr[] = array(
+									'id'	=> $f_post->ID,
+									'tit'	=> $f_post->post_title,
+									'order'	=> $f_post->menu_order);
+								unset($get_feature_posts_copy[$k]); //to not be repeated in "uncategorized"
+							}
 						}
 					}
 				}
@@ -1211,18 +1274,21 @@ for ($i = 0; $i != 15; $i++) {
 				$feature_post_arr[] = array('id'=>$f_post->ID,'order'=>$f_post->menu_order);
 				unset($get_feature_posts_copy[$k]);
 			}
-								
-			//print cats if in $parent_term_id
+
 			$cati = 0;
 			$total_i = 0;
-			foreach ($myterms as $k => $cat) {		
-				if ($cat->parent == $parent_term_id) {
-					$list_posts 		= hys_admin_list_posts_for_managing($get_feature_posts, $cat, $cati, $total_i);
-					$get_feature_posts 	= $list_posts['get_feature_posts'];
-					$count 				= $list_posts['count']+$count;
-					$total_i			= $list_posts['total_i'];
-					echo $list_posts['return'];
-					$cati++;
+								
+			//print cats if in $parent_term_id
+			if ($using_categories) {
+				foreach ($myterms as $k => $cat) {		
+					if ($cat->parent == $parent_term_id) {
+						$list_posts 		= hys_admin_list_posts_for_managing($get_feature_posts, $cat, $cati, $total_i);
+						$get_feature_posts 	= $list_posts['get_feature_posts'];
+						$count 				= $list_posts['count']+$count;
+						$total_i			= $list_posts['total_i'];
+						echo $list_posts['return'];
+						$cati++;
+					}
 				}
 			}
 			
@@ -1274,76 +1340,80 @@ for ($i = 0; $i != 15; $i++) {
 		
 		//Cat header row...
 		
-		if (empty($cat)) {
-			$the_cat_title = "<span class='uncategorized_cat' style='color:#999;'>Uncategorized</span>";
-		} else {
-			//get category meta: title / blurb / html format (older heyyou's)
-			$cat_meta = @unserialize($cat->description); 
-			// if the descrition is serialized (older heyyou's)
-			if ($cat_meta == true) {
-				$cat_blurb = $cat_meta['blurb'];
-				$cat_format = stripslashes($cat_meta['format']);
+		$using_categories = (isset($hys['hys_page_config']['include_cats']) && $hys['hys_page_config']['include_cats'] == 1) ? true : false;
+		
+		if ($using_categories) {
+			if (empty($cat)) {
+				$the_cat_title = "<span class='uncategorized_cat' style='color:#999;'>Uncategorized</span>";
 			} else {
-				$cat_blurb 	= $cat->description;
-				$cat_format =  get_post_meta($cat->term_id, 'cat_override');	
-				$cat_format	= (isset($cat_format[0])) ? $cat_format[0] : array();
+				//get category meta: title / blurb / html format (older heyyou's)
+				$cat_meta = @unserialize($cat->description); 
+				// if the descrition is serialized (older heyyou's)
+				if ($cat_meta == true) {
+					$cat_blurb = $cat_meta['blurb'];
+					$cat_format = stripslashes($cat_meta['format']);
+				} else {
+					$cat_blurb 	= $cat->description;
+					$cat_format =  get_post_meta($cat->term_id, 'cat_override');	
+					$cat_format	= (isset($cat_format[0])) ? $cat_format[0] : array();
+				}
+				
+				$catnotifyhtml = (isset($cat_meta['format']) && !empty($cat_meta['format'])) ? "<code style='font-style:normal !important'>&lt;HTML&gt;</code> " : '';
+				$catshorttitle = (isset($cat_meta['title']) && !empty($cat_meta['title'])) ? "<strong>".$cat_meta['title']."</strong> - " : '';
+				$catshortdescript = "<a class='hys_fake_link' style='color:#999 !important; font-style:italic' onclick='showhide(\"cat_{$cat->term_id}_moreinfo\")'>{$catnotifyhtml}".$catshorttitle.nostyle($cat_meta['blurb'],50,'...')."</a>";
+				
+				$cat_format = ($cat_format == 'Array') ? '' : $cat_format;
+	
+				$the_cat_title = "
+						<!-- CAT DELETE -->
+						<a href='{$uri}&delete_cat={$cat->term_id}&message=3' ".
+					 		"title='DELETE cat #{$cat->term_id}' onclick='return doConfirm(this.id);'><img src='{$hys['dir']}/res/imgs/delete.png' alt='' class='hys_admin_ico' style='padding: 0 8px 0 32px;' /></a>
+						
+						<!-- CAT EDIT -->
+						<a class='hys_fake_link' onclick='showhide(\"cat_{$cat->term_id}_moreinfo\")' ".
+							"title='Edit Category'><img src='{$hys['dir']}/res/imgs/pencil.png' alt='' class='hys_admin_ico' /></a> 
+							&nbsp; 
+						
+						<!-- CAT COUNT/ORDER -->
+						<input type='text' name='update_cat[{$cat->term_id}][count]' value='{$cat->count}' size=1 ".
+											" style='width:35px;' class='code hys_cat_counter' />  
+						
+						<!-- CAT TITLE -->
+						<input type='text' name='update_cat[{$cat->term_id}][name]' value='{$cat->name}' size=30/>
+						{$catshortdescript}<br />
+						
+						<!-- CAT DESCRIPT -->
+						<div id='cat_{$cat->term_id}_moreinfo'  style='display:none;'>
+							<table border=0>
+							  <tr>
+								<td valign='top'  align=right  style='font-size:11px !important;'>Description:<br />
+									<a onClick='addtext(\"moredescript_{$cat->term_id}\");'>
+									<img src='{$hys['dir']}/res/imgs/more_btn.jpg' alt='' ".
+									"class='' style='width:26px !important;height:24px !important;margin:5px' />
+									</a>
+								</td>
+								<td>
+									<textarea name='update_cat[{$cat->term_id}][description]' ".
+										"id='moredescript_{$cat->term_id}' class='cat_textarea'>{$cat_blurb}</textarea>
+								</td>
+							  </tr>
+							  <tr>
+								<td valign='top'  align=right  style='font-size:11px !important;'>Override HTML<br /> output format:
+								</td>
+								<td>
+									<textarea name='cat_override[{$cat->term_id}]' class='code cat_textarea' style='font-size:10px;'>".$cat_format."</textarea>
+								</td>
+							  </tr>
+							</table>
+						</div><!--/cat_{$cat->term_id}_moreinfo-->";
 			}
-			
-			$catnotifyhtml = (isset($cat_meta['format']) && !empty($cat_meta['format'])) ? "<code style='font-style:normal !important'>&lt;HTML&gt;</code> " : '';
-			$catshorttitle = (isset($cat_meta['title']) && !empty($cat_meta['title'])) ? "<strong>".$cat_meta['title']."</strong> - " : '';
-			$catshortdescript = "<a class='hys_fake_link' style='color:#999 !important; font-style:italic' onclick='showhide(\"cat_{$cat->term_id}_moreinfo\")'>{$catnotifyhtml}".$catshorttitle.nostyle($cat_meta['blurb'],50,'...')."</a>";
-			
-			$cat_format = ($cat_format == 'Array') ? '' : $cat_format;
-
-			$the_cat_title = "
-					<!-- CAT DELETE -->
-					<a href='{$uri}&delete_cat={$cat->term_id}&message=3' ".
-				 		"title='DELETE cat #{$cat->term_id}' onclick='return doConfirm(this.id);'><img src='{$hys['dir']}/res/imgs/delete.png' alt='' class='hys_admin_ico' style='padding: 0 8px 0 32px;' /></a>
 					
-					<!-- CAT EDIT -->
-					<a class='hys_fake_link' onclick='showhide(\"cat_{$cat->term_id}_moreinfo\")' ".
-						"title='Edit Category'><img src='{$hys['dir']}/res/imgs/pencil.png' alt='' class='hys_admin_ico' /></a> 
-						&nbsp; 
-					
-					<!-- CAT COUNT/ORDER -->
-					<input type='text' name='update_cat[{$cat->term_id}][count]' value='{$cat->count}' size=1 ".
-										" style='width:35px;' class='code hys_cat_counter' />  
-					
-					<!-- CAT TITLE -->
-					<input type='text' name='update_cat[{$cat->term_id}][name]' value='{$cat->name}' size=30/>
-					{$catshortdescript}<br />
-					
-					<!-- CAT DESCRIPT -->
-					<div id='cat_{$cat->term_id}_moreinfo'  style='display:none;'>
-						<table border=0>
-						  <tr>
-							<td valign='top'  align=right  style='font-size:11px !important;'>Description:<br />
-								<a onClick='addtext(\"moredescript_{$cat->term_id}\");'>
-								<img src='{$hys['dir']}/res/imgs/more_btn.jpg' alt='' ".
-								"class='' style='width:26px !important;height:24px !important;margin:5px' />
-								</a>
-							</td>
-							<td>
-								<textarea name='update_cat[{$cat->term_id}][description]' ".
-									"id='moredescript_{$cat->term_id}' class='cat_textarea'>{$cat_blurb}</textarea>
-							</td>
-						  </tr>
-						  <tr>
-							<td valign='top'  align=right  style='font-size:11px !important;'>Override HTML<br /> output format:
-							</td>
-							<td>
-								<textarea name='cat_override[{$cat->term_id}]' class='code cat_textarea' style='font-size:10px;'>".$cat_format."</textarea>
-							</td>
-						  </tr>
-						</table>
-					</div><!--/cat_{$cat->term_id}_moreinfo-->";
-		}
-					
-		$return .= "
+			$return .= "
 			<div class='hys_cat_edit_row hys_cat_edit_row_top'> 
 				{$the_cat_title}
 			</div><!--/hys_cat_edit_row-->";
-		
+		}
+
 		$return .= "<ul class='sortablelist' id='sortable-list-{$cati}'>";
 		
 		$select_checkboxes = '';
