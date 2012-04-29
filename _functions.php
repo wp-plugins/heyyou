@@ -1007,7 +1007,10 @@ function hys_load_jquery() {
 					if ($cat->parent == $parent_term_id) // if the cat is in the parent (hys_post-xxx)
 						$numoflists++;
 				}
-			}		
+			} else {
+				// there may be no cats, but are there uncategorized posts?
+				if (count(get_heyyou()) > 0) $numoflists = 1;
+			}
 		}
 		
 		if ($numoflists > 0) {
