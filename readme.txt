@@ -161,6 +161,11 @@ The entire origin of this project bases from wanting the following within a Word
 
 == Changelog ==
 
+= 0.0.0.3 =
+* April 28th, 2012
+* fixed: drop and drag issue on posts without cats set, and uncateogized. 
+
+
 = 0.0.0.2 =
 * April 7th, 2012
 * REMOVED "+NEW" and "COMMENTS" tabs from new Wordpress Admin Tool Bar.. solves issue where sites w/out posts don't find +post
