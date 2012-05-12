@@ -1504,7 +1504,7 @@ for ($i = 0; $i != 15; $i++) {
 				if ($hys['user'] != 'heyyou_client') {
 					$return .= "
 						<!-- DUPLICATE -->
-						<a href='{$uri}&dbl_ftr={$f_post->ID}&message=3#hys_manage_metabox' title='DUPLICATE post #{$f_post->ID}' >
+						<a href='{$uri}&dbl_ftr={$f_post->ID}&ts=".time()."&message=3#hys_manage_metabox' title='DUPLICATE post #{$f_post->ID}' >
 							<img src='{$hys['dir']}/res/imgs/dbl.png' alt='' style='' />
 						</a>\n";
 				}

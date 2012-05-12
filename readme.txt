@@ -11,8 +11,7 @@ heyyou is a plugin framework that supplies resources for rapid development & add
 
 == Description ==
 
-* Visit: [hey-you.ca](http://hey-you.ca/)
-* Tweet: [@david_sword](http://twitter.com/david_sword/#)
+** If you expereince any issues: before rating, please contact: we will help you ** 
 
 This plugin (currently in alpha stage) is intended as a developers framework - it's goal to turn Wordpress into more of a CMS by adding a wide range of functionalities, settings, and functions to easily:
 
@@ -20,6 +19,8 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 2. Serve as a Development Framework - housing an assortment of presets with an extensive admin settings page
 3. Simplifying Wordpress, but adding options to cut down unneeded admin items
 
+* Visit: [hey-you.ca](http://hey-you.ca/)
+* Tweet: [@david_sword](http://twitter.com/david_sword/#)
 
 
 = Elaborating on some primary features, heyyou: =
@@ -161,10 +162,15 @@ The entire origin of this project bases from wanting the following within a Word
 
 == Changelog ==
 
+= 0.0.0.4 =
+* May 7th, 2012
+* FIXED: issue with media items uncategorizing after hiting "save changes" while using the "attach" button. The "as if they moved overnight" issue
+
 = 0.0.0.3 =
 * April 28th, 2012
-* fixed: drop and drag issue on posts without cats set, and uncateogized. 
-
+* FIXED: drop and drag issue on posts without cats set, and uncateogized. 
+* FIXED: added timestamp to duplicate button so as URL's are not the same (allowing you to re-duplicate same file again and again instead of clicking the current url (dead link))
+* FIXED: issue with media dropdown sticking on edit post
 
 = 0.0.0.2 =
 * April 7th, 2012
@@ -202,20 +208,20 @@ The entire origin of this project bases from wanting the following within a Word
 
 = 0.0.13.2 =
 * February 18th, 2012
-* issue were media cat items may apear in their set cat as well as uncategorized.. (as media items can have multi-cats, and "1" uncat is set as default..)
-* fixed: same bug in hey_media library from before in media dropdown (slow due to large # of queries)
-* removed: initial-scale=1.0 from mobile detection
-* fixed: bug where when attaching 1 img, gallery doesn't show. ($y > 0 && isset($x[0]['id']))
+* FIXED: issue were media cat items may apear in their set cat as well as uncategorized.. (as media items can have multi-cats, and "1" uncat is set as default..)
+* FIXED: same bug in hey_media library from before in media dropdown (slow due to large # of queries)
+* REMOVED: initial-scale=1.0 from mobile detection
+* FIXED: bug where when attaching 1 img, gallery doesn't show. ($y > 0 && isset($x[0]['id']))
 
 = 0.0.13 =
 * February 4th, 2012
 * Updated: Minor IE9 compat in 3rd party JS tools.... awh IE..... 
 * updated: updater for pre-alpha versions of heyyou to convert "hys_%feature%" post types into "hys_post" and be recognized as enabled
-* fixed: numberposts issue in hys_media library that may of cause "disappearing" and "uncategorizing" media items
+* FIXED: numberposts issue in hys_media library that may of cause "disappearing" and "uncategorizing" media items
 
 = 0.0.12 =
 * "Hey Jude" - January 22, 2012
-* fixed: bug where new media items that were uncategorized weren't showing up in library
+* FIXED: bug where new media items that were uncategorized weren't showing up in library
 
 = 0.0.11 =
 * "Susan" - January 6, 2012

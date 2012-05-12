@@ -223,10 +223,9 @@ if (!class_exists('mc')) {
 		public function add_media_category_field($fields, $object) {
 			$html = '';
 			
-			$ignor_this_displaying_of = (isset($_GET['attachbtn']) || (isset($_GET['s']) && !empty($_GET['s']))) ? true : false;
-
-
-			if (!isset($fields['media_library_categories']) && !$ignor_this_displaying_of) {
+			//$ignor_this_displaying_of = (isset($_GET['attachbtn']) || (isset($_GET['s']) && !empty($_GET['s']))) ? true : false;
+			
+			if (!isset($fields['media_library_categories']) /* && !$ignor_this_displaying_of */) {
 				
 				$categories = $this->get_category_hierarchical_terms();
 				$selected_categories = (array)wp_get_object_terms($object->ID, 'media_category');

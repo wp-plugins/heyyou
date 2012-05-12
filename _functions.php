@@ -2001,7 +2001,7 @@ function  hys_attach_attachments($heyyou_post_id) {
 						<span class='attach_download_title'>Download:</span>
 						<a href='".hys_return_url()."?download={$full_download[0]}' target='_Blank' class='attach_download_hi'>{$hi}</a>
 						<span class='attach_download_seperator'> | </span>
-						<a href='".hys_return_url()."?download={$low_download[0]}' target='_Blank' class='attach_download_low' rel='lightbox[smallgallery{$heyyou_post_id}]'>{$low}</a>
+						<a href='".hys_return_url()."?download={$low_download[0]}' target='_Blank' class='attach_download_low'>{$low}</a>
 					  </div>\n";
 					}
 					$attachments .= "
@@ -2537,7 +2537,7 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 		$the_date,
 		$post_content,
 		$i,
-		'[-DEPRECIATED-]',$lb_first.$lb_links,
+		'<!-- [DEPRECIATED] -->',$lb_first.$lb_links,
 		hys_lines(1), hys_lines(2),
 		$back_link,
 		$prev_link, $next_link,
@@ -2594,7 +2594,13 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 				$meta[$metanum] = (isset($meta[$metanum])) ? $meta[$metanum] : '';
 				$metaval 		= (isset($meta[$token])) ? $meta[$token] : $meta[$metanum];
 				//run filters on (blurb)
-				if (strpos(strtolower($mtaname),'(blurb)') || @$hys_page_config['meta_type'][$k] == 'blurb') 
+				if (
+					(strpos(strtolower($mtaname),'(blurb)') || @$hys_page_config['meta_type'][$k] == 'blurb')
+					OR
+					(strpos(strtolower($mtaname),'(textarea)') || @$hys_page_config['meta_type'][$k] == 'textarea')
+					OR
+					(strpos(strtolower($mtaname),'(code)') || @$hys_page_config['meta_type'][$k] == 'code')
+				) 
 					$metaval = nl2br($metaval);
 				//get URL of (media) drop-down selected file
 				if (strpos(strtolower($mtaname),'(media)') || @$hys_page_config['meta_type'][$k] == 'media')  {
@@ -3285,7 +3291,7 @@ function hys_make_moreless($first,$second,$id='',$readmore_text='',$readless_tex
 					$posts = get_posts( $args );
 					foreach ($posts as $apost) {
 						$sel = ($apost->ID == $preselect) ? " selected='selected'" : '';
-						$return .= "<option value='".get_the_ID()."'{$sel}>".$apost->post_title."</option>";
+						$return .= "<option value='".$apost->ID."'{$sel}>".$apost->post_title."</option>";
 						unset($array_of_files[$apost->ID]);
 					}
 				$return .= "</optgroup>";
