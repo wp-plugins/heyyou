@@ -4,7 +4,7 @@ Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 0.0.0.2
+Stable tag: 0.0.0.4
 
 heyyou is a plugin framework that supplies resources for rapid development & adds unique dynamic custom post types directly in a Wordpress Page
 
@@ -26,16 +26,18 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 = Elaborating on some primary features, heyyou: =
 
 * Creation of Dynamic Custom Post Types:
-	* option on every page to add page-specific custom post types with wide range of preset and meta configuration options
-	* built-in per-page-pagination for longer lists of posts within a page
+	* option on every page, directly within that page, to add page-specific custom post types on the fly, with wide range of preset and meta configuration options, 
+	* built-in per-page-pagination for longer lists of posts, directly within a page
 	* Drag and drop ordering of posts
 	* Categorizing of posts within a page
 	* outputting: a simple textarea with %macros% placeholders and HTML for formatting the posts output (useful for: FAQ, Staff Listing, Press Releases, ect.)
 	* outputting: can bypass default %macros% output and use PHP in your theme instead
-* Custom Media Library :
+* Custom Media Library:
 	* Media items listed as a simplified grid thumbnails,
-	* Media Categories
 	* Cleaned CSS for showing file information
+* Media Categories
+	* Sort media items into categories
+	* functions for listing media items in dropdown menu for dynamic forms
 * Page Options (Options in setting page to add the following into a pages 'heyyou page settings' metabox):
 	* Add secondary blurb to pages (to use in template)
 	* Add Twitter / Facebook social buttons
@@ -100,10 +102,10 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 
 = CREDIT: External Plugins =
 
-The following plugins are hard coded into the plugin - they were edited enough that they are no longer updatable. *heyyou* will print a **function already exists** error if any of the following plugins are used. If you have money to donate, I highly recommend visiting any of these three sites and pledging there.
+The following plugins are hard coded into heyyou - they were edited enough that they are no longer updatable.. a thousand thank you's to the authors, please check out their and if you have money to donate, I highly recommend visiting any of these three sites and pledging there.. *heyyou* will print a **function already exists** error if any of the following plugins are used.
 
 * [Jonathan Christopher](http://mondaybynoon.com/)'s [Attachment Plugin](http://wordpress.org/extend/plugins/attachments/)
-	* included directly into the plugins core- with an option to turn it off - the interface for attachments was majorly altered to a simplified thumbnail grid
+	* included directly into the plugins core- with an option to turn it off - the interface for attachments was majorly altered to a simplified thumbnail grid, and many edits where written in the plugins source to handle and play nicely with the media categories.
 * [Hart Associates (Rick Mead)](http://www.hartinc.com)'s [Media Categories](https://sites.google.com/site/medialibarycategories/)
 	* integrated directly into the plugins core and manipulated to work with plugin more effectively
 * [Chris Scott](http://vocecommuncations.com/)'s [Multiple Post Thumbnails](http://wordpress.org/extend/plugins/multiple-post-thumbnails/)
@@ -112,7 +114,7 @@ The following plugins are hard coded into the plugin - they were edited enough t
 
 = NOTICE: Important!!! =
 
-This plugin is a *very large* framework design specifically for development of websites by [heyshauna.com](http://heyshauna.com/) & [davidsword.ca](http://davidsword.ca/). It essentially has the functionality of 30+ plugins. *heyyou* is not likely to be compatible with all themes or plugins and is recommended for intermediate-to-advance users only that are committed to experimenting with this plugin. Always backup your database and files before installing a plugin of this scale. It is recommended that potential users test this plugin in a test environment prior to installing on a live site. Please view the documentation at : [hey-you.ca](http://hey-you.ca/)
+This plugin is a *very large* framework design specifically for development of websites by [heyshauna.com](http://heyshauna.com/) & [davidsword.ca](http://davidsword.ca/). It essentially has the functionality of 20+ plugins (see "Features" list in description). *heyyou* is not likely to be compatible with all themes or plugins and is recommended for intermediate-to-advance Wordpress users only that are committed to experimenting with this plugin. **Always** backup your database and files before installing a plugin of this scale. It is recommended that potential users test this plugin in a test environment prior to installing on a live site. Please view the documentation at : [hey-you.ca](http://hey-you.ca/)
 
 `ALL Documentation and plugin are at ALPHA LEVEL, the plugin is currently being developed / written.`
 
