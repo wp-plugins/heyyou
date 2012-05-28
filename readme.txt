@@ -168,6 +168,7 @@ Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-f
 1. Dynamic Custom Post Types added directly to the page the post types will show in. Simplifying CTP's for your clients.
 2. Custom post types appear just as they do in the admin - directly below the corresponding pages main content
 3. Some of the options in the Settings page to configure what scripts, tools, theme_support, to include on the site; options to change the admin navigation, menu bar, and more.
+4. 4-Steps to adding posts to a page ([full image here](http://hey-you.ca/overview/posts-for-pages/))
 
 == Changelog ==
 
