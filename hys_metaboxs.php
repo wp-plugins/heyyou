@@ -137,37 +137,38 @@
 		?>
 		<div class='hys_metabox_output'>
 			<!-- hide output -->
+				<? $this_section_has_feilds = false; ?>
 				<? if(@$hys['settings']['show_opt_hide'] == 1):?>
 							<label>
-								<input type='checkbox' name='hys_page_config[hideoutput]' value=1 
-								<?php 
+								<input type='checkbox' name='hys_page_config[hideoutput]' value=1  <?php 
 									if (isset($hys['hys_page_config']['hideoutput'])) 
 									  echo chckchckbox($hys['hys_page_config']['hideoutput']); 
 								?> /> 
 								Hide <em>heyyou</em> output
 							</label>
+							<? $this_section_has_feilds = true; ?>
 				<? endif; ?>
 
 			<!--  Hide Title -->
 				<? if(@$hys['settings']['show_opt_titlehide'] == 1): ?>
 							<label>
-								<input type='checkbox' name='hys_page_config[hidetitle]' value=1 
-								<?php 
+								<input type='checkbox' name='hys_page_config[hidetitle]' value=1  <?php 
 									if (isset($hys['hys_page_config']['hidetitle'])) 
 									  echo chckchckbox($hys['hys_page_config']['hidetitle']); 
 								?> /> 
 								Hide Page Title On Site
 							</label>
+							<? $this_section_has_feilds = true; ?>
 				<? endif; ?>
 				<? if(@$hys['settings']['show_opt_blurbhide'] == 1): ?>
 							<label>
-								<input type='checkbox' name='hys_page_config[hideblurb]' value=1 
-								<?php 
+								<input type='checkbox' name='hys_page_config[hideblurb]' value=1  <?php 
 									if (isset($hys['hys_page_config']['hideblurb'])) 
 									  echo chckchckbox($hys['hys_page_config']['hideblurb']); 
 								?> /> 
 								Disable page main blurb
 							</label>
+							<? $this_section_has_feilds = true; ?>
 				<? endif; ?>
 				<? if(@$hys['settings']['show_opt_sec_blurb'] == 1 || @$hys['settings']['secondary_blurbs'] == 1): ?>
 							<label>
@@ -180,57 +181,60 @@
 								Add secondary Blurb
 								<?= @($hys['settings']['secondary_blurbs'] == 1) ? "</span>" : ''; ?>
 							</label>
+							<? $this_section_has_feilds = true; ?>
 				<? endif; ?>
 				
-		       			<? hys_space() ?>
-
+		       			<? if ($this_section_has_feilds) hys_space() ?>
+		       			<? $this_section_has_feilds = false; ?>
 
 			<!-- Facebook -->
 				<? if(@$hys['settings']['show_opt_fb'] == 1):?>
 							<label>
-								<input type='checkbox' name='hys_page_config[facebooklike]' value=1 
-								<?php 
+								<input type='checkbox' name='hys_page_config[facebooklike]' value=1  <?php 
 									if (isset($hys['hys_page_config']['facebooklike'])) 
 									  echo chckchckbox($hys['hys_page_config']['facebooklike']); 
 								?> /> 
 								Add Facebook "Like" Button
 							</label>
+							<? $this_section_has_feilds = true; ?>
 				<? endif; ?>
 			<!-- Twitter -->
 				<? if(@$hys['settings']['show_opt_tw'] == 1):?>
 							<label>
-								<input type='checkbox' name='hys_page_config[twitter]' value=1 
-								<?php 
+								<input type='checkbox' name='hys_page_config[twitter]' value=1  <?php 
 									if (isset($hys['hys_page_config']['twitter'])) 
 									  echo chckchckbox($hys['hys_page_config']['twitter']); 
 								?> /> 
 								Add Twitter "Tweet" Button
 							</label>
+							<? $this_section_has_feilds = true; ?>
 				<? endif; ?>
 			<!-- Google + -->
 				<? if(@$hys['settings']['show_opt_gp'] == 1):?>
 							<label>
-								<input type='checkbox' name='hys_page_config[googleplus]' value=1 
-								<?php 
+								<input type='checkbox' name='hys_page_config[googleplus]' value=1  <?php 
 									if (isset($hys['hys_page_config']['googleplus'])) 
 									  echo chckchckbox($hys['hys_page_config']['googleplus']); 
 								?> /> 
 								Add Google+ Share Button
 							</label>
+							<? $this_section_has_feilds = true; ?>
 				<? endif; ?>
 				
-		       			<? hys_space() ?>
+				
+		       			<? if ($this_section_has_feilds) hys_space() ?>
+		       			<? $this_section_has_feilds = false; ?>
 				
 				
 				<? if(@$hys['settings']['lightbox'] == 1):?>
 							<label>
-								<input type='checkbox' name='hys_page_config[disable_lightbox]' value=1 
-								<?php 
+								<input type='checkbox' name='hys_page_config[disable_lightbox]' value=1  <?php 
 									if (isset($hys['hys_page_config']['disable_lightbox'])) 
 									  echo chckchckbox($hys['hys_page_config']['disable_lightbox']); 
 								?> /> 
 								Disable Lightbox scripts on this page
 							</label>
+							<? $this_section_has_feilds = true; ?>
 				<? endif; ?>
 
 			<!-- Page Photo/Image Gallery (attachments plugin) -->
@@ -238,26 +242,26 @@
 					
 				?>
 							<label>
-								<input type='checkbox' name='hys_page_config[show_pg_img]' value=1 
-								<?php 
+								<input type='checkbox' name='hys_page_config[show_pg_img]' id='show_pg_img' value=1  <?php 
 									if (isset($hys['hys_page_config']['show_pg_img'])) 
 									  echo chckchckbox($hys['hys_page_config']['show_pg_img']); 
 								?> /> 
 								Add Photo Gallery to Page
 							</label>
 							
-							<label title='Turn off auto placement: of the image gallery. Instead use custom theme or %gallery% token in output format'>
-								&nbsp;&nbsp;&nbsp;&nbsp;  <input type='checkbox' name='hys_page_config[show_pg_img_autoplaceoff]' value=1 
-								<?php 
+							<label title='Turn off auto placement: of the image gallery. Instead use custom theme or %gallery% token in output format' id='if_show_pg_img'>
+								&nbsp;&nbsp;&nbsp;&nbsp;  <input type='checkbox' name='hys_page_config[show_pg_img_autoplaceoff]' value=1  <?php 
 									if (isset($hys['hys_page_config']['show_pg_img_autoplaceoff'])) 
 									  echo chckchckbox($hys['hys_page_config']['show_pg_img_autoplaceoff']); 
 								?> /> 
 								 Turn <b>off</b> auto placement of Gallery
-							</label>							
+							</label>
+							<? $this_section_has_feilds = true; ?>						
 				<? endif;  ?>
 				
 				
-		       			<? hys_space() ?>
+		       			<? if ($this_section_has_feilds) hys_space() ?>
+		       			<? $this_section_has_feilds = false; ?>
 				
 						<table cellpadding="1" cellspacing="2" border="0" style='width:100%;'>
 						
@@ -273,6 +277,7 @@
 										value='<?= @$hys['hys_page_config']['title'] ?>' style='width:150px' />
 								</td>
 							</tr>
+							<? $this_section_has_feilds = true; ?>						
 				<? endif; ?>
 												
 			<!-- BANNER -->
@@ -287,6 +292,7 @@
 								 </select>
 								</td>
 							</tr>
+							<? $this_section_has_feilds = true; ?>						
 				<? endif; ?>
 							
 			<!-- Credit -->
@@ -299,6 +305,7 @@
 									<input type="text" id="banner_credit" name="hys_usrpg_config[banner_credit]" value="<?= @$banner_credit ?>" style='width:150px' />
 								</td>
 							</tr>
+							<? $this_section_has_feilds = true; ?>						
 				<? endif; ?>
 							
 			<!-- Main Color -->
@@ -319,6 +326,7 @@
 									</label>
 								</td>
 							</tr>
+							<? $this_section_has_feilds = true; ?>						
 				<? endif; ?>
 				
 				
@@ -332,15 +340,18 @@
 									<code>#</code><input type='text' name='hys_page_config[sec_color]' id='sec_color' value='<?= @$hys['hys_page_config']['sec_color']; ?>' class='code' size='6' maxlength='6' />
 								</td>
 							</tr>
+							<? $this_section_has_feilds = true; ?>						
 				<? endif; ?>
 				
+				<? if ($this_section_has_feilds) { ?>
 				<tr>
 				<td colspan=2><h4></h4><br /></td>
 				</tr>
-				
+				<? } ?>
 				
 			<!-- Site meta fields -->
-				<? if (is_array(@$hys['settings']['meta'])) : ?>
+				<? 
+				if (is_array(@$hys['settings']['meta'])) { ?>
 
 						<?
 						$numofmeta = count($hys['settings']['meta']);
@@ -401,13 +412,15 @@
 								echo "</td></tr>";
 							}
 						} 
-						echo "</table>";
 						
-						?>
+						$this_section_has_feilds = true; 
+				} 
+				?>
 			<!-- Site meta fields -->
+		   </table>
 		</div><!--/hys_metabox_output-->
-				<? endif;
-
+				
+		<?			
 	}
 	
 	
@@ -558,10 +571,10 @@
 			<h4>heyyou Features</h4>
 			
 			<!-- USE THE TITLE -->
-				<label>
-					<input type='checkbox' name='' disabled='disabled' CHECKED /> Use Title
-				</label>
-						
+					<? $advanced_checked =  (!empty($hys['hys_page_config']['custom_title']) || !empty($hys['hys_page_config']['anchors']) || !empty($hys['hys_page_config']['numanchors'])) ? true : false; ?>
+					<input type='checkbox' name='' disabled='disabled' CHECKED /> Use Title <?= !$advanced_checked ? "<span onclick=\"showhide('advance_title_options');\" class='small fake_link'>+ Advance</span>" : ''; ?>
+						<br />
+						<div id='advance_title_options' style='display:<?= $advanced_checked ? 'block' : 'none' ?>'>
 					<!-- add anchor navigation -->
 						<label>
 							&nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' name='hys_page_config[custom_title]' value=1 
@@ -593,7 +606,7 @@
 							?> /> 
 							Make posts (&amp; anchor) numeric
 						</label>	
-						
+						</div><!--/advance_title_options-->
 			<!-- USE THE DATE -->
 				<label>
 					<input type='checkbox' name='hys_page_config[include_date]' value=1 <?php 
@@ -603,16 +616,22 @@
 				</label>
 
 			<!-- USE THE BLURB -->
-				<label>
-					<input type='checkbox' name='hys_page_config[include_blurb]' value=1 <?php 
+				<? $advanced_checked =  (!empty($hys['hys_page_config']['hidecontent']) || !empty($hys['hys_page_config']['hidecontent_notitlelink'])) ? true : false; ?>
+				<label style="display:inline">
+					<input type='checkbox' name='hys_page_config[include_blurb]' id='include_blurb' value=1 <?php 
 						if (isset($hys['hys_page_config']['include_blurb'])) 
 							echo chckchckbox($hys['hys_page_config']['include_blurb']); 
-					?> /> Use Blurb
-				</label>
-				
+					?> /> Use Blurb  
+				</label><?= (!$advanced_checked && (isset($hys['hys_page_config']['include_blurb']) && $hys['hys_page_config']['include_blurb'] == 1)) ? "<span onclick=\"showhide('advance_include_blurb');\" class='small fake_link'>+ Advance</span>" : ''; ?><br />
+					<div id='if_include_blurb'>
+					<div id='advance_include_blurb' style='<? if (isset($hys['hys_page_config']['include_blurb']) && $hys['hys_page_config']['include_blurb'] == 1) {
+					 echo "display:"; 
+					 echo ($advanced_checked) ? 'block' : 'none' ;
+					 }
+					 ?>'>
 					<!-- show/hide content (toggel visiblity w title) -->
 						<label>
-							&nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' name='hys_page_config[hidecontent]' value=1 
+							&nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' name='hys_page_config[hidecontent]' id='hidecontent' value=1 
 							<?php 
 								if (isset($hys['hys_page_config']['hidecontent'])) 
 								  echo chckchckbox($hys['hys_page_config']['hidecontent']); 
@@ -621,6 +640,7 @@
 						</label>
 						
 					<!-- show/hide content (toggel visiblity w title) -->
+						<div id='if_hidecontent'>
 						<label>
 							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <input type='checkbox' name='hys_page_config[hidecontent_notitlelink]' value=1 
 							<?php 
@@ -629,7 +649,9 @@
 							?> /> 
 							Don't use %title% as reveal link
 						</label>
-
+						</div><!--/if_hidecontent-->
+					</div><!--/advance_include_blurb-->
+					</div><!--/if_include_blurb-->
 			<!-- USE CATEGORIES -->
 				<label>
 					<input type='checkbox' name='hys_page_config[include_cats]' value=1 <?php 
@@ -642,12 +664,12 @@
 			<!-- USE ATTACHMENTS -->
 				<? if (@$hys['settings']['no_attachments'] != 1) : ?>
 				<label>
-					<input type='checkbox' name='hys_page_config[include_attach]' value=1 <?php 
+					<input type='checkbox' name='hys_page_config[include_attach]' id='include_attach' value=1 <?php 
 						if (isset($hys['hys_page_config']['include_attach'])) 
 							echo chckchckbox($hys['hys_page_config']['include_attach']); 
 					?> /> Use Images Attachments
 				</label>	
-						
+					<div id='if_include_attach'>
 						<label title='Checking this add the images TITLE and CAPTION under the image on the page'>
 						&nbsp; &nbsp; &nbsp; 
 							<input type='checkbox' name='hys_page_config[show_pg_img_printlabel]' value=1 
@@ -661,69 +683,70 @@
 					<!-- USE ATTACHMENTS AS IMAGE GALLERY -->
 						<label>
 							&nbsp; &nbsp; &nbsp; 
-							<input type='checkbox' name='hys_page_config[attachments_gallery]' value=1 
+							<input type='checkbox' name='hys_page_config[attachments_gallery]' id='attachments_gallery' value=1 
 							<?php 
 								if (isset($hys['hys_page_config']['attachments_gallery'])) 
 								  echo chckchckbox($hys['hys_page_config']['attachments_gallery']); 
 							?> /> 
 							Use Attachments as Image Gallery
 						</label>
-												
-					
-					<!-- AUTO PALCE ATTACHMENTS -->
-						<label title='Turn off auto placement: instead use a custom theme or the token %attach% in the HTML output format.'>
-							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-							<input type='checkbox' name='hys_page_config[autoattach]' value=1 
-							<?php 
-								if (isset($hys['hys_page_config']['autoattach'])) 
-								  echo chckchckbox($hys['hys_page_config']['autoattach']); 
-							?> /> 
-							Turn <b>off</b> auto placement
-						</label>
 						
-					<!-- AUTO PALCE ATTACHMENTS -->
-						<label>
-							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-							<input type='checkbox' name='hys_page_config[downloadattach]' value=1 
-							<?php 
-								if (isset($hys['hys_page_config']['downloadattach'])) 
-								  echo chckchckbox($hys['hys_page_config']['downloadattach']); 
-							?> /> 
-							Add hi/low res downloads
-						</label>
-
-					<!-- IMAGE SIZE: -->
-						<label>
-							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Image Size:
-						<select name='hys_page_config[img_size]' id='img_size'>
-							<option value='full'>full size</option>
-							<?php 
-								$sizes = array('thumbnails','medium','large','full');
-								foreach ($sizes as $size) {
-									$preselect = (isset($hys['hys_page_config']['img_size']) && !empty($hys['hys_page_config']['img_size'])) ? $hys['hys_page_config']['img_size'] : 'large';
-									$sel = ($size == $preselect) ? " selected='selected'": '';
-									echo "<option{$sel}>{$size}</option>";
-								}
-							?>
-						</select>
-						</label>
+						<div id='if_attachments_gallery'>						
+						
+						<!-- AUTO PALCE ATTACHMENTS -->
+							<label title='Turn off auto placement: instead use a custom theme or the token %attach% in the HTML output format.'>
+								&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+								<input type='checkbox' name='hys_page_config[autoattach]' value=1 
+								<?php 
+									if (isset($hys['hys_page_config']['autoattach'])) 
+									  echo chckchckbox($hys['hys_page_config']['autoattach']); 
+								?> /> 
+								Turn <b>off</b> auto placement
+							</label>
+							
+						<!-- AUTO PALCE ATTACHMENTS -->
+							<label>
+								&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+								<input type='checkbox' name='hys_page_config[downloadattach]' value=1 
+								<?php 
+									if (isset($hys['hys_page_config']['downloadattach'])) 
+									  echo chckchckbox($hys['hys_page_config']['downloadattach']); 
+								?> /> 
+								Add hi/low res downloads
+							</label>
+	
+						<!-- IMAGE SIZE: -->
+							<label>
+								&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Image Size:
+							<select name='hys_page_config[img_size]' id='img_size'>
+								<option value='full'>full size</option>
+								<?php 
+									$sizes = array('thumbnails','medium','large','full');
+									foreach ($sizes as $size) {
+										$preselect = (isset($hys['hys_page_config']['img_size']) && !empty($hys['hys_page_config']['img_size'])) ? $hys['hys_page_config']['img_size'] : 'large';
+										$sel = ($size == $preselect) ? " selected='selected'": '';
+										echo "<option{$sel}>{$size}</option>";
+									}
+								?>
+							</select>
+							</label>
+						</div><!--/if_attachments_gallery-->
+					</div><!--/if_include_attach-->
 			<? endif ?>
 				
 			<!-- single page -->
 				<label>
-					<input type='checkbox' name='hys_page_config[single]' value=1 disabled='disabled' CHECKED
+					<input type='checkbox' name='hys_page_config[single]' id='single_hys' value=1 
 					<?php
-						// we want this always on now that  'single_altr_morelesslink' determins if %blurb% will be altered
-						#if (isset($hys['hys_page_config']['single'])) 
-						#  echo chckchckbox($hys['hys_page_config']['single']); 
+						if (isset($hys['hys_page_config']['single'])) 
+						  echo chckchckbox($hys['hys_page_config']['single']); 
 					?> /> 
 					Enable Single Pages ("hypg") for posts
 				</label>
-				
+					<div id='if_single_hys'>
 						<!-- change %blurb% to link to single -->
 							<label>
-								&nbsp; &nbsp; &nbsp; <input type='checkbox' name='hys_page_config[single_altr_morelesslink]' value=1 
-								<?php 
+								&nbsp; &nbsp; &nbsp; <input type='checkbox' name='hys_page_config[single_altr_morelesslink]' value=1  <?php 
 									if (isset($hys['hys_page_config']['single_altr_morelesslink'])) 
 									  echo chckchckbox($hys['hys_page_config']['single_altr_morelesslink']); 
 								?> /> 
@@ -732,8 +755,7 @@
 			
 						<!--  Use more/less in  -->	
 							<label>
-								&nbsp; &nbsp; &nbsp; <input type='checkbox' name='hys_page_config[single_moreless]' value=1 
-								<?php 
+								&nbsp; &nbsp; &nbsp; <input type='checkbox' name='hys_page_config[single_moreless]' value=1  <?php 
 									  echo chckchckbox(@$hys['hys_page_config']['single_moreless']); 
 								?> /> 
 								Use more/less in hypg
@@ -741,8 +763,7 @@
 									
 						<!--  Hide Title Single -->
 							<label>
-								&nbsp; &nbsp; &nbsp; <input type='checkbox' name='hys_page_config[hidetitlesingle]' value=1 
-								<?php 
+								&nbsp; &nbsp; &nbsp; <input type='checkbox' name='hys_page_config[hidetitlesingle]' value=1  <?php 
 									  echo chckchckbox(@$hys['hys_page_config']['hidetitlesingle']); 
 								?> /> 
 								Hide the page title on hypg
@@ -751,13 +772,13 @@
 						<!--  Hide Title Single -->
 						<? if (@$hys['settings']['no_attachments'] != 1) : ?>
 							<label>
-								&nbsp; &nbsp; &nbsp; <input type='checkbox' name='hys_page_config[single_showattchinpage]' value=1 
-								<?php 
+								&nbsp; &nbsp; &nbsp; <input type='checkbox' name='hys_page_config[single_showattchinpage]' value=1  <?php 
 									  echo chckchckbox(@$hys['hys_page_config']['single_showattchinpage']); 
 								?> /> 
 								Show attachments on hypg (not in list)
 							</label>
 						<? endif; ?>
+					</div><!--/if_single_hys-->
 				<? hys_space() ?>
 				<h4>heyyou, list settings</h4>
 					<!-- New posts positioning: -->
@@ -848,6 +869,7 @@
 				}
 			}
 			?>
+<!--
 <div class="hys_help">
 <h4>help/key</h4>
 <div class='description' style='padding:4px 0;'>Add any of the following "<code>(*)</code>" list below to a meta field name to turn it from a standard text field, into a different input type:</div>
@@ -856,85 +878,57 @@
 (Media) = dropdown list of media
 (Blurb)	= textarea
 </textarea>
-</div><!--/hys_help-->
+</div>
+-->
 	</div><!--/heyyou_tab_3-->
 	<div id="heyyou_tab_4" style='display:none;'>
-		
-			<h4>Add Lines</h4>
-			<!-- ADD LINE BEFORE FEATURE -->
-				<label>
-					<input type='checkbox' name='hys_page_config[line_before_list]' value=1 
-					<?php 
-						if (isset($hys['hys_page_config']['line_before_list'])) 
-						  echo chckchckbox($hys['hys_page_config']['line_before_list']); 
-					?> /> 
-					Add primary line <em>before</em> heyyou list
-				</label>
-			<!-- LINE BETWEEN Cats -->
-				<label>
-					<input type='checkbox' name='hys_page_config[line_between_cats]' value=1 
-						<?php if (isset($hys['hys_page_config']['line_between_cats'])) 
-							echo chckchckbox($hys['hys_page_config']['line_between_cats']); 
-						?> 
-					/> Add secondary line <em>between</em> categories
-				</label>
-			<!-- LINE BETWEEN POSTINGS -->
-				<label>
-					<input type='checkbox' name='hys_page_config[line_between_list]' value=1 
-						<?php if (isset($hys['hys_page_config']['line_between_list'])) 
-							echo chckchckbox($hys['hys_page_config']['line_between_list']); 
-						?> 
-					/> Add secondary line <em>between</em> <strong>posts</strong>
-				</label>
-			<!-- ADD LINE AFTER FEATURE -->
-				<label>
-					<input type='checkbox' name='hys_page_config[line_after_list]' value=1 
-					<?php 
-						if (isset($hys['hys_page_config']['line_after_list'])) 
-						  echo chckchckbox($hys['hys_page_config']['line_after_list']); 
-					?> /> 
-					Add primary line <em>after</em> heyyou list
-				</label>
-
-			<h4>Pagination</h4>
-						<table cellpadding="1" cellspacing="2" border="0">
-			<!-- SHOW X PER PAGE -->
-							<tr>
-								<td valign="top">
-									<label for="title">Paginate:</label> 
-								</td>
-								<td>
-								<input type='text' name='hys_page_config[perpage]' 
-								  value='<?php echo @$hys['hys_page_config']['perpage'] ?>' 
-								  size=1 />  per (page / cat), using: <br />
-								  <?php $hys['hys_page_config']['paginatemthod'] = @(empty($hys['hys_page_config']['paginatemthod'])) ? 'pages' : $hys['hys_page_config']['paginatemthod']; ?>
-								<label style='padding:4px 0 0 0;'><input type='radio' name='hys_page_config[paginatemthod]' value='pages' <?php echo ($hys['hys_page_config']['paginatemthod'] == 'pages') ? "CHECKED ": ''; ?>> Pages</label>
-								<label style='padding:2px 0 5px 0;'><input type='radio' name='hys_page_config[paginatemthod]' value='moreless' <?php echo ($hys['hys_page_config']['paginatemthod'] == 'moreless') ? "CHECKED ": ''; ?>> more/less reveal</label>
-								</td>
-							</tr>
-			<!-- Pagination Text -->
-							<tr>
-								<td valign="top">
-									<label for="pagination_text">Pages Text:</label> 
-								</td>
-								<td>
-									<input type='text' name='hys_page_config[pagination_text]' id='pagination_text'
-								value='<?= @$hys['hys_page_config']['pagination_text'] ?>' />
-							<span class='description'><code>Pages:</code></span>
-								</td>
-							</tr>
-						</table>
-				
 			<h4>HTML Output Formats</h4>
+			
+			<h5 class='format_title'><em>heyyou</em> posts HTML output format</h5>
+					<?php $format = @(empty($hys['hys_page_config']['format'])) ? "       <!-- CHANGE ME -->\n<!-- TO DESIRED HTML OUTPUT -->\n\n<!-- Delete everything in this textarea, and create a  output for your posts using HTML and tokens. If need help visit: {@link: http://hey-you.ca/tutorials/output_format/ } -->\n\n<b>%title%</b><br />\n// <span style='color:red;'>change the HTML output format</span> of this post in <code>wp-admin > pages > (this page) > heyyou > Format (Tab) > \"heyyou_post HTML output format\"</code>\n<br />\n<br />" : $hys['hys_page_config']['format']; ?>
+					<textarea name='hys_page_config[format]' class='code'
+					  style='width:100%;height:100px !important;font-size:10px; resize:vertical'><?php 
+					  echo $format;
+					?></textarea>
+				
+				<span class='oj'>&rarr;</span> <a class='hys_fake_link hys_readmore nouline view_tokens' id='' onclick="showhide('token_help_post');" >show %macros%</a>
+				<div id="token_help_post" style="display:none; margin-top:5px;">
+					<textarea readonly='readonly' class='text urlfield code disabled_textarea'>
+%id% / %ID%
+%title% / %title:moreless%
+%date%
+%blurb%
+%num%
+%media% / %media:lightbox%
+%line% / %line2%
+%attach%
+%attachments%
+%lightbox_gallery%
+%more:moreless% / %less:moreless% / %moreless%
+%view_single% / %view_single_link%
+
+--------------------
+Extra Meta Tokens:
+--------------------
+<?php 
+for ($i = 0; $i != 15; $i++) {
+	if (isset($hys['hys_page_config']['meta'][$i]) && !empty($hys['hys_page_config']['meta'][$i])) {
+		echo "%".hys_url_friendly($hys['hys_page_config']['meta'][$i])."%"."\n";
+	}
+}
+?>
+					</textarea>
+				</div>
+
+			
 			<?
 				$ba_output = @$hys['hys_page_config']['before_heyyou'].@$hys['hys_page_config']['after_heyyou'];
 			?>
-			<h5><a class='<?=(!empty($ba_output)) ? "blacklink" : '' ?>' id='' onclick="showhide('beforeafter_output_format');" >Before / After heyyou Output</a></h5>
+			<h5 class='format_title'><a class='<?=(!empty($ba_output)) ? "blacklink" : '' ?>' id='' onclick="showhide('beforeafter_output_format');" >Before / After heyyou Output</a></h5>
 			<div id='beforeafter_output_format' <?=(empty($ba_output)) ? "style='display:none;'" : '' ?>>
 				<textarea name='hys_page_config[before_heyyou]'  class='code' style='width:100%;height:44px !important;font-size:10px;'><?php echo @$hys['hys_page_config']['before_heyyou'];?></textarea>
 				<div>-</div>
 				<textarea name='hys_page_config[after_heyyou]' class='code' style='width:100%;height:44px !important;font-size:10px;'><?php echo @$hys['hys_page_config']['after_heyyou'];?></textarea>
-			<br />
 			<br />
 			</div><!--/beforeafter_output_format-->	
 			
@@ -943,7 +937,7 @@
 				$ba_output = @$hys['hys_page_config']['before_cats_heyyou'].@$hys['hys_page_config']['after_cats_heyyou'];
 			?>
 			
-			<h5><a class='<?=(!empty($ba_output)) ? "blacklink" : '' ?>' id='' onclick="showhide('beforeaftercat_output_format');" >Before / After heyyou Categories</a></h5>
+			<h5 class='format_title'><a class='<?=(!empty($ba_output)) ? "blacklink" : '' ?>' id='' onclick="showhide('beforeaftercat_output_format');" >Before / After heyyou Categories</a></h5>
 			<div id='beforeaftercat_output_format' <?=(empty($ba_output)) ? "style='display:none;'" : '' ?>>
 				<textarea name='hys_page_config[before_cats_heyyou]'  class='code' style='width:100%;height:44px !important;font-size:10px;'><?php echo @$hys['hys_page_config']['before_cats_heyyou'];?></textarea>
 				<div>-</div>
@@ -955,7 +949,7 @@
 					
 			
 			<?php  if (isset($hys['hys_page_config']['include_cats'])) {  ?>
-			<h5><a class='<?=(!empty($hys['hys_page_config']['include_cats'])) ? "blacklink" : '' ?>' id='' onclick="showhide('cat_output_format');" >Category HTML output format</a></h5>
+			<h5 class='format_title'><a class='<?=(!empty($hys['hys_page_config']['include_cats'])) ? "blacklink" : '' ?>' id='' onclick="showhide('cat_output_format');" >Category HTML output format</a></h5>
 			
 				<div id='cat_output_format' <?=(@$hys['hys_page_config']['include_cats'] != 1) ? "style='display:none;'" : '' ?>>
 				<label>
@@ -965,7 +959,7 @@
 				?></textarea>
 				</label>	
 				
-				<span class='oj'>&rarr;</span> <a class='hys_fake_link hys_readmore nouline view_tokens' id='' onclick="showhide('token_help_cat');" >%tokens%</a>
+				<span class='oj'>&rarr;</span> <a class='hys_fake_link hys_readmore nouline view_tokens' id='' onclick="showhide('token_help_cat');" >show %macros%</a>
 				<div id="token_help_cat" style="display:none; margin-top:5px;">
 					<textarea readonly='readonly' class='text urlfield code disabled_textarea'>
 %title% / %name% / %cat_title% / %cat%
@@ -980,15 +974,14 @@
 			
 			<!-- Blocks HTML Output format -->
 
-					<h5><a class='<?=(!empty($hys['hys_page_config']['singleformat'])) ? "blacklink" : '' ?>' id='' onclick="showhide('single_output_format');" >Single Page (hypg) HTML output format</a></h5>
-					<div id='single_output_format' <?=(@$hys['hys_page_config']['singleformat'] != 1) ? "style='display:none;'" : '' ?>>
-					<textarea name='hys_page_config[singleformat]' class='code'
-					  style='width:100%;height:300px;font-size:10px;'><?php 
+					<h5 class='format_title'><a class='<?=(!empty($hys['hys_page_config']['singleformat'])) ? "blacklink" : '' ?>' id='' onclick="showhide('single_output_format');" >Single Page (hypg) HTML output format</a></h5>
+					<div id='single_output_format' <?= (empty($hys['hys_page_config']['singleformat'])) ? "style='display:none;'" : '' ?>>
+					<textarea name='hys_page_config[singleformat]' class='code' style='width:100%;height:300px;font-size:10px;'><?php 
 					  echo @$hys['hys_page_config']['singleformat'];
 					?></textarea>
 				
 				
-				<span class='oj'>&rarr;</span> <a class='hys_fake_link hys_readmore nouline view_tokens' id='' onclick="showhide('token_help_sing');" >%tokens%</a>
+				<span class='oj'>&rarr;</span> <a class='hys_fake_link hys_readmore nouline view_tokens' id='' onclick="showhide('token_help_sing');" >show %macros%</a>
 				<div id="token_help_sing" style="display:none;">
 					<textarea readonly='readonly' class='text urlfield code disabled_textarea'>
 %id% / %ID%
@@ -1023,45 +1016,81 @@ for ($i = 0; $i != 15; $i++) {
 
 
 
-
-
-			<h5>heyyou_post HTML output format</h5>
-					<?php $format = @(empty($hys['hys_page_config']['format'])) ? "       <!-- CHANGE ME -->\n<!-- TO DESIRED HTML OUTPUT -->\n\n<!-- Delete everything in this textarea, and create a  output for your posts using HTML and tokens. If need help visit: {@link: http://hey-you.ca/tutorials/output_format/ } -->\n\n<b>%title%</b><br />\n// <span style='color:red;'>change the HTML output format</span> of this post in <code>wp-admin > pages > (this page) > heyyou > Format (Tab) > \"heyyou_post HTML output format\"</code>\n<br />\n<br />" : $hys['hys_page_config']['format']; ?>
-					<textarea name='hys_page_config[format]' class='code'
-					  style='width:100%;height:100px !important;font-size:10px;'><?php 
-					  echo $format;
-					?></textarea>
+		    <? $lines_checked =  (!empty($hys['hys_page_config']['line_before_list']) || !empty($hys['hys_page_config']['line_between_cats']) || !empty($hys['hys_page_config']['line_between_list']) || !empty($hys['hys_page_config']['line_after_list'])) ? true : false; ?>
+		    
+		    <label>
+			<h4><input type='checkbox' <?= ($lines_checked) ? 'disabled="disabled"' : ''; ?> id='show_lines' <?= ($lines_checked) ? "checked='checked'" : '' ?> /> Add Lines To Output</h4>
+		    </label>
+			<div id='if_show_lines'>
+			<!-- ADD LINE BEFORE FEATURE -->
+				<label>
+					<input type='checkbox' name='hys_page_config[line_before_list]' value=1 
+					<?php 
+						if (isset($hys['hys_page_config']['line_before_list'])) 
+						  echo chckchckbox($hys['hys_page_config']['line_before_list']); 
+					?> /> 
+					Add primary line <em>before</em> heyyou list
+				</label>
+			<!-- LINE BETWEEN Cats -->
+				<label>
+					<input type='checkbox' name='hys_page_config[line_between_cats]' value=1 
+						<?php if (isset($hys['hys_page_config']['line_between_cats'])) 
+							echo chckchckbox($hys['hys_page_config']['line_between_cats']); 
+						?> 
+					/> Add secondary line <em>between</em> categories
+				</label>
+			<!-- LINE BETWEEN POSTINGS -->
+				<label>
+					<input type='checkbox' name='hys_page_config[line_between_list]' value=1 
+						<?php if (isset($hys['hys_page_config']['line_between_list'])) 
+							echo chckchckbox($hys['hys_page_config']['line_between_list']); 
+						?> 
+					/> Add secondary line <em>between</em> <strong>posts</strong>
+				</label>
+			<!-- ADD LINE AFTER FEATURE -->
+				<label>
+					<input type='checkbox' name='hys_page_config[line_after_list]' value=1 
+					<?php 
+						if (isset($hys['hys_page_config']['line_after_list'])) 
+						  echo chckchckbox($hys['hys_page_config']['line_after_list']); 
+					?> /> 
+					Add primary line <em>after</em> heyyou list
+				</label>
+			</div><!--/show_lines-->
+			
+		    <? $pageinate_used =  (!empty($hys['hys_page_config']['perpage'])) ? true : false; ?>
+		    
+		    <label>
+			<h4><input type='checkbox' <?= ($pageinate_used) ? 'disabled="disabled"' : ''; ?> id='show_pagination' <?= ($pageinate_used) ? "checked='checked'" : '' ?> /> Use Pagination</h4>
+		    </label>
+						<table cellpadding="1" cellspacing="2" border="0" id='if_show_pagination'>
+			<!-- SHOW X PER PAGE -->
+							<tr>
+								<td valign="top">
+									<label for="title">Paginate:</label> 
+								</td>
+								<td>
+								<input type='text' name='hys_page_config[perpage]' 
+								  value='<?php echo @$hys['hys_page_config']['perpage'] ?>' 
+								  size=1 />  per (page / cat), using: <br />
+								  <?php $hys['hys_page_config']['paginatemthod'] = @(empty($hys['hys_page_config']['paginatemthod'])) ? 'pages' : $hys['hys_page_config']['paginatemthod']; ?>
+								<label style='padding:4px 0 0 0;'><input type='radio' name='hys_page_config[paginatemthod]' value='pages' <?php echo ($hys['hys_page_config']['paginatemthod'] == 'pages') ? "CHECKED ": ''; ?>> Pages</label>
+								<label style='padding:2px 0 5px 0;'><input type='radio' name='hys_page_config[paginatemthod]' value='moreless' <?php echo ($hys['hys_page_config']['paginatemthod'] == 'moreless') ? "CHECKED ": ''; ?>> more/less reveal</label>
+								</td>
+							</tr>
+			<!-- Pagination Text -->
+							<tr>
+								<td valign="top">
+									<label for="pagination_text">Pages Text:</label> 
+								</td>
+								<td>
+									<input type='text' name='hys_page_config[pagination_text]' id='pagination_text'
+								value='<?= @$hys['hys_page_config']['pagination_text'] ?>' />
+							<span class='description'><code>Pages:</code></span>
+								</td>
+							</tr>
+						</table>
 				
-				<span class='oj'>&rarr;</span> <a class='hys_fake_link hys_readmore nouline view_tokens' id='' onclick="showhide('token_help_post');" >%tokens%</a>
-				<div id="token_help_post" style="display:none; margin-top:5px;">
-					<textarea readonly='readonly' class='text urlfield code disabled_textarea'>
-%id% / %ID%
-%title% / %title:moreless%
-%date%
-%blurb%
-%num%
-%media% / %media:lightbox%
-%line% / %line2%
-%attach%
-%attachments%
-%lightbox_gallery%
-%more:moreless% / %less:moreless% / %moreless%
-%view_single% / %view_single_link%
-
---------------------
-Extra Meta Tokens:
---------------------
-<?php 
-for ($i = 0; $i != 15; $i++) {
-	if (isset($hys['hys_page_config']['meta'][$i]) && !empty($hys['hys_page_config']['meta'][$i])) {
-		echo "%".hys_url_friendly($hys['hys_page_config']['meta'][$i])."%"."\n";
-	}
-}
-?>
-					</textarea>
-				</div>
-
-
 
 
 			

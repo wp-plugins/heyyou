@@ -9,8 +9,8 @@ function hys_default_settings() {
 			'not_heyshauna'		=> 0,
 			'no_attachments'	=> 0,
 			
-            'lightbox' 			=> 1,
-            'facebook' 			=> 1,
+            'lightbox' 			=> 0,
+            'facebook' 			=> 0,
             'mobile_css' 		=> 0,
             'show_opt_banner' 	=> 0,
             'show_opt_color' 	=> 0,
@@ -46,7 +46,7 @@ function hys_default_settings() {
             'undercon_reveal' 	=> 1,
             'undercon_sess' 	=> 0,
             'undercon_cook' 	=> 0,
-            'ie6msg' 			=> 1,
+            'ie6msg' 			=> 0,
             'undercontit' 		=> 'Under Construction',
             'underconmsg' 		=> "Message or notice to apear on site.",
             'meta_keywords' 	=> 'Add 5 keywords/phrases here seperated by comas for better SEO',
@@ -367,1048 +367,912 @@ function hys_crontimes( $schedules ) {
 			echo "<div id='message' class='updated fade'><p>Backups siccessfully deleted.</p></div>";
 	?>
 	
-	<form method="post" action="options.php">
-	
-	
-	
-	    <?php settings_fields( 'hys_settings' ); ?>
-	    <input type='hidden' name='hys_options[installed]' value='1' />
-	    <table class="form-table">
-	    
-    <?php 
-	if (!$a_admin) {
-	?>
-			</table>
-		<div style='display:none;'>
-			<table class="form-table">
-	<?php
-	} //endif($a_admin) 
-	?>		
-	        
-    <tr valign="top">
-    <th scope="row"><h3>Options:</h3></th>
-    <td>
-		<table cellpadding="0" cellspacing="0">
-			<tr>
-				<td valign="top">
-					
-					<h4 style='padding-top:0;margin-top:0'>Include Tools/Apps:</h4>
-		        	<label>
-		        	<input type='checkbox' name='hys_options[mootools]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['mootools'])
-		        		?> /> MooTools
-		        	</label><br />
-		        	<label>
-		        	<input type='checkbox' name='hys_options[lightbox]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['lightbox'])
-		        		?> /> Lightbox
-		        	</label><br />
-		        	<label>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <input type='checkbox' name='hys_options[lightboxcustom]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['lightboxcustom'])
-		        		?> /> custom LightboxOptions()
-		        	</label><br />
-		        	<label>
-		        	<input type='checkbox' name='hys_options[jquery]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['jquery'])
-		        		?> /> jQuery
-		        	</label><br />
-		        	<label>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_lightbox]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['jquery_lightbox'])
-		        		?> /> jQuery.Lightbox
-		        	</label><br />
-		        	<label>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <input type='checkbox' name='hys_options[jquery_lightbox_assign]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['jquery_lightbox_assign'])
-		        		?> /> <span title='$(.attachments a, .hys_attach ul li .attach_image a, ul.photo_gallery li a).lightBox...'>define galleries: <span class='hys_description'>(hover to reveal)</span></span>
-		        	</label><br />
-		        	<label>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_opacityrollovers]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['jquery_opacityrollovers'])
-		        		?> /> jQuery.OpacityRollovers
-		        	</label><br />
-		        	<label>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_cycle]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['jquery_cycle'])
-		        		?> /> jQuery.Cycle
-		        	</label><br />
-		        	<label>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_fx]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['jquery_fx'])
-		        		?> /> jQuery.Effects
-		        	</label><br />
-		        	<label>
-		        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_color]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['jquery_color'])
-		        		?> /> jQuery.Color
-		        	</label><br />
-		        	<br />
-		        	
-		        			        	
-					<h4 style='padding-top:0;margin-top:0'>Wordpress Options:</h4>
-		        	<label>
-		        	<input type='checkbox' name='hys_options[page_featured_image]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['page_featured_image'])
-		        		?> /> Use "Featured Image" on pages
-		        	</label><br />
-		        	<label>
-		        	<input type='checkbox' name='hys_options[post_featured_image]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['post_featured_image'])
-		        		?> /> Use "Featured Image" on posts
-		        	</label><br />
-		        	<label>
-		        	<input type='checkbox' name='hys_options[page_secondary_image]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['page_secondary_image'])
-		        		?>  />  Use "Secondary Image" on pages
-		        	</label><br />
-		        	<label>
-		        	<input type='checkbox' name='hys_options[post_secondary_image]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['post_secondary_image'])
-		        		?>  /> Use "Secondary Image" on posts
-		        	</label><br />
-		        	<label>
-		        	<input type='checkbox' name='hys_options[page_excerpts]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['page_excerpts'])
-		        		?> /> Use "Excerpts" on pages
-		        	</label><br />
-		        	<input type='checkbox' name='hys_options[post_excerpts]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['post_excerpts'])
-		        		?> /> Use "Excerpts" on posts
-		        	</label><br />
-		        	
-				     <br />
-				     <br />
-					<h4 style='padding-top:0;margin-top:0'>Generate &lt;head&gt; html:</h4>
-				    
-				    <label>
-					    TinyMCE Stylesheet:<br />
-			        	&nbsp; &nbsp; ..<? 
-			        	echo "<span class='description'>".str_replace(array(get_bloginfo('url'),'/wp-content/themes'),'',
-			        	get_bloginfo('stylesheet_directory')) ?>/</span>  <input type='text' style='color: #999;' name='hys_options[header_tinymce]' value='<?= @$hys['settings']['header_tinymce'] ?>'  />
-			        </label>
-			        <br />
-			        
-			        <label>
-					    .favicon URL:<br />
-			        	&nbsp; &nbsp; ..<? 
-			        	echo "<span class='description'>".str_replace(array(get_bloginfo('url'),'/wp-content/themes'),'',
-			        	get_bloginfo('stylesheet_directory')) ?>/</span>  <input type='text' style='color: #999;' name='hys_options[header_favicon]' value='<?= @$hys['settings']['header_favicon'] ?>' />
-			        </label>
-			        <br />
-				     
-			        <label>
-					    js.js URL:<br />
-			        	&nbsp; &nbsp; ..<? 
-			        	echo "<span class='description'>".str_replace(array(get_bloginfo('url'),'/wp-content/themes'),'',
-			        	get_bloginfo('stylesheet_directory')) ?>/</span>  <input type='text' style='color: #999;' name='hys_options[header_js]' value='<?= @$hys['settings']['header_js'] ?>' />
-			        </label>
-				  </td>
-				  <td>
-				  
-					<h4 style='padding-top:0;margin-top:0'>Exceptions &amp; Customization:</h4>
-		        	<label>
-		        	<input type='checkbox' name='hys_options[not_heyshauna]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['not_heyshauna'])
-		        		?> /> Hide heyshauna welcome note
-		        	</label><br />
-		        	<label>
-		        	<input type='checkbox' name='hys_options[no_attachments]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['no_attachments'])
-		        		?> /> Do not include use Attachments
-		        	</label><br />
-		        	<label>
-		        	<input type='checkbox' name='hys_options[animated_moreless]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['animated_moreless'])
-		        		?> /> Use jQuery more/less slide up/down animation 
-		        	</label><br />
-					<br />
-					<h4 style='padding-top:0;margin-top:0'>Navigation:</h4>
-					
-					
-					
-				        	<table cellpadding="0" cellspacing="0" style='padding-left:20px;'>
-				        		<tr>
-				        			<td>&nbsp;</td>
-				        			<td class='hys_description'>client</td>
-				        			<td class='hys_description'>subadmin</td>
-				        		</tr>
-				        		
-				        			<?php
-				        				//global $menu;
-				        				
-				        				$menu = $hys['menu_copy'];
-				        				
-				        				foreach ($menu as $ke => $pageinfo) {
-				        					$pageinfo[0] = trim(str_replace(array(' 0',' 1'),'',strip_tags($pageinfo[0])));
-				        					
-				        					//if (!in_array($pageinfo[0],array('Dashboard','Pages','Users','heyyou'))) {
-						        				if (empty($pageinfo[0])) {
-
-						        				} else {
-						        					$alwys_show 	= array('Dashboard','Media','Pages','heyyou', 'Users','heyyoumedia');
-						        					$if_subadmin 	= array('Settings','Appearance');
-	
-						        					//'Users','Settings',
-						        					#$disnchk 		= (in_array($pageinfo[0],$alwys_show)) ? " CHECKED DISABLED" : '';
-						        					#$disnchk_admin 	=  ? " CHECKED DISABLED" : '';
-						        					
-						        					if (in_array($pageinfo[0],$alwys_show)) {
-									        				$form1 = "
-									        				<input type='hidden' name='hys_options[heyyou_menu_{$ke}]' value='1' />
-									        				<input type='checkbox' name='dumby' value='1' CHECKED DISABLED />";
-									        		} else {
-									        				$form1 = "<input type='checkbox' name='hys_options[heyyou_menu_{$ke}]' value='1' ".
-									        						chckchckbox(@$hys['settings']['heyyou_menu_'.$ke])." />";
-									        		}
-									        		
-						        					if (in_array($pageinfo[0],$if_subadmin) || in_array($pageinfo[0],$alwys_show)) {
-									        				$form2 = "
-									        				<input type='hidden' name='hys_options[subadmin_menu_{$ke}]' value='1' />
-									        				<input type='checkbox' name='dumby' value='1' CHECKED DISABLED />";
-									        		} else {
-									        				$form2 = "<input type='checkbox' name='hys_options[subadmin_menu_{$ke}]' value='1' ".
-									        						chckchckbox(@$hys['settings']['heyyou_menu_'.$ke])." />";
-									        		}
-									        				
-					        						echo "
-									        		<tr>
-									        			<td style='text-align:right;padding:0;margin:0;'>
-															{$pageinfo[0]}<br />
-									        			</td>
-									        			<td style='padding:0;margin:0;text-align:center;'>
-															{$form1}
-									        			</td>
-									        			<td style='padding:0;margin:0;text-align:center;'>
-									        				{$form2}
-									        			</td>
-									        		</tr>\n";
-					        					}
-				        					//}
-				        				}
-				        				
-				        			?>
-				        	</table>	
-				  </td>
-				  </tr>
-				  <tr>
-<td>
-				      
-				        	<br />
-					<h4 style='padding-top:0;margin-top:0'>Add the following options to <em>heyyou</em>'s page configuration tab:</h4>
-		        	<label>
-		        	<input type='checkbox' name='hys_options[show_opt_hide]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_opt_hide'])
-		        		?> /> Hide <em>heyyou</em> Output <span class='hys_description'>(prim. for if using templates that utilize heyyou)</span>
-		        	</label><br />
-		        	
-		        	<label>
-		        	<input type='checkbox' name='hys_options[show_opt_title]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_opt_title'])
-		        		?> /> Include <em>heyyou</em> Title
-		        	</label><br />
-		        	
-		       			<? hys_space() ?>
-
-				    <label>
-		        	<input type='checkbox' name='hys_options[show_opt_titlehide]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_opt_titlehide'])
-		        		?> /> Disable/hide Wp's Page Title <span class='hys_description'>(on selected sites page)</span>
-		        	</label><br />
-		        	
-		        	<label>
-		        	<input type='checkbox' name='hys_options[show_opt_blurbhide]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_opt_blurbhide'])
-		        		?> /> Disable/hide Wp's Page Content <span class='hys_description'>(main textarea content)</span>
-		        	</label><br />
-		        	
-		        	<label>
-		        	<input type='checkbox' name='hys_options[show_opt_sec_blurb]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_opt_sec_blurb'])
-		        		?> /> Secondary Blurb <span class='hys_description'>(ie: two colounms)</span>
-		        	</label><br />
-		        	
-		        	<label>
-		        	 &nbsp; &nbsp;  <input type='checkbox' name='hys_options[secondary_blurbs]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['secondary_blurbs'])
-		        		?> /> Default Secondary Blurbs <span class='hys_description'>enabled on all pages</span>
-		        	</label><br />
-
-		        	<label <?= (@$hys['settings']['show_opt_sec_blurb'] == 1) ? '' : " style='display:none;'" ?>>
-		        	   <? $hys['settings']['secondary_blurb_title'] = (empty($hys['settings']['secondary_blurb_title'])) ? 'Secondary Blurb' : $hys['settings']['secondary_blurb_title']; ?>
-		        	 &nbsp; &nbsp;  <input type='text' style='color: #999;' name='hys_options[secondary_blurb_title]' value='<?= @$hys['settings']['secondary_blurb_title'] ?>'  /> 
-		        	 	<span class='hys_description'>- Title of textarea (ie: Right Column)</span><br />
-		        	</label>
-		        	
-		       			<? hys_space() ?>
-		        	
-		        	<label>
-		        	<input type='checkbox' name='hys_options[show_opt_fb]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_opt_fb'])
-		        		?> /> Share on Facebook button
-		        	</label><br />
-		        	
-		        	<label>
-		        	<input type='checkbox' name='hys_options[show_opt_tw]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_opt_tw'])
-		        		?> /> Share on Twitter button
-		        	</label><br />
-
-		        	<label>
-		        	<input type='checkbox' name='hys_options[show_opt_gp]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_opt_gp'])
-		        		?> /> Share on Google+ button
-		        	</label><br />
-		        	
-		        	<label>
-
-		        	
-		       			<? hys_space() ?>
-		        	
-		        	<label>
-		        	<input type='checkbox' name='hys_options[show_opt_banner]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_opt_banner'])
-		        		?> /> Banner URL <span class='hys_description'>(alt. to Featured Image)</span>
-		        	</label><br />
-		        	<label> &nbsp;&nbsp;&nbsp;&nbsp;
-		        	<input type='checkbox' name='hys_options[show_opt_banner_credit]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_opt_banner_credit'])
-		        		?> /> Banner Image Credit
-		        	</label><br />
-
-		        	<label>
-		        	<input type='checkbox' name='hys_options[show_opt_color]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_opt_color'])
-		        		?> /> Main Hexidecimal Color
-		        	</label><br />
-
-		        	<label>
-		        	<input type='checkbox' name='hys_options[show_opt_sec_color]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_opt_sec_color'])
-		        		?> /> Secondary Hexidecimal Color
-		        	</label><br />
-		        	
-		        	
-		       			<? hys_space() ?>
-		        	
-		        	
-		        	<label>
-		        	<input type='checkbox' name='hys_options[show_pg_img]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_pg_img'])
-		        		?> /> Add image gallery/attachments to page
-		        	</label><br />
-		        	
-		        	<label>
-		        	<input type='checkbox' name='hys_options[show_pt_img]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['show_pt_img'])
-		        		?> /> Add image gallery/attachments to posts
-		        	</label><br />
-		        	
-		        	<label>
-		        	<input type='checkbox' name='hys_options[attach_use_titles]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['attach_use_titles'])
-		        		?> /> Enable <b>Title</b>s in Attachments Plugin
-		        	</label><br />
-		        	
-		        	<label>
-		        	<input type='checkbox' name='hys_options[attach_disable-hys_photo_gallery]' value='1' <?php 
-		        		echo chckchckbox(@$hys['settings']['attach_disable-hys_photo_gallery'])
-		        		?> /> Disable autoplacement of "Page Photo Gallery" <span class='hys_description'>*for custom themes</span>
-		        	</label><br />
-
-
-				</td>
-				<td valign=top>
-				    <?
-
-	$main_metaboxes_post = array(
-		'postcustom' 		=> 'Custom Fields',
-		'postexcerpt' 		=> 'Excerpt',
-		'commentstatusdiv' 	=> 'Comments',
-		'trackbacksdiv' 	=> 'Talkback',
-		'slugdiv' 			=> 'Slug',
-		'authordiv' 		=> 'Author'
-	);
-	$main_metaboxes_pages = array(
-		'postcustom' 		=> 'Custom Fields',
-		'postexcerpt' 		=> 'Excerpt',
-		'commentstatusdiv' 	=> 'Comments',
-		'commentsdiv' 		=> 'Comments',
-		'trackbacksdiv' 	=> 'Talkback',
-		'slugdiv' 			=> 'Slug',
-		'authordiv' 		=> 'Author',
-	);
-	$dash_metaboxes_side = array(
-		'dashboard_primary' 		=> 'Primary??',
-		'dashboard_secondary' 		=> 'Secondary??',
-		'dashboard_quick_press' 	=> 'Quick Press',
-		'dashboard_recent_drafts' 	=> 'Recent Drafts'
-	);
-	$dash_metaboxes_norm = array(
-		'dashboard_right_now' 		=> 'Right Now',
-		'dashboard_recent_comments' => 'Comments',
-		'dashboard_incoming_links' 	=> 'Incom. Links',
-		'dashboard_plugins' 		=> 'WP Plugins',
-	);
-				    ?>
-				    <br />
-					<h4 style='padding-top:0;margin-top:0'>Default MetaBoxes:</h4>
-				       	<table cellpadding="0" cellspacing="0" style=''>
-				       		<tr>
-				       		<td style="width:50%;" valign="top">
-				        	<span class='hys_description'>Wordpress Posts:</span><br />
-					        	<?
-					        		$diabledlist = array('slugdiv');
-					        		foreach ($main_metaboxes_post as $widget=>$widget_name) {
-					        		
-					        		?>
-					        			<label>
-							        	&nbsp; &nbsp; <input type='checkbox' name='hys_options[widget_post_<?=$widget?>]' value='1' <?php 
-							        		if (in_array($widget,$diabledlist)) {
-							        			echo " CHECKED disabled='disabled'/> <span class='hys_description'>{$widget_name}</span>";
-							        		} else {
-								        		echo chckchckbox(@$hys['settings']['widget_post_'.$widget]);
-								        		echo "/> {$widget_name}<span class='hys_description'><!--{$widget}--></span>";
-								        	}
-							        		?> 
-							        	</label><br />
-					        	<?	}
-					        	?>
-				        	</td>
-				        	<td valign="top">
-					        	<span class='hys_description'>Wordpress Pages:</span><br />
-					        	<?
-					        		foreach ($main_metaboxes_pages as $widget=>$widget_name) {?>
-					        			<label>
-							        	&nbsp; &nbsp; <input type='checkbox' name='hys_options[widget_page_<?=$widget?>]' value='1' <?php 
-							        		if (in_array($widget,$diabledlist)) {
-							        			echo " CHECKED disabled='disabled'/> <span class='hys_description'>{$widget_name}</span>";
-							        		} else {
-								        		echo chckchckbox(@$hys['settings']['widget_post_'.$widget]);
-								        		echo "/> {$widget_name}<span class='hys_description'><!--{$widget}--></span>";
-								        	}
-							        		?>
-							        	</label><br />
-					        	<?	}
-					        	?>
-				        	</td>
-				       	</tr>
-				       		<tr>
-				       		<td valign="top">
-				        	<span class='hys_description'>Dashboard (Side):</span><br />
-					        	<?
-					        		foreach ($dash_metaboxes_side as $widget=>$widget_name) {?>
-					        			<label>
-							        	&nbsp; &nbsp; <input type='checkbox' name='hys_options[<?=$widget?>]' value='1' <?php 
-							        		if (in_array($widget,$diabledlist)) {
-							        			echo " CHECKED disabled='disabled'/> <span class='hys_description'>{$widget_name}</span>";
-							        		} else {
-								        		echo chckchckbox(@$hys['settings'][$widget]);
-								        		echo "/> {$widget_name}<span class='hys_description'><!--{$widget}--></span>";
-								        	}
-							        		?>
-							        	</label><br />
-					        	<?	}
-					        	?>
-				        	</td>
-				       		<td valign="top">
-				        	<span class='hys_description'>Dashbrd (Norm):</span><br />
-					        	<?
-					        		foreach ($dash_metaboxes_norm as $widget=>$widget_name) {?>
-					        			<label>
-							        	&nbsp; &nbsp; <input type='checkbox' name='hys_options[<?=$widget?>]' value='1' <?php 
-							        		if (in_array($widget,$diabledlist)) {
-							        			echo " CHECKED disabled='disabled'/> <span class='hys_description'>{$widget_name}</span>";
-							        		} else {
-								        		echo chckchckbox(@$hys['settings'][$widget]);
-								        		echo "/> {$widget_name}<span class='hys_description'><!--{$widget}--></span>";
-								        	}
-							        		?>
-							        	</label><br />
-					        	<?	}
-					        	?>
-				        	</td>
-				       	</tr>
-				       </table> 
-				</td>
-			</tr>
-		</table>
-    </td>
-    </tr>
-    
-    
-    
-	        
-    
-    
-	       	<tr>
-	       		<td colspan=2>
-	       			<hr />
-	       		</td>
-	       	</tr>
-	        
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row"  valign=top>
-	        	<h3>Site Meta Feilds</h3>
-	        </th>
-	        <td valign=middle><br />
-			<?php
-			
-			$field_types = @$hys['metatypes'];
-			
-			
-			for ($i = 0; $i != 15; $i++) {
-				$vis = ($i == 0 || !isset($hys['settings']['meta'][$i])) ? "block": "none";
-				$vis = (isset($hys['settings']['meta'][$i]) && !empty($hys['settings']['meta'][$i])) ? "block": $vis;
-				$vis = (isset($hys['settings']['meta'][$i])) ? $vis: "none";
-				$vis = ($i == 0) ? "block" : $vis;
-			
-				$hys['settings']['meta'] = (isset($hys['settings']['meta'])) ? $hys['settings']['meta'] : array();
+		<script type='text/javascript'>
+			function heyyoutab(id) {				
+				document.getElementById(id).style.display='block'
+				document.getElementById(id+'_link').className='heyyou_tab_current'
 				
-				if (is_array($hys['settings']['meta'])) {
-
-					$typedd = '';
-					foreach ($field_types as $fieldname) {
-						$selt = @(strtolower($fieldname) == $hys['settings']['meta_type'][$i]) ? " selected='selected'": '';
-						$typedd .= "<option value='".strtolower($fieldname)."'{$selt}>{$fieldname}</option>";
+				for(i = 1; i != 6; i++) {
+					thisid = "heyyou_tab_"+i
+					if (thisid != id) {
+						document.getElementById(thisid).style.display='none'
+						document.getElementById(thisid+'_link').className='heyyou_tab_inactive'
 					}
-
-					$hys['settings']['meta'][$i] = (isset($hys['settings']['meta'][$i])) ? $hys['settings']['meta'][$i]: '';
-					$hys['settings']['meta_blurb'][$i] = (isset($hys['settings']['meta_blurb'][$i])) ? $hys['settings']['meta_blurb'][$i]: '';
-					
-					
-					$spacing = " style='padding:0 10px 4px 0;margin:0;'";
-					echo "
-					<div id='hys_meta_{$i}' style='display:{$vis};padding-bottom:15px;'>
-					
-					<!-- ############## {$i} ################ -->
-					<table cellpadding=0 cellspacing=0 style='paddin:0;margin:0;'>
-						<tr>
-							<td{$spacing}>Meta Feild:</td>
-							<td{$spacing}>
-								<input 
-									type='text' 
-									name='hys_options[meta][{$i}]' 
-									value='{$hys['settings']['meta'][$i]}'
-									size='15' class='code'
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td{$spacing}>Meta Type:</td>
-							<td{$spacing}>
-								<select name='hys_options[meta_type][{$i}]' style='width:75px;'>
-									{$typedd}
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td{$spacing}>Instructions:</td>
-							<td{$spacing}>
-								<input 
-									type='text' 
-									name='hys_options[meta_blurb][{$i}]' 
-									value='{$hys['settings']['meta_blurb'][$i]}'
-									size='15' class=''
-								/> <span class='hys_description'>for field information (like this)</span>
-							</td>
-						</tr>
-						<tr>
-							<td{$spacing}>Use in Theme:</td>
-							<td{$spacing}>
-								<input type='text' readonly='readonly' class='text urlfield code' value=\"&lt;?php \$hys['hys_page_config']['meta_".hys_url_friendly($hys['settings']['meta'][$i])."'] ?&gt;\" style='width:290px;font-size:10px;' />
-							</td>
-						</tr>
-					</table>
-					";
-					if ($i != 14 && empty($hys['settings']['meta'][($i+1)])) {
-					  echo "<br /><a class='hys_fake_link'  id='hys_meta_{$i}_link' onclick=\"showhide('hys_meta_{$i}_link'); showhide('hys_meta_".($i+1)."')\" >add..</a>";
-					}
-					echo "</div>
-					<!-- ############## END {$i} ################ -->\n\n\n";
-					
 				}
 			}
-			?>
-			<span class='hys_description'>For adding additional fields to heyyou page config, "Page" options (tab): </span>
-	        </td>
-	        </tr>
-    
-    
-    
-    
-    
-	       	
-	       	
-	       	
-	       	<tr>
-	       		<td colspan=2>
-	       			<hr />
-	       		</td>
-	       	</tr>
-	        
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row"  valign=top>
-	        	<h3>Backup</h3>
-	        </th>
-	        <td valign=middle><br />
-	        	<div style="margin:0 0 10px 0;">
-	        		<a href="admin.php?page=heyyou/_functions.php&backup_now=true&message=backup" class='button' style='margin: 5px 0;'>Backup Database &amp; WP Now!</a><br />
-	        	</div>
-		        <div class='description'>
-					note: the use of mysqldump may require <code>open_basedir</code>. allowing this weakens your servers security.<br />
-					note: backup emails are <u><b>not</b></u> sent will SSL or any other encryption. all information in backup is susceptible to interception.<br />
-					note: storing .sql files on the server is not concidered "safe practice".<br />
-				</div>
-	        </td>
-	        </tr>
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row">Automated Backups:</th>
-	        <td valign=center>
-	        
-	        	<?php 
-	        		$backupon = (@$hys['settings']['backup_onoff'] == 'on') ? 1 : 0;
-	        	?>
+		</script>
 
-	        	<label><input type="radio" name="hys_options[backup_onoff]" value="off" <?= ($backupon != 1 ) ? ' CHECKED' : ''; ?> /> Off</label><br />
-	        	<label><input type="radio" name="hys_options[backup_onoff]" value="on"  <?= ($backupon == 1 ) ? ' CHECKED' : ''; ?> /> On: 
-	        (an email with attached <code>{database}.SQL</code> file will be sent, &amp; stored on the server) </label>
-		        <div class='description'>
-					note: automated backup and sending is done via cron jobs. server configurment must allow Wordpress cronjobs.<br />
-				</div>
-	        <br />
-	        </td>
-	        </tr>
-	        
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row">
-	        	Backup Interval:
-	        </th>
-	        <td valign=middle>
-	        	<select name="hys_options[backup_period]">
-					<?
-						$backup = array(
-							'',
-							'daily',
-							'weekly',
-							'monthly',
-							'quarterly',
-							'biyearly',
-							'yearly',
-						);
-						foreach ($backup as $period) {
-							$presl = ($period == @$hys['settings']['backup_period']) ? " selected='selected'": '';
-							echo "<option{$presl}>{$period}</option>";
-						}
-						
-						$adminemail = (!isset($hys['settings']['backup_to']) || empty($hys['settings']['backup_to'])) ? get_bloginfo('admin_email') : $hys['settings']['backup_to'];
-					?>
-	        	</select>
-	        	<input type='hidden' name='backup_period_currently' value='<?= @$hys['settings']['backup_period'] ?>' />
-	        </td>
-	        </tr>
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row">
-	        	Using <code>/mysqldump</code> located in: 
-	        </th>
-	        <td valign=middle>
-	        	<input type="text" name="hys_options[backup_from]" value="<?php echo @$hys['settings']['backup_from'] ?>" style='width:230px;' class='code' />  <span class="hys_description"><code>/usr/dir/bin</code> *no trailing slash</span>
-	        </td>
-	        </tr>
-	        
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row">
-	        	Send backup email to:
-	        </th>
-	        <td valign=middle>
-	        	<input type="text" name="hys_options[backup_to]" value="<?php echo $adminemail ?>" style='width:230px;' class='code' /> <span class="hys_description">you may use <code>backups@hey-you.ca</code></span>
-	        </td>
-	        </tr>
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row">
-	        	Exisiting Backups:
-	        </th>
-	        <td valign=middle>
-
-				<?php
-				$backup_folder 	= 'hys_sql_backups/'.$hys['site'];
-				$backup_dir 	= WP_CONTENT_DIR.'/'.$backup_folder;
-				$numodbackups 	= 0;
-				$listoffiles	= '';
-				if (is_dir($backup_dir)) { 
-					if ($handle = opendir($backup_dir)) {
-					    while (false !== ($file = readdir($handle))) {
-					        if ($file != "." && $file != ".." && $file != "index.php") {
-								$file_name	= $hys['site'];
-					        	
-					        	$dateoffile = str_replace(array($file_name.'-sql_','.sql'),'',$file);
-					        	$dateoffile = explode('_',$dateoffile);
-					        	$dateoffile = $dateoffile[0].' '.str_replace('-',':',$dateoffile[1]);
-					        	$dateoffile = date('Y, F j - H:i:s',strtotime($dateoffile));
-					        	
-								$fsize = filesize($backup_dir.'/'.$file);
-								$fsize = round($fsize / 1048576, 2);
-					        	
-					        	
-					            $listoffiles .= " &nbsp; &gt; <a href='".WP_CONTENT_URL."/{$backup_folder}/{$file}' class='afile'>{$dateoffile} &nbsp; ($fsize mb)</a><br />";
 	
-					            $numodbackups++;
-					        }
-					    }
-					    closedir($handle);
-					}
-				} else {
-					$listoffiles = "<div>- there are currently no backups -</div>";
-				}
-				?>
-
-	        	<div class='hys_list_backup_files' <? echo ($listoffiles > 8) ? " style='max-height: 200px;overflow-y: scroll;' " : ''; ?>>
-	        	IN <? echo str_replace(get_bloginfo('url'),'',WP_CONTENT_URL.'/'.$backup_folder.'/..') ?><br />
-	        	-------------------------------------------------<br />
-	        	<?= $listoffiles ?>
-	        	-------------------------------------------------<br />
-				<br />
-				</div>
-				<?php if ($numodbackups > 0) { ?>
-				<a href='admin.php?page=heyyou/_functions.php&settings-updated=true&deleteallbackups=true&message=backupsdeleted' class='button' style='margin:-12px 0 0 13px;z-index:999;float:left;'>Delete (<?= $numodbackups; ?>) backups</a>
-				<?php } ?>
-	        </td>
-	        </tr>
-	        
-	        
-    <?php 
-	if (!$a_admin) {
-	?>
-			</table>
-		</div>
-			<table class="form-table">
-	<?php
-	} //endif($a_admin) 
-	?>			  
+	<form method="post" action="options.php">
 		
-	        <tr valign="top">
-	        <th colspan="2"><hr /><h3>Banner(s):</h3></td>
-	        </tr>
-	        
-	        <tr valign="top">
-	        <th scope="row" style=''>Banner Options(s):</th>
-	        <td>
-	        	<label>
-	        	<input type='checkbox' name='hys_options[undercon]' value='1' <?php 
-	        		echo chckchckbox(@$hys['settings']['undercon'])
-	        		?> /> Show custom banner
-	        	</label><br />
-	        	&nbsp; &nbsp; &nbsp; 
-	        	<label>
-	        	<input type='checkbox' name='hys_options[undercon_reveal]' value='1' <?php 
-	        		if (isset($hys['settings']['undercon_reveal']))
-	        		echo chckchckbox($hys['settings']['undercon_reveal'])
-	        		?> /> Auto reveal the message (no show/hide toggling)
-	        	</label><br />
-	        	
-    	<?php if (!$a_admin) { ?>
-				<div style='display:none'>
-    	<? } ?>
-	        	&nbsp; &nbsp; &nbsp; 
-	        	<label>
-	        	<input type='checkbox' name='hys_options[undercon_sess]' value='1' <?php 
-	        		if (isset($hys['settings']['undercon_sess']))
-	        		echo chckchckbox($hys['settings']['undercon_sess'])
-	        		?> /> Show $_SESSION in banner (for developing)
-	        	</label><br />
-	        	&nbsp; &nbsp; &nbsp; 
-	        	<label>
-	        	<input type='checkbox' name='hys_options[undercon_cook]' value='1' <?php 
-	        		if (isset($hys['settings']['undercon_cook']))
-	        		echo chckchckbox($hys['settings']['undercon_cook'])
-	        		?> /> Show $_COOKIE in banner (for developing)
-	        	</label><br />
-	    <?php 
-	    	if (!$a_admin) {
-	    		echo "</div>";
-	    	} //endif($a_admin) 
-	    ?>
-	        </td>
-	        </tr>
-	        <tr valign="top">
-	        <th scope="row" style=''>Custom banner title and message:</th>
-	        <td>
+		<ul class='heyyou_tabs'>
+			<li><div class='sidecell'>&nbsp;</div></li>
+			<li id='heyyou_tab_1_link' class='heyyou_tab_current'><a onclick='heyyoutab("heyyou_tab_1")'>Main</a></li>
+			<li id='heyyou_tab_2_link' class=''><a onclick='heyyoutab("heyyou_tab_2")'>Developer </a></li>
+			<li id='heyyou_tab_3_link' class=''><a onclick='heyyoutab("heyyou_tab_3")'>heyyou Page Options</a></li>
+			<li id='heyyou_tab_4_link' class=''><a onclick='heyyoutab("heyyou_tab_4")'>BackUp</a></li>
+			<li id='heyyou_tab_5_link' class=''><a onclick='heyyoutab("heyyou_tab_5")'>Layout &amp; Text</a></li>
+		</ul>
+	    <?php settings_fields( 'hys_settings' ); ?>
+	    <input type='hidden' name='hys_options[installed]' value='1' />
+	    
+		<!-- 1 ==================================== -->
+		<!-- ====================================== -->
+		<!-- ====================================== -->
+	    <div id="heyyou_tab_1" style='display:block;'>
+			<table class="form-table">
 
-	        	Custom banner title and message:<br />
-	        	<input type="text" name="hys_options[undercontit]" 
-	        		value="<?php echo $hys['settings']['undercontit']; ?>" style='color: #333 !important;
-						font-family: Courier;
-						font-size: 14px;
-						background: #fcf3bb' /><br />
-	        	<textarea name='hys_options[underconmsg]' style='
-	        			width:600px;height:50px;
-	        			color: #333 !important;
-						font-family: Courier;
-						font-size: 14px;
-						padding: 30px 10px 10px 10px;
-						background: #fcf3bb url(<?= $hys['dir'] ?>/res/imgs/underconbanner.png) repeat-x top '><?php echo $hys['settings']['underconmsg'] ?></textarea>
-	        </td>
-	        </tr>
-	        
-	        
-	        <tr valign="top">
-	        <th colspan="2"><hr /><h3>Document/Page Settings</h3></td>
-	        </tr>
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row">&lt;META&gt; keywords:</th>
-	        <td><input type="text" name="hys_options[meta_keywords]" 
-	        		value="<?php echo @$hys['settings']['meta_keywords']; ?>" style='width:400px !important;' class='code'><br />
-	        		<span class='hys_description'>3-5 keyword/phrases seperate with coma "<code>keyphrase, keyphrase, ect</code>"</span></td>
-	        </tr>
-	        <tr valign="top">
-	        <th scope="row">&lt;META&gt; description:</th>
-	        <td><textarea name="hys_options[meta_description]" class="code" style='width:400px !important;height:60px !important;'><?php 
-	        		echo @$hys['settings']['meta_description']; ?></textarea><br />
-	        		<span class='hys_description'>limit to 150-200 characters.</td>
-	        </tr>
-	        
-    <?php 
-	if (!$a_admin) {
-	?>
+		        <tr valign="top">
+			        <th colspan="2"><h3>Search Engines</h3></th>
+		        </tr>
+		        <tr valign="top">
+		       	 	<th scope="row">&lt;META&gt; keywords:</th>
+		       	 	<td><input type="text" name="hys_options[meta_keywords]" 
+		        		value="<?php echo @$hys['settings']['meta_keywords']; ?>" style='width:400px !important;' class='code'><br />
+		        		<span class='hys_description'>3-5 keyword/phrases seperate with coma "<code>keyphrase, keyphrase, ect</code>"</span></td>
+		        </tr>
+		        <tr valign="top">
+		       		 <th scope="row">&lt;META&gt; description:</th>
+		       	 	<td><textarea name="hys_options[meta_description]" class="code" style='width:400px !important;height:60px !important;'><?php 
+		        		echo @$hys['settings']['meta_description']; ?></textarea><br />
+		        		<span class='hys_description'>limit to 150-200 characters.</span></td>
+		        </tr>
+
+		        <tr valign="top">
+			        <th colspan="2"><h3>Social Media</h3></th>
+		        </tr>
+		        
+		        <?
+		        	// MUST ADD to change_checkbox_visibility() in js_admin.js
+		        	$social_media_types = array(
+		        		'Facebook', 'Twitter', 'YouTube', 'Linkedin', 'Pinterest', 'Mailing List', 'Google Plus', 
+		        	);
+		        	
+		        	foreach ($social_media_types as $social) {
+		        		$soc = hys_url_friendly($social);
+		        		$checked = (isset($hys['settings'][$soc.'_url']) && !empty($hys['settings'][$soc.'_url'])) ? ' checked="checked" disabled="disabled"' : '';
+		        	echo "
+				        <tr valign='top'>
+				       	 	<th scope='row'><label><input type='checkbox' id='{$soc}_using' name='hys_options[{$soc}_using]' {$checked} ". chckchckbox(@$hys['settings'][$soc.'_using']). "/> {$social} URL:</label></th>
+				       	 	<td>
+				       	 		<div id='if_{$soc}_using'>
+				       	 		<input type='text' name='hys_options[{$soc}_url]' 
+				        		value='".@$hys['settings'][$soc.'_url']."' style='width:400px !important;' class='code'><br />
+				        		<input type='text' readonly='readonly' class='text urlfield code' value=\"&lt;?= \$hys['settings']['{$soc}_url'] ?&gt;\" style='width:290px;font-size:10px;' />
+				       	 		</div><!--/{$soc}_using-->
+				        	</td>
+				        </tr>
+				        ";
+		        	}
+		        	
+		        ?>
+		        
+		        <tr valign="top">
+		       	 	<th scope="row">Other:<input type="text" name="hys_options[other1_url_name]" 
+		        		value="<?php echo @$hys['settings']['other1_url_name']; ?>" style='width:200px !important;' ></th>
+		       	 	<td>&nbsp; <br /> <input type="text" name="hys_options[other1_url]" 
+		        		value="<?php echo @$hys['settings']['other1_url']; ?>" style='width:400px !important;' class='code'><br />
+		        		<input type='text' readonly='readonly' class='text urlfield code' value="&lt;?= $hys['settings']['other1_url'] ?&gt;" style='width:290px;font-size:10px;' />
+		        	</td>
+		        </tr>
+		        
+		        <tr valign="top">
+		        	<th colspan="2"><h3>Banners:</h3></th>
+		        </tr>
+		        
+		        <tr valign="top">
+		        <th scope="row" style=''>Banner Options:</th>
+		        <td>
+		        	<label>
+		        	<input type='checkbox' name='hys_options[undercon]' value='1' id='undercon' <?= chckchckbox(@$hys['settings']['undercon'])
+		        		?> /> Show custom banner
+		        	</label>
+		        	<div class='if_undercon'>
+			        	<br />
+			        	&nbsp; &nbsp; &nbsp; 
+			        	<label>
+			        	<input type='checkbox' name='hys_options[undercon_reveal]' value='1' <?php 
+			        		if (isset($hys['settings']['undercon_reveal']))
+			        		echo chckchckbox($hys['settings']['undercon_reveal']) ?> />Auto reveal the message (no show/hide toggling)
+			        	</label><br />
+			        	&nbsp; &nbsp; &nbsp; 
+			        	<label>
+			        	<input type='checkbox' name='hys_options[undercon_sess]' value='1' <?php 
+			        		if (isset($hys['settings']['undercon_sess']))
+			        		echo chckchckbox($hys['settings']['undercon_sess']) ?> />Show $_SESSION in banner (for developing)
+			        	</label><br />
+			        	&nbsp; &nbsp; &nbsp; 
+			        	<label>
+			        	<input type='checkbox' name='hys_options[undercon_cook]' value='1' <?php 
+			        		if (isset($hys['settings']['undercon_cook']))
+			        		echo chckchckbox($hys['settings']['undercon_cook']) ?> />Show $_COOKIE in banner (for developing)
+			        	</label><br />
+		        	</div><!--/if_undercon-->
+		        </td>
+		        </tr> 
+		        <tr valign="top" class='if_undercon'>
+		        <th scope="row" style=''>Custom banner title and message:</th>
+		        <td>
+		        	Custom banner title and message:<br />
+		        	<input type="text" name="hys_options[undercontit]" 
+		        		value="<?php echo $hys['settings']['undercontit']; ?>" style='color: #333 !important;
+							font-family: Courier;
+							font-size: 14px;
+							background: #fcf3bb' /><br />
+		        	<textarea name='hys_options[underconmsg]' style='
+		        			width:600px;height:50px;
+		        			color: #333 !important;
+							font-family: Courier;
+							font-size: 14px;
+							padding: 30px 10px 10px 10px;
+							background: #fcf3bb url(<?= $hys['dir'] ?>/res/imgs/underconbanner.png) repeat-x top '><?php echo $hys['settings']['underconmsg'] ?></textarea>
+		        </td>
+		        </tr>
+
+
+		        
+		    </table>
+	    </div><!--/heyyou_tab_1-->
+	    
+	    
+	    
+	    
+		<!-- 2 ==================================== -->
+		<!-- ====================================== -->
+		<!-- ====================================== -->
+	    <div id="heyyou_tab_2" style='display:none;'>
+			<table class="form-table" >
+				<tr valign="top">
+					<th scope="row"><h3>Include Tools/Apps:</h3></th>    
+				    <td>
+			        	<label>
+			        	<input type='checkbox' name='hys_options[mootools]' value='1' <?= chckchckbox(@$hys['settings']['mootools']) ?> />MooTools
+			        	</label><br />
+			        	<label>
+			        	<input type='checkbox' name='hys_options[lightbox]' value='1' <?= chckchckbox(@$hys['settings']['lightbox']) ?> />Lightbox
+			        	</label><br />
+			        	<label>
+			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <input type='checkbox' name='hys_options[lightboxcustom]' value='1' <?= chckchckbox(@$hys['settings']['lightboxcustom']) ?> /> custom LightboxOptions()
+			        	</label><br />
+			        	<label>
+			        	<input type='checkbox' name='hys_options[jquery]' value='1' <?= chckchckbox(@$hys['settings']['jquery']) ?> />jQuery
+			        	</label><br />
+			        	<label>
+			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[animated_moreless]' value='1' <?= chckchckbox(@$hys['settings']['animated_moreless']) ?> />Use jQuery more/less slide up/down animation 
+			        	</label><br />
+			        	<label>
+			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_lightbox]' value='1' <?= chckchckbox(@$hys['settings']['jquery_lightbox']) ?> />jQuery.Lightbox
+			        	</label><br />
+			        	<label>
+			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <input type='checkbox' name='hys_options[jquery_lightbox_assign]' value='1' <?= chckchckbox(@$hys['settings']['jquery_lightbox_assign']) ?> /><span title='$(.attachments a, .hys_attach ul li .attach_image a, ul.photo_gallery li a).lightBox...'>define galleries: <span class='hys_description'>(hover to reveal)</span></span>
+			        	</label><br />
+			        	<label>
+			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_opacityrollovers]' value='1' <?= chckchckbox(@$hys['settings']['jquery_opacityrollovers']) ?> />jQuery.OpacityRollovers
+			        	</label><br />
+			        	<label>
+			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_cycle]' value='1' <?= chckchckbox(@$hys['settings']['jquery_cycle']) ?> />jQuery.Cycle
+			        	</label><br />
+			        	<label>
+			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_fx]' value='1' <?= chckchckbox(@$hys['settings']['jquery_fx']) ?> />jQuery.Effects
+			        	</label><br />
+			        	<label>
+			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_color]' value='1' <?= chckchckbox(@$hys['settings']['jquery_color']) ?> />jQuery.Color
+			        	</label><br />
+			        	<label>
+			        	<input type='checkbox' name='hys_options[no_attachments]' value='1' <?= chckchckbox(@$hys['settings']['no_attachments']) ?> />Do not include use Attachments
+			        	</label><br />
+				    </td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><h3>Generate &lt;head&gt; html:</h3></th>    
+				    <td>
+						<label>
+						    TinyMCE Stylesheet:<br />
+							&nbsp; &nbsp; ..<? 
+							echo "<span class='description' style='color:#ccc'>".str_replace(array(get_bloginfo('url'),'/wp-content/themes'),'',
+							get_bloginfo('stylesheet_directory')) ?>/</span>  <input type='text' style='color: #999;' name='hys_options[header_tinymce]' value='<?= @$hys['settings']['header_tinymce'] ?>'  />
+						</label>
+						<br />
+						
+						<label>
+						    .favicon URL:<br />
+							&nbsp; &nbsp; ..<? 
+							echo "<span class='description' style='color:#ccc'>".str_replace(array(get_bloginfo('url'),'/wp-content/themes'),'',
+							get_bloginfo('stylesheet_directory')) ?>/</span>  <input type='text' style='color: #999;' name='hys_options[header_favicon]' value='<?= @$hys['settings']['header_favicon'] ?>' />
+						</label>
+						<br />
+						 
+						<label>
+						    js.js URL:<br />
+							&nbsp; &nbsp; ..<? 
+							echo "<span class='description' style='color:#ccc'>".str_replace(array(get_bloginfo('url'),'/wp-content/themes'),'',
+							get_bloginfo('stylesheet_directory')) ?>/</span>  <input type='text' style='color: #999;' name='hys_options[header_js]' value='<?= @$hys['settings']['header_js'] ?>' />
+						</label><br />
+				    </td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><h3>Wordpress Options:</h3></th>    
+				    <td>
+				    	<span style='width:170px;display:inline-block'>Use Featured Image:</span> 
+			        	<label>
+			        	<input type='checkbox' name='hys_options[page_featured_image]' value='1' <?= chckchckbox(@$hys['settings']['page_featured_image']) ?> />on pages
+			        	</label> &nbsp; 
+			        	<label>
+			        	<input type='checkbox' name='hys_options[post_featured_image]' value='1' <?= chckchckbox(@$hys['settings']['post_featured_image']) ?> />on posts
+			        	</label><br />
+			        	<span style='width:170px;display:inline-block'>Use Secondary Image:</span>
+			        	<label>
+			        	<input type='checkbox' name='hys_options[page_secondary_image]' value='1' <?= chckchckbox(@$hys['settings']['page_secondary_image'])
+			        		?>  />  on pages
+			        	</label> &nbsp; 
+			        	<label>
+			        	<input type='checkbox' name='hys_options[post_secondary_image]' value='1' <?= chckchckbox(@$hys['settings']['post_secondary_image'])
+			        		?>  /> on posts
+			        	</label><br />
+			        	<span style='width:170px;display:inline-block'>Use Excerpts:</span> 
+			        	<label>
+			        	<input type='checkbox' name='hys_options[page_excerpts]' value='1' <?= chckchckbox(@$hys['settings']['page_excerpts']) ?> /> on pages
+			        	</label> &nbsp; 
+			        	<label>
+			        	<input type='checkbox' name='hys_options[post_excerpts]' value='1' <?= chckchckbox(@$hys['settings']['post_excerpts']) ?> />on posts
+			        	</label><br />
+				    </td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><h3>Navigation:</h3></th>    
+				    <td>
+			        	<table cellpadding="0" style='padding-left:20px;'>
+			        		<tr>
+			        			<td>&nbsp;</td>
+			        			<td class='hys_description'>client</td>
+			        			<td class='hys_description'>subadmin</td>
+			        		</tr>
+		        			<?php
+		        			//global $menu;
+	        				$menu = $hys['menu_copy'];
+	        				foreach ($menu as $ke => $pageinfo) {
+	        					$pageinfo[0] = trim(str_replace(array(' 0',' 1'),'',strip_tags($pageinfo[0])));
+		        				if (empty($pageinfo[0])) {
+			        				//nothing
+		        				} else {
+		        					$alwys_show 	= array('Dashboard','Media','Pages','heyyou', 'Users','heyyoumedia');
+		        					$if_subadmin 	= array('Settings','Appearance');
+		        					if (in_array($pageinfo[0],$alwys_show)) {
+					        				$form1 = "
+					        				<input type='hidden' name='hys_options[heyyou_menu_{$ke}]' value='1' />
+					        				<input type='checkbox' name='dumby' value='1' CHECKED DISABLED />";
+					        		} else {
+					        				$form1 = "<input type='checkbox' name='hys_options[heyyou_menu_{$ke}]' value='1' ".
+					        						chckchckbox(@$hys['settings']['heyyou_menu_'.$ke])." />";
+					        		}
+		        					if (in_array($pageinfo[0],$if_subadmin) || in_array($pageinfo[0],$alwys_show)) {
+					        				$form2 = "
+					        				<input type='hidden' name='hys_options[subadmin_menu_{$ke}]' value='1' />
+					        				<input type='checkbox' name='dumby' value='1' CHECKED DISABLED />";
+					        		} else {
+					        				$form2 = "<input type='checkbox' name='hys_options[subadmin_menu_{$ke}]' value='1' ".
+					        						chckchckbox(@$hys['settings']['heyyou_menu_'.$ke])." />";
+					        		}
+	        						echo "
+					        		<tr>
+					        			<td style='text-align:right;padding:0;margin:0;'>
+											{$pageinfo[0]}<br />
+					        			</td>
+					        			<td style='padding:0;margin:0;text-align:center;'>
+											{$form1}
+					        			</td>
+					        			<td style='padding:0;margin:0;text-align:center;'>
+					        				{$form2}
+					        			</td>
+					        		</tr>\n";
+	        					}
+	        				}	
+		        			?>
+			        	</table>	
+				    </td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><h3>Media Library</h3></th>    
+				    <td>
+						Display Media Items as:<br />
+						<? $media_layout = (@$hys['settings']['media_layout'] == 'list') ? 1 : 0; ?>
+						<label><input type="radio" name="hys_options[media_layout]" value="grid" <?= ($media_layout != 1 ) ? ' CHECKED' : ''; ?> /> Thumb Tile Grid </label><br />
+						<label><input type="radio" name="hys_options[media_layout]" value="list"  <?= ($media_layout == 1 ) ? ' CHECKED' : ''; ?> /> Text List <span class="description">recommended for >70 images</span>
+						<br /><Br />
+						heyyou Library:
+						<label>
+						<input type='checkbox' name='hys_options[dont_use_heyyou_media_library]' value='1' <?php 
+							if (isset($hys['settings']['dont_use_heyyou_media_library']))
+							echo chckchckbox($hys['settings']['dont_use_heyyou_media_library'])
+							?> />  Don't use <em>heyyou</em> media library<br /> 
+							&nbsp; &nbsp; &nbsp;<span class="description">(reverts to core Wordpress Media Library)</span>
+						</label><br />
+				    </td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><h3>Default MetaBoxes</h3></th>    
+				    <td>
+					    <?
+						$main_metaboxes_post = array(
+							'postcustom' 		=> 'Custom Fields',
+							'postexcerpt' 		=> 'Excerpt',
+							'commentstatusdiv' 	=> 'Comments',
+							'trackbacksdiv' 	=> 'Talkback',
+							'slugdiv' 			=> 'Slug',
+							'authordiv' 		=> 'Author'
+						);
+						$main_metaboxes_pages = array(
+							'postcustom' 		=> 'Custom Fields',
+							'postexcerpt' 		=> 'Excerpt',
+							'commentstatusdiv' 	=> 'Comments',
+							'commentsdiv' 		=> 'Comments',
+							'trackbacksdiv' 	=> 'Talkback',
+							'slugdiv' 			=> 'Slug',
+							'authordiv' 		=> 'Author',
+						);
+						$dash_metaboxes_side = array(
+							'dashboard_primary' 		=> 'Primary??',
+							'dashboard_secondary' 		=> 'Secondary??',
+							'dashboard_quick_press' 	=> 'Quick Press',
+							'dashboard_recent_drafts' 	=> 'Recent Drafts'
+						);
+						$dash_metaboxes_norm = array(
+							'dashboard_right_now' 		=> 'Right Now',
+							'dashboard_recent_comments' => 'Comments',
+							'dashboard_incoming_links' 	=> 'Incom. Links',
+							'dashboard_plugins' 		=> 'WP Plugins',
+						);
+					    ?>
+				       	<table cellpadding="0" style=''>
+				       		<tr>
+								<td style="width:50%;" valign="top">
+									<span class='hys_description'>Wordpress Posts:</span><br />
+									<?  $diabledlist = array('slugdiv');
+										foreach ($main_metaboxes_post as $widget=>$widget_name) {
+										?>
+										<label>
+								    	&nbsp; &nbsp; <input type='checkbox' name='hys_options[widget_post_<?=$widget?>]' value='1' <?php 
+								    		if (in_array($widget,$diabledlist)) {
+								    			echo " CHECKED disabled='disabled'/> <span class='hys_description'>{$widget_name}</span>";
+								    		} else {
+								        		echo chckchckbox(@$hys['settings']['widget_post_'.$widget]);
+								        		echo "/> {$widget_name}<span class='hys_description'><!--{$widget}--></span>";
+								        	}
+								    		?> 
+								    	</label><br />
+									<?	} ?>
+								</td>
+								<td valign="top">
+									<span class='hys_description'>Wordpress Pages:</span><br />
+									<?  foreach ($main_metaboxes_pages as $widget=>$widget_name) {?>
+											<label>
+									    	&nbsp; &nbsp; <input type='checkbox' name='hys_options[widget_page_<?=$widget?>]' value='1' <?php 
+									    		if (in_array($widget,$diabledlist)) {
+									    			echo " CHECKED disabled='disabled'/> <span class='hys_description'>{$widget_name}</span>";
+									    		} else {
+									        		echo chckchckbox(@$hys['settings']['widget_post_'.$widget]);
+									        		echo "/> {$widget_name}<span class='hys_description'><!--{$widget}--></span>";
+									        	}
+									    		?>
+									    	</label><br />
+									<?	} ?>
+								</td>
+							</tr>
+				       		<tr>
+				       			<td valign="top">
+						        	<span class='hys_description'>Dashboard (Side):</span><br />
+							        	<?  foreach ($dash_metaboxes_side as $widget=>$widget_name) {?>
+							        			<label>
+									        	&nbsp; &nbsp; <input type='checkbox' name='hys_options[<?=$widget?>]' value='1' <?php 
+									        		if (in_array($widget,$diabledlist)) {
+									        			echo " CHECKED disabled='disabled'/> <span class='hys_description'>{$widget_name}</span>";
+									        		} else {
+										        		echo chckchckbox(@$hys['settings'][$widget]);
+										        		echo "/> {$widget_name}<span class='hys_description'><!--{$widget}--></span>";
+										        	}
+									        		?>
+									        	</label><br />
+							        	<?	}  ?>
+						        </td>
+						        <td valign="top">
+						        	<span class='hys_description'>Dashbrd (Norm):</span><br />
+							        	<label>
+							        	&nbsp; &nbsp;  <input type='checkbox' name='hys_options[not_heyshauna]' value='1' <?php 
+							        		echo chckchckbox(@$hys['settings']['not_heyshauna'])
+							        		?> /> heyshauna welcome
+							        	</label><br />
+
+							        	<?  foreach ($dash_metaboxes_norm as $widget=>$widget_name) {?>
+							        			<label>
+									        	&nbsp; &nbsp; <input type='checkbox' name='hys_options[<?=$widget?>]' value='1' <?php 
+									        		if (in_array($widget,$diabledlist)) {
+									        			echo " CHECKED disabled='disabled'/> <span class='hys_description'>{$widget_name}</span>";
+									        		} else {
+										        		echo chckchckbox(@$hys['settings'][$widget]);
+										        		echo "/> {$widget_name}<span class='hys_description'><!--{$widget}--></span>";
+										        	}
+									        		?>
+									        	</label><br />
+							        	<?	}  ?>
+						        </td>
+							</tr>
+				       	</table>
+				    </td>
+				</tr>
 			</table>
-		<div style='display:none;'>
+	    </div><!--/heyyou_tab_2-->
+	    
+	    <!-- 3 ==================================== -->
+		<!-- ====================================== -->
+		<!-- ====================================== -->
+	    <div id="heyyou_tab_3" style='display:none;'>
 			<table class="form-table">
-	<?php
-	} //endif($a_admin) 
-	?>		
-	      
-	        <tr valign="top">
-	        <th scope="row"># to break more/less at:</th>
-	        <td><input type="text" name="hys_options[moreless]" 
-	        		value="<?php echo @$hys['settings']['moreless']; ?>" size=4 class='code'>characters</td>
-	        </tr>
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row">mobile viewport width:</th>
-	        <td><input type="text" name="hys_options[viewport]" 
-	        		value="<?php echo @$hys['settings']['viewport']; ?>" size=4 class='code'>px</td>
-	        </tr>
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row">ID's exempt from navigation: </th>
-	        <td><input type="text" name="hys_options[navview]" 
-	        		value="<?php echo @$hys['settings']['navview']; ?>" size=10 class='code'><span class='hys_description'>*seperate with coma: 1,2,3..</span></td>
-	        </tr>
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row">Tutorial Page ID: </th>
-	        <td><input type="text" name="hys_options[tutid]" 
-	        		value="<?php echo @$hys['settings']['tutid']; ?>" size=4 class='code'><span class='hys_description'>*page ID: visible to <em>hys_client</em> in live site, but not in admin. To get ID: edit page &amp; extract from URL<br /> <code>http://.../wp-admin/post.php?post=<span style='text-decoration:underline;padding:0 2px;'>524</span>&action=edit</span></code></td>
-	        </tr>
-	        
-	        
-	        
-	        <tr valign="top">
-	        <th colspan="2"><hr /><h3>Output Texts</h3></td>
-	        </tr>
-	        
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row">More/less text:</th>
-	        <td>
-	        	<input type="text" name="hys_options[more]" 
-	        			value="<?php echo @$hys['settings']['more']; ?>" 
-	        			class=''> <span class='hys_description'>(more)</span><br />
-	        	<input type="text" name="hys_options[less]" value="<?php 
-	        		echo $hys['settings']['less']; 
-	        		?>" class=''> <span class='hys_description'>(less)</span>
-	        </td>
-	        </tr>
+				<tr valign="top">
+					<th scope="row"><h3>Page's heyyou options</h3></th>    
+				    <td>
+			        	<input type='checkbox' name='hys_options[show_opt_hide]' value='1' <?= chckchckbox(@$hys['settings']['show_opt_hide']) ?> />Hide <em>heyyou</em> Output <span class='hys_description'>(prim. for if using templates that utilize heyyou)</span>
+			        	</label><br />
+			        	
+			        	<label>
+			        	<input type='checkbox' name='hys_options[show_opt_title]' value='1' <?= chckchckbox(@$hys['settings']['show_opt_title']) ?> />Include <em>heyyou</em> Title
+			        	</label><br />
+			        	
+			       			<? hys_space() ?>
 	
+					    <label>
+			        	<input type='checkbox' name='hys_options[show_opt_titlehide]' value='1' <?= chckchckbox(@$hys['settings']['show_opt_titlehide']) ?> />Disable/hide Wp's Page Title <span class='hys_description'>(on selected sites page)</span>
+			        	</label><br />
+			        	
+			        	<label>
+			        	<input type='checkbox' name='hys_options[show_opt_blurbhide]' value='1' <?= chckchckbox(@$hys['settings']['show_opt_blurbhide']) ?> />Disable/hide Wp's Page Content <span class='hys_description'>(main textarea content)</span>
+			        	</label><br />
+			        	
+			        	<label>
+			        	<input type='checkbox' name='hys_options[show_opt_sec_blurb]' value='1' <?= chckchckbox(@$hys['settings']['show_opt_sec_blurb']) ?> />Secondary Blurb <span class='hys_description'>(ie: two colounms)</span>
+			        	</label><br />
+			        	
+			        	<label>
+			        	 &nbsp; &nbsp;  <input type='checkbox' name='hys_options[secondary_blurbs]' value='1' <?= chckchckbox(@$hys['settings']['secondary_blurbs']) ?> />Default Secondary Blurbs <span class='hys_description'>enabled on all pages</span>
+			        	</label><br />
 	
-	        <tr valign="top">
-	        <th scope="row">Pagination "Pages" text:</th>
-	        <td>
-	        	<input type="text" name="hys_options[pages]" value="<?php 
-	        			echo @$hys['settings']['pages']; 
-	        	?>" class='' /> 
-	        	<span class='hys_description'>"<code>Pages:</code> 1 | 2 | 3 | ..."</span><br />
-	        	<div style='height:7px'></div>
-	        	<label>
-	        	<input type='checkbox' name='hys_options[pages_sep]' value='1' <?php 
-	        		echo chckchckbox(@$hys['settings']['pages_sep'])
-	        		?> /> Show seperator "<code>|</code>" between page numbers
-	        	</label>
-	        </td>
-	        </tr>
-	        
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row">View lightbox gallery link:</th>
-	        <td>
-	        	<input type="text" name="hys_options[lightbox_gallery_link]" value="<?php 
-	        			echo @$hys['settings']['lightbox_gallery_link']; 
-	        	?>" class='' /> 
-	        	<span class='hys_description'>"<code>%lightbox_gallery%</code> = <code>View Gallery:</code></span><br />
-	        </td>
-	        </tr>
-	        
-	        <tr valign="top">
-	        <th scope="row">Download Hi/ Low Res Text:</th>
-	        <td>
-	        	<input type="text" name="hys_options[text_hi_res]" value="<?php 
-	        			echo @$hys['settings']['text_hi_res']; 
-	        	?>" class='' /> 
-	        	<span class='hys_description'>"hi res"</span><br />
-	        	
-	        	<input type="text" name="hys_options[text_low_res]" value="<?php 
-	        			echo @$hys['settings']['text_low_res']; 
-	        	?>" class='' /> 
-	        	<span class='hys_description'>"low res"</span><br />
-	        </td>
-	        </tr>
-	        
-	        <tr valign="top">
-	        <th scope="row">"Back" text:</th>
-	        <td>
-	        	<input type="text" name="hys_options[back]" value="<?php 
-	        			echo htmlentities($hys['settings']['back']); 
-	        	?>" class='' /> 
-	        	<span class='hys_description'>"<code>&lt; Back</code>"</span><br />
-	        	<div style='height:7px'></div>
-	        </td>
-	        </tr>
-	        
-	        
-	        
-	        
-	        <tr valign="top">
-	        <th scope="row">Text Seporators/lines:</th>
-	        <td>
-	        	<input type="text" name="hys_options[line1]" value="<?php 
-	        			echo @$hys['settings']['line1']; 
-	        	?>" class='' /> 
-	        	<span class='hys_description'>"<code>&lt;hr /&gt;</code>", 
-	        	"<code>&lt;div&gt;.....&lt;/div&gt;</code>", ect</span><br />
-	        	<div style='height:7px'></div>
-	        	<input type="text" name="hys_options[line2]" value="<?php 
-	        			echo @$hys['settings']['line2']; 
-	        	?>" class='' /> 
-	        	<span class='hys_description'>"<code>&lt;hr /&gt;</code>", 
-	        	"<code>&lt;div&gt;.....&lt;/div&gt;</code>", ect</span><br />
-	        	<div style='height:7px'></div>
-	        </td>
-	        </tr>
-	        
-	        <tr valign="top">
-	        <th scope="row">feature search result text:</th>
-	        <td><input type="text" name="hys_options[search_text]" 
-	        		value="<?php echo @$hys['settings']['search_text']; ?>"></td>
-	        </tr>
-	      
-	        <tr valign="top">
-	        <th colspan="2"><hr /><h3>TinyMCE</h3></td>
-	        </tr>
-	        
-	        <tr valign="top">
-	        <th scope="row">TinyMCE CSS:</th>
-	        <td>
-				<?php
-					for ($i = 0; $i != 10; $i++) {
-						$vis = ($i == 0 || !isset($hys['settings']['tinymce_css'][$i])) ? "block": "none";
-						$vis = (isset($hys['settings']['tinymce_css'][$i]) && !empty($hys['settings']['tinymce_css'][$i])) ? "block": $vis;
-						$vis = (isset($hys['settings']['tinymce_css'][$i])) ? $vis: "none";
-						$vis = ($i == 0) ? "block" : $vis;		
-						$hys['settings']['tinymce_css'] = (isset($hys['settings']['tinymce_css'])) ? $hys['settings']['tinymce_css'] : array();
-						if (is_array($hys['settings']['tinymce_css'])) {
-							if ( !term_exists($hys['settings']['tinymce_css'][$i],'mediacategory') )
-								wp_insert_term($hys['settings']['tinymce_css'][$i],'mediacategory');
-							$hys['settings']['tinymce_css'][$i] = (isset($hys['settings']['tinymce_css'][$i])) ? $hys['settings']['tinymce_css'][$i]: '';
-							echo "
-							<div id='hys_tinymcecss_{$i}' style='display:{$vis};'>
-							<code>.</code><label style='display:inline;'>
-								<input 
-									type='text' 
-									name='hys_options[tinymce_css][{$i}]' 
-									value='{$hys['settings']['tinymce_css'][$i]}'
-									size=15
-									class='code'
-								/>
-								</label> ";
-							echo ($i==0) ? "<span class='hys_description'>text only - don't include <code>#</code>id or class element identifies</span>" : '';
-							if ($i != 14 && empty($hys['settings']['tinymce_css'][($i+1)])) {
-							  echo "<br /><a class='hys_fake_link'  id='hys_tinymcecss_{$i}_link' 
-							   onclick=\"showhide('hys_tinymcecss_{$i}_link'); showhide('hys_tinymcecss_".($i+1)."')\" 
-							  >add..</a>";
+			        	<label <?= (@$hys['settings']['show_opt_sec_blurb'] == 1) ? '' : " style='display:none;'" ?>>
+			        	   <? $hys['settings']['secondary_blurb_title'] = (empty($hys['settings']['secondary_blurb_title'])) ? 'Secondary Blurb' : $hys['settings']['secondary_blurb_title']; ?>
+			        	 &nbsp; &nbsp;  <input type='text' style='color: #999;' name='hys_options[secondary_blurb_title]' value='<?= @$hys['settings']['secondary_blurb_title'] ?>'  /> 
+			        	 	<span class='hys_description'>- Title of textarea (ie: Right Column)</span><br />
+			        	</label>
+			        	
+			       			<? hys_space() ?>
+			        	
+			        	<label>
+			        	<input type='checkbox' name='hys_options[show_opt_fb]' value='1' <?= chckchckbox(@$hys['settings']['show_opt_fb']) ?> />Share on Facebook button
+			        	</label><br />
+			        	
+			        	<label>
+			        	<input type='checkbox' name='hys_options[show_opt_tw]' value='1' <?= chckchckbox(@$hys['settings']['show_opt_tw']) ?> />Share on Twitter button
+			        	</label><br />
+	
+			        	<label>
+			        	<input type='checkbox' name='hys_options[show_opt_gp]' value='1' <?= chckchckbox(@$hys['settings']['show_opt_gp']) ?> />Share on Google+ button
+			        	</label><br />
+			        	
+			        	
+			       			<? hys_space() ?>
+			        	
+			        	<!-- 
+			        	BELOW DEPRECIATED.. commented out temporaily for backwards compat
+			        	//@TODO: backwards comat
+			        	<label>
+			        	<input type='checkbox' name='hys_options[show_opt_banner]' value='1' <?= chckchckbox(@$hys['settings']['show_opt_banner']) ?> />Banner URL <span class='hys_description'>(alt. to Featured Image)</span>
+			        	</label><br />
+			        	<label> &nbsp;&nbsp;&nbsp;&nbsp;
+			        	<input type='checkbox' name='hys_options[show_opt_banner_credit]' value='1' <?= chckchckbox(@$hys['settings']['show_opt_banner_credit']) ?> />Banner Image Credit
+			        	</label><br />
+			        	<label>
+			        	<input type='checkbox' name='hys_options[show_opt_color]' value='1' <?= chckchckbox(@$hys['settings']['show_opt_color']) ?> />Main Hexidecimal Color
+			        	</label><br />
+	
+			        	<label>
+			        	<input type='checkbox' name='hys_options[show_opt_sec_color]' value='1' <?= chckchckbox(@$hys['settings']['show_opt_sec_color']) ?> />Secondary Hexidecimal Color
+			        	</label><br />
+			        	-->
+			        	
+			        	
+			        	
+			        	<label>
+			        	<input type='checkbox' name='hys_options[show_pg_img]' value='1' <?= chckchckbox(@$hys['settings']['show_pg_img']) ?> />Add image gallery/attachments to page
+			        	</label><br />
+			        	
+			        	<label>
+			        	<input type='checkbox' name='hys_options[show_pt_img]' value='1' <?= chckchckbox(@$hys['settings']['show_pt_img']) ?> />Add image gallery/attachments to posts
+			        	</label><br />
+			        	
+			        	<label>
+			        	<input type='checkbox' name='hys_options[attach_use_titles]' value='1' <?= chckchckbox(@$hys['settings']['attach_use_titles']) ?> />Enable <b>Title</b>s in Attachments Plugin
+			        	</label><br />
+			        	
+			        	<label>
+			        	<input type='checkbox' name='hys_options[attach_disable-hys_photo_gallery]' value='1' <?= chckchckbox(@$hys['settings']['attach_disable-hys_photo_gallery']) ?> />Disable autoplacement of "Page Photo Gallery" <span class='hys_description'>*for custom themes</span>
+			        	</label><br />
+				    </td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><h3>Page's heyyou features</h3></th>    
+				    <td>
+				    
+				    </td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><h3>Site Meta Feilds</h3></th>    
+				    <td>
+						<?php
+						
+						$field_types = @$hys['metatypes'];
+						
+						for ($i = 0; $i != 15; $i++) {
+							$vis = ($i == 0 || !isset($hys['settings']['meta'][$i])) ? "block": "none";
+							$vis = (isset($hys['settings']['meta'][$i]) && !empty($hys['settings']['meta'][$i])) ? "block": $vis;
+							$vis = (isset($hys['settings']['meta'][$i])) ? $vis: "none";
+							$vis = ($i == 0) ? "block" : $vis;
+						
+							$hys['settings']['meta'] = (isset($hys['settings']['meta'])) ? $hys['settings']['meta'] : array();
+							
+							if (is_array($hys['settings']['meta'])) {
+			
+								$typedd = '';
+								foreach ($field_types as $fieldname) {
+									$selt = @(strtolower($fieldname) == $hys['settings']['meta_type'][$i]) ? " selected='selected'": '';
+									$typedd .= "<option value='".strtolower($fieldname)."'{$selt}>{$fieldname}</option>";
+								}
+			
+								$hys['settings']['meta'][$i] = (isset($hys['settings']['meta'][$i])) ? $hys['settings']['meta'][$i]: '';
+								$hys['settings']['meta_blurb'][$i] = (isset($hys['settings']['meta_blurb'][$i])) ? $hys['settings']['meta_blurb'][$i]: '';
+								
+								
+								$spacing = " style='padding:0 10px 4px 0;margin:0;'";
+								echo "
+								<div id='hys_meta_{$i}' style='display:{$vis};padding-bottom:15px;'>
+								<!-- ############## {$i} ################ -->
+								<table cellpadding=0 cellspacing=0 style='paddin:0;margin:0;'>
+									<tr>
+										<td{$spacing}>Meta Feild:</td>
+										<td{$spacing}>
+											<input 
+												type='text' 
+												name='hys_options[meta][{$i}]' 
+												value='{$hys['settings']['meta'][$i]}'
+												size='15' class='code'
+											/>
+										</td>
+									</tr>
+									<tr>
+										<td{$spacing}>Meta Type:</td>
+										<td{$spacing}>
+											<select name='hys_options[meta_type][{$i}]' style='width:75px;'>
+												{$typedd}
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td{$spacing}>Instructions:</td>
+										<td{$spacing}>
+											<input 
+												type='text' 
+												name='hys_options[meta_blurb][{$i}]' 
+												value='{$hys['settings']['meta_blurb'][$i]}'
+												size='15' class=''
+											/> <span class='hys_description'>for field information (like this)</span>
+										</td>
+									</tr>
+									<tr>
+										<td{$spacing}>Use in Theme:</td>
+										<td{$spacing}>
+											<input type='text' readonly='readonly' class='text urlfield code' value=\"&lt;?= \$hys['hys_page_config']['meta_".hys_url_friendly($hys['settings']['meta'][$i])."'] ?&gt;\" style='width:290px;font-size:10px;' />
+										</td>
+									</tr>
+								</table>
+								";
+								if ($i != 14 && empty($hys['settings']['meta'][($i+1)])) {
+								  echo "<br /><a class='hys_fake_link'  id='hys_meta_{$i}_link' onclick=\"showhide('hys_meta_{$i}_link'); showhide('hys_meta_".($i+1)."')\" >add..</a>";
+								}
+								echo "</div>
+								<!-- ############## END {$i} ################ -->\n\n\n";
+								
 							}
-							echo "</div>";
 						}
-					}
-				?>
-			</td>
-			</tr>
-			
-			
-			
-	        <tr valign="top">
-	        <th colspan="2"><hr /><h3>Media Library</h3></td>
-	        </tr>
-			<tr>
-	        	<td valign=top>
-	        		Display Media Items as:
-	        	</td>
-				<td>
-					<? $media_layout = (@$hys['settings']['media_layout'] == 'list') ? 1 : 0; ?>
-					<label><input type="radio" name="hys_options[media_layout]" value="grid" <?= ($media_layout != 1 ) ? ' CHECKED' : ''; ?> /> Thumb Tile Grid </label><br />
-					<label><input type="radio" name="hys_options[media_layout]" value="list"  <?= ($media_layout == 1 ) ? ' CHECKED' : ''; ?> /> Text List <span class="description">recommended for >70 images</span>
-				</td>
-			</tr>
-			
-			<tr>
-	        	<td valign=top>
-	        		heyyou Library:
-	        	</td>
-				<td>
-					<label>
-					<input type='checkbox' name='hys_options[dont_use_heyyou_media_library]' value='1' <?php 
-	        			if (isset($hys['settings']['dont_use_heyyou_media_library']))
-		        		echo chckchckbox($hys['settings']['dont_use_heyyou_media_library'])
-	    	    		?> />  Don't use <em>heyyou</em> media library<br /> 
-	    	    		&nbsp; &nbsp; &nbsp;<span class="description">(reverts to core Wordpress Media Library)</span>
-	        		</label><br />
-	        	</td>
-			</tr>
-			
-			
-				      
-    <?php 
-	if (!$a_admin) {
-	?>
+						?>
+						<span class='hys_description'>For adding additional fields to heyyou page config, "Page" options (tab): </span>
+				    </td>
+				</tr>
 			</table>
-		</div>
+	    </div><!--/heyyou_tab_3-->
+	    
+	    	    
+	    <!-- 4 BACKUP -============================ -->
+		<!-- ====================================== -->
+		<!-- ====================================== -->
+	    <div id="heyyou_tab_4" style='display:none;'>
 			<table class="form-table">
-	<?php
-	} //endif($a_admin) 
-	?>		
-	
-	    </table>
-	    <hr />
+		        <tr valign="top">
+			        <th scope="row"  valign=top>
+			        	<h3>Backup</h3>
+			        </th>
+			        <td valign=middle><br />
+			        	<div style="margin:0 0 10px 0;">
+			        		<a href="admin.php?page=heyyou/_functions.php&backup_now=true&message=backup" class='button' style='margin: 5px 0;'>Backup Database &amp; WP Now!</a><br />
+			        	</div>
+				        <div class='description'>
+							note: the use of mysqldump may require <code>open_basedir</code>. allowing this weakens your servers security.<br />
+							note: backup emails are <u><b>not</b></u> sent will SSL or any other encryption. all information in backup is susceptible to interception.<br />
+							note: storing .sql files on the server is not concidered "safe practice".<br />
+						</div>
+			        </td>
+		        </tr>
+		        <tr valign="top">
+			        <th scope="row">Automated Backups:</th>
+			        <td valign=center>
+			        	<?php  $backupon = (@$hys['settings']['backup_onoff'] == 'on') ? 1 : 0; ?>
+			        	<label><input type="radio" name="hys_options[backup_onoff]" value="off" <?= ($backupon != 1 ) ? ' CHECKED' : ''; ?> /> Off</label><br />
+			        	<label><input type="radio" name="hys_options[backup_onoff]" value="on"  <?= ($backupon == 1 ) ? ' CHECKED' : ''; ?> /> On: 
+			        	(an email with attached <code>{database}.SQL</code> file will be sent, &amp; stored on the server) </label>
+				        <div class='description'>
+							note: automated backup and sending is done via cron jobs. server configurment must allow Wordpress cronjobs.<br />
+						</div>
+						<br />
+			        </td>
+		        </tr>
+		        <tr valign="top">
+			        <th scope="row">
+			        	Backup Interval:
+			        </th>
+			        <td valign=middle>
+			        	<select name="hys_options[backup_period]">
+							<?
+							$backup = array( '',
+								'daily',
+								'weekly',
+								'monthly',
+								'quarterly',
+								'biyearly',
+								'yearly',
+							);
+							foreach ($backup as $period) {
+								$presl = ($period == @$hys['settings']['backup_period']) ? " selected='selected'": '';
+								echo "<option{$presl}>{$period}</option>";
+							}
+							$adminemail = (!isset($hys['settings']['backup_to']) || empty($hys['settings']['backup_to'])) ? get_bloginfo('admin_email') : $hys['settings']['backup_to'];
+							?>
+			        	</select>
+			        	<input type='hidden' name='backup_period_currently' value='<?= @$hys['settings']['backup_period'] ?>' />
+			        </td>
+		        </tr>
+		        <tr valign="top">
+			        <th scope="row">
+			        	Using <code>/mysqldump</code> located in: 
+			        </th>
+			        <td valign=middle>
+			        	<input type="text" name="hys_options[backup_from]" value="<?php echo @$hys['settings']['backup_from'] ?>" style='width:230px;' class='code' />  <span class="hys_description"><code>/usr/dir/bin</code> *no trailing slash</span>
+			        </td>
+		        </tr>
+		        <tr valign="top">
+			        <th scope="row">
+			        	Send backup email to:
+			        </th>
+			        <td valign=middle>
+			        	<input type="text" name="hys_options[backup_to]" value="<?php echo $adminemail ?>" style='width:230px;' class='code' /> <span class="hys_description">you may use <code>backups@hey-you.ca</code></span>
+			        </td>
+		        </tr>
+		        <tr valign="top">
+			        <th scope="row">
+			        	Exisiting Backups:
+			        </th>
+			        <td valign=middle>
+		
+						<?php
+						$backup_folder 	= 'hys_sql_backups/'.$hys['site'];
+						$backup_dir 	= WP_CONTENT_DIR.'/'.$backup_folder;
+						$numodbackups 	= 0;
+						$listoffiles	= '';
+						if (is_dir($backup_dir)) { 
+							if ($handle = opendir($backup_dir)) {
+							    while (false !== ($file = readdir($handle))) {
+							        if ($file != "." && $file != ".." && $file != "index.php") {
+										$file_name	= $hys['site'];
+							        	$dateoffile = str_replace(array($file_name.'-sql_','.sql'),'',$file);
+							        	$dateoffile = explode('_',$dateoffile);
+							        	$dateoffile = $dateoffile[0].' '.str_replace('-',':',$dateoffile[1]);
+							        	$dateoffile = date('Y, F j - H:i:s',strtotime($dateoffile));
+										$fsize = filesize($backup_dir.'/'.$file);
+										$fsize = round($fsize / 1048576, 2);
+							            $listoffiles .= " &nbsp; &gt; <a href='".WP_CONTENT_URL."/{$backup_folder}/{$file}' class='afile'>{$dateoffile} &nbsp; ($fsize mb)</a><br />";
+							            $numodbackups++;
+							        }
+							    }
+							    closedir($handle);
+							}
+						} else {
+							$listoffiles = "<div>- there are currently no backups -</div>";
+						}
+						?>
+			        	<div class='hys_list_backup_files' <? echo ($listoffiles > 8) ? " style='max-height: 200px;overflow-y: scroll;' " : ''; ?>>
+			        	IN <? echo str_replace(get_bloginfo('url'),'',WP_CONTENT_URL.'/'.$backup_folder.'/..') ?><br />
+			        	-------------------------------------------------<br />
+			        	<?= $listoffiles ?>
+			        	-------------------------------------------------<br />
+						<br />
+						</div>
+						<?php if ($numodbackups > 0) { ?>
+						<a href='admin.php?page=heyyou/_functions.php&settings-updated=true&deleteallbackups=true&message=backupsdeleted' class='button' style='margin:-12px 0 0 13px;z-index:999;float:left;'>
+						Delete (<?= $numodbackups; ?>) backups</a>
+						<?php } ?>
+			        </td>
+		        </tr>
+			</table>
+	    </div><!--/heyyou_tab_4-->
+	    
+	    
+	    <!-- 5 Layout and Text ==================== -->
+		<!-- ====================================== -->
+		<!-- ====================================== -->
+	    <div id="heyyou_tab_5" style='display:none;'>
+			<table class="form-table">
+			
+			        <tr valign="top">
+			        <th colspan="2"><h3>TinyMCE</h3></td>
+			        </tr>
+			        
+			        <tr valign="top">
+			        <th scope="row">TinyMCE CSS:</th>
+			        <td>
+					<?php
+						for ($i = 0; $i != 10; $i++) {
+							$vis = ($i == 0 || !isset($hys['settings']['tinymce_css'][$i])) ? "block": "none";
+							$vis = (isset($hys['settings']['tinymce_css'][$i]) && !empty($hys['settings']['tinymce_css'][$i])) ? "block": $vis;
+							$vis = (isset($hys['settings']['tinymce_css'][$i])) ? $vis: "none";
+							$vis = ($i == 0) ? "block" : $vis;		
+							$hys['settings']['tinymce_css'] = (isset($hys['settings']['tinymce_css'])) ? $hys['settings']['tinymce_css'] : array();
+							if (is_array($hys['settings']['tinymce_css'])) {
+								if ( !term_exists($hys['settings']['tinymce_css'][$i],'mediacategory') )
+									wp_insert_term($hys['settings']['tinymce_css'][$i],'mediacategory');
+								$hys['settings']['tinymce_css'][$i] = (isset($hys['settings']['tinymce_css'][$i])) ? $hys['settings']['tinymce_css'][$i]: '';
+								echo "
+								<div id='hys_tinymcecss_{$i}' style='display:{$vis};'>
+								<code>.</code><label style='display:inline;'>
+									<input 
+										type='text' 
+										name='hys_options[tinymce_css][{$i}]' 
+										value='{$hys['settings']['tinymce_css'][$i]}'
+										size=15
+										class='code'
+									/>
+									</label> ";
+								echo ($i==0) ? "<span class='hys_description'>text only - don't include <code>#</code>id or class element identifies</span>" : '';
+								if ($i != 14 && empty($hys['settings']['tinymce_css'][($i+1)])) {
+								  echo "<br /><a class='hys_fake_link'  id='hys_tinymcecss_{$i}_link' 
+								   onclick=\"showhide('hys_tinymcecss_{$i}_link'); showhide('hys_tinymcecss_".($i+1)."')\" 
+								  >add..</a>";
+								}
+								echo "</div>";
+							}
+						}
+					?>
+					</td>
+				</tr>
+
+			
+		        <tr valign="top">
+		        	<th colspan="2"><h3>Text Options</h3></td>
+		        </tr>
+
+		        <tr valign="top">
+			        <th scope="row"># to break more/less at:</th>
+			        <td><input type="text" name="hys_options[moreless]" 
+			        		value="<?php echo @$hys['settings']['moreless']; ?>" size=4 class='code'>characters</td>
+			        </tr>
+			        <tr valign="top">
+			        <th scope="row">mobile viewport width:</th>
+			        <td><input type="text" name="hys_options[viewport]" 
+			        		value="<?php echo @$hys['settings']['viewport']; ?>" size=4 class='code'>px</td>
+			        </tr>
+			        <tr valign="top">
+			        <th scope="row">ID's exempt from navigation: </th>
+			        <td><input type="text" name="hys_options[navview]" 
+			        		value="<?php echo @$hys['settings']['navview']; ?>" size=10 class='code'><span class='hys_description'>*seperate with coma: 1,2,3..</span></td>
+			        </tr>
+			        <tr valign="top">
+			        <th scope="row">Tutorial Page ID: </th>
+			        <td><input type="text" name="hys_options[tutid]" value="<?php echo @$hys['settings']['tutid']; ?>" size=4 class='code'>
+			        		<span class='hys_description'>*page ID: visible to <em>hys_client</em> in live site, but not in admin. To get ID: edit page &amp; extract from URL<br /> 
+			        		<code>http://.../wp-admin/post.php?post=<span style='text-decoration:underline;padding:0 2px;'>524</span>&action=edit</code></span></td>
+			        </tr>
+			        <tr valign="top">
+			        <th colspan="2"><h3>Output Texts</h3></td>
+			        </tr>
+			        <tr valign="top">
+			        <th scope="row">More/less text:</th>
+			        <td>
+			        	<input type="text" name="hys_options[more]" 
+			        			value="<?php echo @$hys['settings']['more']; ?>" 
+			        			class=''> <span class='hys_description'>(more)</span><br />
+			        	<input type="text" name="hys_options[less]" value="<?php 
+			        		echo $hys['settings']['less']; 
+			        		?>" class=''> <span class='hys_description'>(less)</span>
+			        </td>
+			        </tr>
+			        <tr valign="top">
+			        <th scope="row">Pagination "Pages" text:</th>
+			        <td>
+			        	<input type="text" name="hys_options[pages]" value="<?php 
+			        			echo @$hys['settings']['pages']; 
+			        	?>" class='' /> 
+			        	<span class='hys_description'>"<code>Pages:</code> 1 | 2 | 3 | ..."</span><br />
+			        	<div style='height:7px'></div>
+			        	<label>
+			        	<input type='checkbox' name='hys_options[pages_sep]' value='1' <?= chckchckbox(@$hys['settings']['pages_sep']) ?> />Show seperator "<code>|</code>" between page numbers
+			        	</label>
+			        </td>
+			        </tr>
+			        <tr valign="top">
+			        <th scope="row">View lightbox gallery link:</th>
+			        <td>
+			        	<input type="text" name="hys_options[lightbox_gallery_link]" value="<?php 
+			        			echo @$hys['settings']['lightbox_gallery_link']; 
+			        	?>" class='' /> 
+			        	<span class='hys_description'>"<code>%lightbox_gallery%</code> = <code>View Gallery:</code></span><br />
+			        </td>
+			        </tr>
+			        <tr valign="top">
+			        <th scope="row">Download Hi/ Low Res Text:</th>
+			        <td>
+			        	<input type="text" name="hys_options[text_hi_res]" value="<?php 
+			        			echo @$hys['settings']['text_hi_res']; 
+			        	?>" class='' /> 
+			        	<span class='hys_description'>"hi res"</span><br />
+			        	
+			        	<input type="text" name="hys_options[text_low_res]" value="<?php 
+			        			echo @$hys['settings']['text_low_res']; 
+			        	?>" class='' /> 
+			        	<span class='hys_description'>"low res"</span><br />
+			        </td>
+			        </tr>
+			        <tr valign="top">
+			        <th scope="row">"Back" text:</th>
+			        <td>
+			        	<input type="text" name="hys_options[back]" value="<?php 
+			        			echo htmlentities($hys['settings']['back']); 
+			        	?>" class='' /> 
+			        	<span class='hys_description'>"<code>&lt; Back</code>"</span><br />
+			        	<div style='height:7px'></div>
+			        </td>
+			        </tr>
+			        <tr valign="top">
+			        <th scope="row">Text Seporators/lines:</th>
+			        <td>
+			        	<input type="text" name="hys_options[line1]" value="<?php 
+			        			echo @$hys['settings']['line1']; 
+			        	?>" class='' /> 
+			        	<span class='hys_description'>"<code>&lt;hr /&gt;</code>", 
+			        	"<code>&lt;div&gt;.....&lt;/div&gt;</code>", ect</span><br />
+			        	<div style='height:7px'></div>
+			        	<input type="text" name="hys_options[line2]" value="<?php 
+			        			echo @$hys['settings']['line2']; 
+			        	?>" class='' /> 
+			        	<span class='hys_description'>"<code>&lt;hr /&gt;</code>", 
+			        	"<code>&lt;div&gt;.....&lt;/div&gt;</code>", ect</span><br />
+			        	<div style='height:7px'></div>
+			        </td>
+			        </tr>
+			        
+			        <tr valign="top">
+			        <th scope="row">feature search result text:</th>
+			        <td><input type="text" name="hys_options[search_text]" 
+			        		value="<?php echo @$hys['settings']['search_text']; ?>"></td>
+			        </tr>
+			      
+			</table>
+	    </div><!--/heyyou_tab_5-->
+	    
+	    
+
 	    <p class="submit">
 	    <input type="submit" class="button-primary" value="<?php _e('Save All Changes') ?>" />
 	    </p>

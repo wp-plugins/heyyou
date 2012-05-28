@@ -139,25 +139,31 @@ a.blacklink { color: #111 !important; }
 .hys_media_cat_title { background: #eee; text-shadow: 1px 1px #fafafa; font-size: 14px; }
 
 
+h5.format_title { margin-bottom: 2px; margin-top: 4px; }
+
+.small { font-size: 11px; }
+.fake_link { color: #21759B; }
+.fake_link:hover { color: #D54E21; cursor: pointer; }
+
 /*HEYYOU tabs*/
 .heyyou_tabs 						{ overflow: hidden; display: block; }
 
-.heyyou_tabs li 					{ float: left;  border-bottom:1px solid #888; }
+.heyyou_tabs li 					{ float: left;  }
 .heyyou_tabs li a 					{ display: block; 
 									  padding: 2px 7px; 
 									  border-top:1px solid #ccc; 
 									  border-right:1px solid #ccc; 
 									  border-left:1px solid #ccc; 
-									  border-bottom: 1px solid #F8F8F8; }
+									  border-bottom: 1px solid #ccc; }
 									  
 									  
 .heyyou_tabs li a.disabled_tab	{ color: #999; }
 									  
 .heyyou_tabs li a:hover 			{ cursor: pointer; }
-.heyyou_tabs li.heyyou_tab_current  { border-bottom: 1px solid #F8F8F8; }
+.heyyou_tabs li.heyyou_tab_current  {}
 .heyyou_tabs li.heyyou_tab_current a{ border-top:1px solid #888; 
 									  border-right:1px solid #888; 
-									  border-bottom:1px solid #F8F8F8; 
+									  border-bottom:1px solid transparent; 
 									  border-left:1px solid #888; 
 									  color: #f97200 !important; }
 

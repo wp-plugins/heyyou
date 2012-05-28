@@ -423,17 +423,26 @@ function hys_return_meta($id = '') {
 		
 		//if network admin, don't do anything
 		$mystring = hys_return_url();
-		$findme   = '/wp-admin/network/';
+		$findme   = '/network/';
 		$pos = strpos($mystring, $findme);
-		if ($pos === true)
-		    return '';
+		if ($pos === false) {
+			//isn't network
+		} else {
+		    return '';//is network
+		}
 		
 		// get user
 		get_currentuserinfo();
 		
 		$hys['menu_copy'] = $menu;
 		$hys['submenu_copy'] = $submenu;
-				
+		
+		/*
+		echo "<pre>";
+		print_r($current_user);
+		echo "</pre>";
+		/**/
+		
 		//remove "Users"
 		if (isset($current_user->allcaps['heyyou_client'])) {
 			$menu[70][0] = 'User Profile'; // rename "Users"
@@ -4134,8 +4143,8 @@ function showAdminMessages() {
     if( isset( $_GET['dismiss_lb_notice'] ) )
         update_option( 'dismiss_lb_notice', 1 );
 		$dismiss_lb_notice = get_option( 'dismiss_lb_notice' );
-	if (   !is_dir(  WP_CONTENT_DIR.'/plugins/hylb'  )  && $dismiss_lb_notice != 1 ) {
-   echo '<div id="message" class="error" style="padding:10px;">'."<strong>ATTENTION:</strong> a recent <em>heyyou</em> update requires the manual exteneral installation of LightBox to your website. please notify heyyou@davidsword.ca or support@heyshauna.com for immediate assistance.<br />
+	if ( (@$hys['settings']['lightbox'] == 1)   &&   !is_dir(  WP_CONTENT_DIR.'/plugins/hylb'  )  && $dismiss_lb_notice != 1 ) {
+   echo '<div id="message" class="error" style="padding:10px;">'."<strong>ATTENTION:</strong> a recent <em>heyyou</em> update requires the manual exteneral installation of LightBox to your website. Please download this plugin at: http://hey-you.ca/lightbox-extension/.<br />
    <br />
    <a href='?dismiss_lb_notice'>Dismiss</a>"."</div>";
    }

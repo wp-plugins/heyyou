@@ -4,7 +4,7 @@ Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 0.0.0.4
+Stable tag: 1.0
 
 heyyou is a plugin framework that supplies resources for rapid development & adds unique dynamic custom post types directly in a Wordpress Page
 
@@ -28,10 +28,13 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 * Creation of Dynamic Custom Post Types:
 	* option on every page, directly within that page, to add page-specific custom post types on the fly, with wide range of preset and meta configuration options, 
 	* built-in per-page-pagination for longer lists of posts, directly within a page
-	* Drag and drop ordering of posts
-	* Categorizing of posts within a page
+	* drag and drop ordering of posts
+	* create categories of posts within a page
+	* add "attachments" with a checkbox to create galleries for posts
+	* an interface to eaisly add meta fields to lists, ie: "Age", "Media"
 	* outputting: a simple textarea with %macros% placeholders and HTML for formatting the posts output (useful for: FAQ, Staff Listing, Press Releases, ect.)
 	* outputting: can bypass default %macros% output and use PHP in your theme instead
+	* importing/exporting for transferring/duplicating page configurations
 * Custom Media Library:
 	* Media items listed as a simplified grid thumbnails,
 	* Cleaned CSS for showing file information
@@ -150,6 +153,10 @@ The entire origin of this project bases from wanting the following within a Word
  * Staff BIO listing
  * Simple news posts (paginated titles + date + description)
 
+= How do I add Posts to a page? =
+
+Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-for-pages/).
+
 = I still don't understand what this is =
 
  * Visit: [hey-you.ca](http://hey-you.ca/)
@@ -164,8 +171,19 @@ The entire origin of this project bases from wanting the following within a Word
 
 == Changelog ==
 
+= 1.0 =
+* May 27th, 2012
+* BETA RELEASE! http://hey-you.ca/
+* FIXED: issue where super admins may of had hys_subadmin limitations
+* UPDATED: Lightbox-needed-notice points to webpage for install instructions; only shows if lightbox is selected to be used
+* FIXED: html issue when lightbox was set
+* UPDATED: disable lightbox from being auto-included on new installs
+* UPDATED: divided settings page into 4x panels instead of long scroll. sorted for better documentation
+* UPDATED: cleaned up metaboxes: for checkbox with hierarchy only show child options if parent option is checked, hiding rarely used advance options in "+advance" more/less
+* ADDED: Social media URL feilds in the admin for eaisly dynamically adding/changing hard coded social tools/links in themes
+
 = 0.0.0.4 =
-* May 7th, 2012
+* May 11th, 2012
 * FIXED: issue with media items uncategorizing after hiting "save changes" while using the "attach" button. The "as if they moved overnight" issue
 
 = 0.0.0.3 =
@@ -207,6 +225,7 @@ The entire origin of this project bases from wanting the following within a Word
 = 0.0.0.1 =
 * April 6th, 2012
 * REMOVED lightbox from plugin to comply with GPL, I'm sorry for this misunderstanding of GPL, please contact me for info on how to fix your heyyou website if it was using the lightbox features; no charge,
+* Version numbering reverted to manually edit exisiting sites for this lightbox issue. once solved, heyyou will jump to milestone 1.0 release,
 
 = 0.0.13.2 =
 * February 18th, 2012

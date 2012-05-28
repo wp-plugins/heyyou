@@ -31,10 +31,51 @@ jQuery(document).ready(function() {
 			jQuery('#'+parent+' .magnifi_me').hide();
 	     }
 	);
+	
+	
 
-		  
+	// some checkbox, if checked, reveal other boxes, 
+	// run on load
+	change_checkbox_visibility()
+	
+	//run every time a checkbox is un/checked
+	jQuery('input').bind('change',function(){
+	      change_checkbox_visibility();
+	});
+	
+	function change_checkbox_visibility() {	
+		var feilds = [
+			{input:"#undercon",div:".if_undercon"}, 
+			{input:"#show_pg_img",div:"#if_show_pg_img"}, 
+			{input:"#include_blurb",div:"#if_include_blurb"},
+			{input:"#single_hys",div:"#if_single_hys"},
+			{input:"#include_attach",div:"#if_include_attach"},
+			{input:"#hidecontent",div:"#if_hidecontent"},
+			{input:"#attachments_gallery",div:"#if_attachments_gallery"},
+			{input:"#show_lines",div:"#if_show_lines"},
+			{input:"#show_pagination",div:"#if_show_pagination"},
+			{input:"#facebook_using",div:"#if_facebook_using"},
+			
+			{input:"#twitter_using",div:"#if_twitter_using"},
+			{input:"#youtube_using",div:"#if_youtube_using"},
+			{input:"#linkedin_using",div:"#if_linkedin_using"},
+			{input:"#pinterest_using",div:"#if_pinterest_using"},
+			{input:"#mailing_list_using",div:"#if_mailing_list_using"},
+			{input:"#google_plus_using",div:"#if_google_plus_using"},
+			//{input:"",div:""},
+			//{input:"",div:""},
+			//{input:"",div:""},
+			//{input:"",div:""},
+			//{input:"",div:""},
+			//{input:"",div:""},
+		]; 
+		var x;
+		for (x in feilds)
+			jQuery(feilds[x].input).is(':checked') ? jQuery(feilds[x].div).show() : jQuery(feilds[x].div).hide()
+	}
 
 });
+
 
 
 
@@ -55,6 +96,10 @@ jQuery(document).ready(function() {
 		document.getElementById(mainid).style.color='#000'
 			
 	}
+	
+	
+	
+
 
 
 	function change_url_color(focusblur, id) {
