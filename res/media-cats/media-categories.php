@@ -1,9 +1,12 @@
 <?php
 /*
-Media Categories - https://sites.google.com/site/medialibarycategories/
-Media Library Categories is a WordPress plugin that lets you add custom categories for use in the media library. Media items can then be sorted per category.
-By: Hart Associates (Rick Mead) - http://www.hartinc.com
-Ve: 1.0.6
+ ALL CREDITS FOR THIS TO ORIGINAL AUTHOR:
+ ------------------------------------------------
+ Media Categories - 
+ https://sites.google.com/site/medialibarycategories/
+ Media Library Categories is a WordPress plugin that lets you add custom categories for use in the media library. Media items can then be sorted per category.
+ By: Hart Associates (Rick Mead) - http://www.hartinc.com
+ Ve: 1.0.6
 */   
    
 

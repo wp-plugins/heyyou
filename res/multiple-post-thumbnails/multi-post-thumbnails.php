@@ -1,39 +1,14 @@
 <?php
 /*
-Plugin Name: Multiple Post Thumbnails
-Plugin URI: http://wordpress.org/extend/plugins/multiple-post-thumbnails/
-Description: Adds the ability to add multiple post thumbnails to a post type.
-Version: 999.0.6
-Author: Chris Scott
-Author URI: http://vocecommuncations.com/
-
-
-=== Plugin Name ===
-Contributors: chrisscott
-Tags: thumbnails, image
-Requires at least: 2.9.2
-Tested up to: 3.1.3
-Stable tag: 0.6
-
+ ALL CREDITS FOR THIS TO ORIGINAL AUTHOR:
+ ------------------------------------------------
+ Multiple Post Thumbnails
+ http://wordpress.org/extend/plugins/multiple-post-thumbnails/
+ Adds the ability to add multiple post thumbnails to a post type.
+ 999.0.6
+ Chris Scott
+ http://vocecommuncations.com/
 */
-
-/*  Copyright 2010 Chris Scott (cscott@voceconnect.com)
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as
-    published by the Free Software Foundation.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
-
-
 if (!class_exists('MultiPostThumbnails')) {
 
 	class MultiPostThumbnails {
@@ -42,24 +17,6 @@ if (!class_exists('MultiPostThumbnails')) {
 			$this->register($args);
 		}
 
-		/**
-		 * Register a new post thumbnail.
-		 *
-		 * Required $args contents:
-		 *
-		 * label - The name of the post thumbnail to display in the admin metabox
-		 *
-		 * id - Used to build the CSS class for the admin meta box. Needs to be unique and valid in a CSS class selector.
-		 *
-		 * Optional $args contents:
-		 *
-		 * post_type - The post type to register this thumbnail for. Defaults to post.
-		 *
-		 * priority - The admin metabox priority. Defaults to low to show after normal post thumbnail meta box.
-		 *
-		 * @param array|string $args See above description.
-		 * @return void
-		 */
 		public function register($args = array()) {
 			$defaults = array(
 				'label' => null,
