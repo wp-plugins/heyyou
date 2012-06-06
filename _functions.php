@@ -1,5 +1,4 @@
 <?php
-
 /*
  * _functions.php
  *
@@ -7,8 +6,6 @@
  * @since 	0.1
  * @global 	$hys
  */
- 
- 	
 /*-------------------------------------------------------------
  Name:      hys_get_meta
 
@@ -25,7 +22,6 @@ function hys_return_meta($id = '') {
 }
 
 
- 
 /*-------------------------------------------------------------
  Name:      hys_space
 
@@ -49,7 +45,6 @@ function hys_return_meta($id = '') {
  Return:	- none -
 -------------------------------------------------------------*/
  function hys_grant($splashURL = '') {
- 	
 	if (isset($_GET['grant']) || isset($_GET['preview']) || isset($_GET['heyshauna'])) {
 		setcookie("hys_grant", '1', (time()+2800));	
 		sleep(2);
@@ -64,7 +59,6 @@ function hys_return_meta($id = '') {
 		}
 		die();
 	}
-	
 	//refresh timmer if visiting within active grant/cookie
 	if (isset($_COOKIE['hys_grant']))
 		setcookie("hys_grant", '1', (time()+2800));
@@ -76,7 +70,7 @@ function hys_return_meta($id = '') {
 
 /*====================================================================================================================
     =UPDATE to beta
----------------------------------------------------%attach-----------------------------------------------------------------*/
+--------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------------
  Name:      hys_update_to_beta
 

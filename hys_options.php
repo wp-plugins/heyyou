@@ -2,7 +2,6 @@
 function hys_default_settings() {
 		global $hys;
 		
-		
 		$defaults = array(
 			'installed'			=> 1,
 			
@@ -1281,5 +1280,4 @@ function hys_crontimes( $schedules ) {
 	</div>
 	<?php 
 	}
-
 ?>
