@@ -6,6 +6,8 @@
  * @since 	0.1
  * @global 	$hys
  */
+ 
+ 
 /*-------------------------------------------------------------
  Name:      hys_get_meta
 
@@ -506,6 +508,7 @@ function hys_return_meta($id = '') {
 			}
 		}
 	}
+	
 
 /*-------------------------------------------------------------
  Name:      hys_create_edit_menus_and_columns
@@ -615,15 +618,19 @@ function hys_return_meta($id = '') {
 		$title			= $theid ? _wp_specialchars($thiseditpost->post_title,'single') : '';
 		$date			= $theid ? $thiseditpost->post_date : '';
 		$content		= $theid ? $thiseditpost->post_content : '';
-		$nextinor		= (isset($_GET['edit_ftr']) && $thiseditpost->menu_order == 0) ? 1 : hys_get_next_in_order('hys_post');
-		$order			= ($theid && !empty($thiseditpost->menu_order)) ? $thiseditpost->menu_order : $nextinor;
 		$timeanddate 	= ($theid) ? true : false;
-		$next_in_order 	= hys_get_next_in_order('hys_post');
 		$meta 			= array();
 	  	$hidedate 		= (isset($hys['hys_page_config']['include_date']) && $hys['hys_page_config']['include_date'] == 1) ? '' : "style='display:none;'";
 		if ($theid) {
 			$meta =  get_post_meta($theid, 'meta');	
 			$meta = (isset($meta[0])) ? $meta[0] : array();
+		}
+		
+		//find the order
+		if ($theid) { // if editing keep the same
+			$order = $thiseditpost->menu_order;
+		} else { // if new post, add to top or botton
+			$order = ($hys['hys_page_config']['newposts_toporbottom'] == 'top') ? 0 : hys_get_next_in_order('hys_post');
 		}
 		
 		// Use nonce for verification, hidden details
@@ -634,7 +641,9 @@ function hys_return_meta($id = '') {
 			<input type='hidden' name='parent_term_id' 		value='{$parent_term_id}' />
 			<input type='hidden' name='feature_code' 		value='{$hys['feature_code']}' />
 			<input type='hidden' name='is_a_draft' 			value='{$thiseditpost->post_status}' />
-			<input type='hidden' name='hys_post_order' 		value='{$order}' />\n"; 
+			<input type='hidden' name='hys_post_order' 		value='{$order}' />\n 
+			<input type='hidden' name='toporbottom'			value='{$hys['hys_page_config']['newposts_toporbottom']}' />\n"; 
+			
 		
 		//HTML FORM..
 		?>
@@ -1173,14 +1182,14 @@ function hys_load_jquery() {
 		$hys_post_order = ( isset($_POST['hys_post_order']) && !empty($_POST['hys_post_order'])) 
 								? $_POST['hys_post_order'] : 0;
 		//put on buttom of list if selected in: heyyou page config > "Features", or put where pre-exsist if editing
-		$hys_post_order = @($_POST['hys_page_config']['newposts_toporbottom'] == 'bottom' || isset($_POST['edit_ftr'])) ? $_POST['hys_post_order'] : 0;
+		$hys_post_order = @($_POST['toporbottom'] == 'bottom' || isset($_POST['edit_ftr'])) ? $_POST['hys_post_order'] : 0;
 		
-		/*
+/*
 		echo "<pre>--";
 		print_r($hys['hys_page_config']['newposts_toporbottom']);
 		echo "</pre>";
-		/**/
-		//die;
+		die;
+*/
 								
 		//if post cats new
 		if (!empty($_POST['hys_post_cat_new']) && $_POST['hys_post_cat_new'] != 'Add New Category') {
@@ -1636,9 +1645,8 @@ function hys_load_jquery() {
 	<!-- heyyou -->\n";
 		
 		if (@$hys['mobile'] == 1) {
-			$viewport = (@$hys['settings']['viewport']) ? @$hys['settings']['viewport'] : 482;
 			echo "
-	<meta name='viewport' content='width={$viewport}' />";
+	<meta name='viewport' content='width=device-width'>";
 		}
 		
 		if (isset($hys['settings']['header_favicon']) && !empty($hys['settings']['header_favicon'])) {
@@ -2908,7 +2916,7 @@ function hys_shortcode( $atts ) {
 		global $wpdb;
 		$next = $wpdb->get_row("SELECT menu_order FROM $wpdb->posts 
 									ORDER BY menu_order DESC LIMIT 1");
-		return (isset($next->menu_order)) ? (($next->menu_order)+1) : die('ERROR FINDING NEXT IN ORDER: SEND EMAIL TO  heyyou@davidsword.ca WITH THIS ERROR: <code>#hys_get_next_in_order(false)</code>');
+		return (isset($next->menu_order)) ? (($next->menu_order)+1) : die('ERROR FINDING NEXT IN ORDER: SEND EMAIL TO supprt WITH THIS ERROR: <code>#hys_get_next_in_order(false)</code>');
 	}
 
 /*-------------------------------------------------------------
@@ -4129,7 +4137,7 @@ function hys_get_feature_image_src($id = '',$size = 'full') {
 /**
  * warn users of removed lightbox, provide solution on how to fix
  *
- * @since 0.0.0.0.1
+ * @since 0.1
  * @author roi_davidsword
  */	
 function showAdminMessages() {
@@ -4138,12 +4146,69 @@ function showAdminMessages() {
         update_option( 'dismiss_lb_notice', 1 );
 		$dismiss_lb_notice = get_option( 'dismiss_lb_notice' );
 	if ( (@$hys['settings']['lightbox'] == 1)   &&   !is_dir(  WP_CONTENT_DIR.'/plugins/hylb'  )  && $dismiss_lb_notice != 1 ) {
-   echo '<div id="message" class="error" style="padding:10px;">'."<strong>ATTENTION:</strong> a recent <em>heyyou</em> update requires the manual exteneral installation of LightBox to your website. Please download this plugin at: http://hey-you.ca/lightbox-extension/.<br />
+   echo '<div id="message" class="error" style="padding:10px;">'."<strong>ATTENTION:</strong> a recent <em>heyyou</em> update requires the manual exteneral installation of LightBox to your website. Please download this plugin at: <a href='http://hey-you.ca/lightbox-extension/' target='_Blank'>http://hey-you.ca/lightbox-extension/</a>.<br />
    <br />
    <a href='?dismiss_lb_notice'>Dismiss</a>"."</div>";
    }
 }
 add_action('admin_notices', 'showAdminMessages');
+
+
+
+
+ 
+ 
+ 
+
+
+/**
+ * change rewrite rules.. for when veiwing single heyyou posts.., since we view posts within a page, as part
+ * of the reasoning for heyyou, we don't use Wordpress built-in custom URL rewriting for the custom post
+ * type, instead just a URL query like "/?hypg=711" - we need this to look like /{variable}/{id or slug}/
+ *
+ * @since 0.1.3
+ * @author roi_davidsword
+ */	
+// rewrite
+/*
+add_action('init','add_hyspg_rewrite');
+	function add_hyspg_rewrite() {
+		add_rewrite_rule('^hypg/([^/]*)/?','?hypg=$matches[1]');
+		add_rewrite_tag('%hypg%','([^&]+)');
+	}
+*/
+
+/*
+add_filter( 'rewrite_rules_array','my_insert_rewrite_rules' );
+//add_filter( 'query_vars','my_insert_query_vars' );
+add_action( 'wp_loaded','my_flush_rules' );
+
+// flush_rules() if our rules are not yet included
+function my_flush_rules(){
+	$rules = get_option( 'rewrite_rules' );
+
+	if ( ! isset( $rules['(hypg)/(\d*)$'] ) ) {
+		global $wp_rewrite;
+	   	$wp_rewrite->flush_rules();
+	}
+}
+
+// Adding a new rule
+function my_insert_rewrite_rules( $rules )
+{
+	$newrules = array();
+	$newrules['(hypg)/(\d*)$'] = '?hypg=$matches[1]';
+	return $newrules + $rules;
+}
+*/
+
+// Adding the id var so that WP recognizes it
+//function my_insert_query_vars( $vars )
+//{
+//    array_push($vars, 'id');
+//    return $vars;
+//}
+
 
 
 

@@ -1167,11 +1167,13 @@ function hys_crontimes( $schedules ) {
 			        <td><input type="text" name="hys_options[moreless]" 
 			        		value="<?php echo @$hys['settings']['moreless']; ?>" size=4 class='code'>characters</td>
 			        </tr>
+			        <!--
 			        <tr valign="top">
 			        <th scope="row">mobile viewport width:</th>
 			        <td><input type="text" name="hys_options[viewport]" 
 			        		value="<?php echo @$hys['settings']['viewport']; ?>" size=4 class='code'>px</td>
 			        </tr>
+			        -->
 			        <tr valign="top">
 			        <th scope="row">ID's exempt from navigation: </th>
 			        <td><input type="text" name="hys_options[navview]" 

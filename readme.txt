@@ -3,8 +3,8 @@ Contributors: davidsword, heyshauna.com
 Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
-Tested up to: 3.3.1
-Stable tag: 1.1
+Tested up to: 3.4.1
+Stable tag: 1.3
 
 heyyou is a plugin framework that supplies resources for rapid development & adds unique dynamic custom post types directly in a Wordpress Page
 
@@ -171,6 +171,16 @@ Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-f
 4. 4-Steps to adding posts to a page ([full image here](http://hey-you.ca/overview/posts-for-pages/))
 
 == Changelog ==
+
+= 1.3 = 
+* July 17th, 2012
+* fixed issue where posts were posting to bottom, regardless if "new posts: top" was set
+* added: hyperlink to lightbox notice
+
+= 1.2 = 
+* June 10th, 2012
+* fixed viewport for more tablet friendly rendering
+* removed dynamic viewport pixel width option
 
 = 1.1 =
 * June 5th, 2012

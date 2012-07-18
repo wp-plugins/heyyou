@@ -792,7 +792,6 @@
 						?>
 					</select>
 					</label>
-					
 					<?
 						$optns = '';
 						for ($i = 0; $i != 15; $i++) {
@@ -1451,18 +1450,6 @@ for ($i = 0; $i != 15; $i++) {
 			$custom_fields =  get_post_meta($f_post->ID, 'meta');	
 			$custom_fields = (isset($custom_fields[0])) ? $custom_fields[0] : array();
 			
-			/*
-			echo "<pre>";
-			print_r($custom_fields);
-			echo "</pre>";
-			/**/
-			
-			/*
-			echo "<pre>";
-			echo @"{$custom_fields['hys_post_cat']} == {$cat->term_id}";
-			echo "</pre>";
-			/**/
-			
 			if (empty($cat) || ( @$custom_fields['hys_post_cat'] == @$cat->term_id) ) {
 				//fix title .. if empty of too long
 				$f_post->post_title = preg_replace('/<!--(.*)-->/Uis', '', $f_post->post_title);
@@ -1544,7 +1531,7 @@ for ($i = 0; $i != 15; $i++) {
 				
 				$return .= "
 						<!-- TITLE -->
-						&nbsp;&nbsp;<span class='hys_post_list_title' {$strike}>".$f_post->post_title."</span>						
+						&nbsp;&nbsp;<span class='hys_post_list_title' {$strike}>".$f_post->post_title. "</span>						
 						<!-- DESCRITION -->
 						<em {$strike}>".$descptshort."</em>
 						{$attachments}
