@@ -4,7 +4,7 @@ Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
 Tested up to: 3.4.1
-Stable tag: 1.3
+Stable tag: 1.3.1
 
 heyyou is a plugin framework that supplies resources for rapid development & adds unique dynamic custom post types directly in a Wordpress Page
 
@@ -171,6 +171,13 @@ Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-f
 4. 4-Steps to adding posts to a page ([full image here](http://hey-you.ca/overview/posts-for-pages/))
 
 == Changelog ==
+
+= 1.3.1 =
+* July 23rd, 2012
+* fixed issue with force download where if !allow_url_fopen, errors would occur
+* fixed issue where non-admins could see advance (developer) heyyou options/setting
+* fixed max length of string in text drop-down for form select media lists
+
 
 = 1.3 = 
 * July 17th, 2012

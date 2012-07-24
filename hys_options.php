@@ -387,10 +387,17 @@ function hys_crontimes( $schedules ) {
 		<ul class='heyyou_tabs'>
 			<li><div class='sidecell'>&nbsp;</div></li>
 			<li id='heyyou_tab_1_link' class='heyyou_tab_current'><a onclick='heyyoutab("heyyou_tab_1")'>Main</a></li>
+			<?
+			
+			if ( $a_admin  ) {
+
+			 ?>
 			<li id='heyyou_tab_2_link' class=''><a onclick='heyyoutab("heyyou_tab_2")'>Developer </a></li>
 			<li id='heyyou_tab_3_link' class=''><a onclick='heyyoutab("heyyou_tab_3")'>heyyou Page Options</a></li>
 			<li id='heyyou_tab_4_link' class=''><a onclick='heyyoutab("heyyou_tab_4")'>BackUp</a></li>
 			<li id='heyyou_tab_5_link' class=''><a onclick='heyyoutab("heyyou_tab_5")'>Layout &amp; Text</a></li>
+			
+			<? } ?>
 		</ul>
 	    <?php settings_fields( 'hys_settings' ); ?>
 	    <input type='hidden' name='hys_options[installed]' value='1' />
