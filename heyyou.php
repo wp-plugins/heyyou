@@ -3,7 +3,7 @@
 Plugin Name: heyyou
 Plugin URI: http://hey-you.ca/
 Description: heyyou puts posts into pages - easily.
-Version: 1.3.1
+Version: 1.3.2
 Author: David Sword
 Author URI: http://davidsword.ca/
 License: GPL2
@@ -78,8 +78,12 @@ License: GPL2
     // !4: heyyou output
     
     add_action('init',                  'hys_clean_wp_head');   # remove 'unessisary' added header info
+    add_action('wp_enqueue_scripts',    'hys_enqueue_scripts');	# load js and css
+    
+    add_action('wp_head',               'hys_header_meta', 0);  # edit head, put last
     add_action('wp_head',               'hys_header', 999);     # edit head, put last
     add_action('the_content',           'hys_content');         # main placement of heyyou on page !important
+    add_action('wp_footer',             'hys_footer', 999);     # edit head, put last
     
     
     // !heyyou shortcode
@@ -87,9 +91,8 @@ License: GPL2
     add_shortcode('mobile_link',        'mobile_link_f');       # "view {mobile/full} site"
     add_shortcode('heyyou',             'hys_shortcode');       # [heyyou] output
 	add_shortcode('social',             'hys_social_shrtcd');   # add social buttons
-
-    
-    
+	add_shortcode('hys_tweets',			'hys_tweets_shortcode');# [hys_tweets id='' count='' refresh_rate='']
+	
     
     // !some hacks and other duct-tape work arounds...
     

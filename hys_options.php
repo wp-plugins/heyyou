@@ -541,28 +541,28 @@ function hys_crontimes( $schedules ) {
 			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <input type='checkbox' name='hys_options[lightboxcustom]' value='1' <?= chckchckbox(@$hys['settings']['lightboxcustom']) ?> /> custom LightboxOptions()
 			        	</label><br />
 			        	<label>
-			        	<input type='checkbox' name='hys_options[jquery]' value='1' <?= chckchckbox(@$hys['settings']['jquery']) ?> />jQuery
+			        	<input type='checkbox' name='hys_options[jquery]' value='1' <?= chckchckbox(@$hys['settings']['jquery']) ?> /> jQuery
 			        	</label><br />
 			        	<label>
 			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[animated_moreless]' value='1' <?= chckchckbox(@$hys['settings']['animated_moreless']) ?> />Use jQuery more/less slide up/down animation 
 			        	</label><br />
 			        	<label>
-			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_lightbox]' value='1' <?= chckchckbox(@$hys['settings']['jquery_lightbox']) ?> />jQuery.Lightbox
+			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_lightbox]' value='1' <?= chckchckbox(@$hys['settings']['jquery_lightbox']) ?> /> jQuery.Lightbox
 			        	</label><br />
 			        	<label>
 			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <input type='checkbox' name='hys_options[jquery_lightbox_assign]' value='1' <?= chckchckbox(@$hys['settings']['jquery_lightbox_assign']) ?> /><span title='$(.attachments a, .hys_attach ul li .attach_image a, ul.photo_gallery li a).lightBox...'>define galleries: <span class='hys_description'>(hover to reveal)</span></span>
 			        	</label><br />
 			        	<label>
-			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_opacityrollovers]' value='1' <?= chckchckbox(@$hys['settings']['jquery_opacityrollovers']) ?> />jQuery.OpacityRollovers
+			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_opacityrollovers]' value='1' <?= chckchckbox(@$hys['settings']['jquery_opacityrollovers']) ?> /> jQuery.OpacityRollovers
 			        	</label><br />
 			        	<label>
-			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_cycle]' value='1' <?= chckchckbox(@$hys['settings']['jquery_cycle']) ?> />jQuery.Cycle
+			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_cycle]' value='1' <?= chckchckbox(@$hys['settings']['jquery_cycle']) ?> /> jQuery.Cycle
 			        	</label><br />
 			        	<label>
-			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_fx]' value='1' <?= chckchckbox(@$hys['settings']['jquery_fx']) ?> />jQuery.Effects
+			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_fx]' value='1' <?= chckchckbox(@$hys['settings']['jquery_fx']) ?> /> jQuery.Effects
 			        	</label><br />
 			        	<label>
-			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_color]' value='1' <?= chckchckbox(@$hys['settings']['jquery_color']) ?> />jQuery.Color
+			        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='hys_options[jquery_color]' value='1' <?= chckchckbox(@$hys['settings']['jquery_color']) ?> /> jQuery.Color
 			        	</label><br />
 			        	<label>
 			        	<input type='checkbox' name='hys_options[no_attachments]' value='1' <?= chckchckbox(@$hys['settings']['no_attachments']) ?> />Do not include use Attachments
@@ -587,6 +587,14 @@ function hys_crontimes( $schedules ) {
 							get_bloginfo('stylesheet_directory')) ?>/</span>  <input type='text' style='color: #999;' name='hys_options[header_favicon]' value='<?= @$hys['settings']['header_favicon'] ?>' />
 						</label>
 						<br />
+
+						<label>
+						    apple-touch-icon URL:<br />
+							&nbsp; &nbsp; ..<? 
+							echo "<span class='description' style='color:#ccc'>".str_replace(array(get_bloginfo('url'),'/wp-content/themes'),'',
+							get_bloginfo('stylesheet_directory')) ?>/</span>  <input type='text' style='color: #999;' name='hys_options[header_touchicon]' value='<?= @$hys['settings']['header_touchicon'] ?>' />
+						</label>
+						<br />
 						 
 						<label>
 						    js.js URL:<br />
@@ -601,10 +609,10 @@ function hys_crontimes( $schedules ) {
 				    <td>
 				    	<span style='width:170px;display:inline-block'>Use Featured Image:</span> 
 			        	<label>
-			        	<input type='checkbox' name='hys_options[page_featured_image]' value='1' <?= chckchckbox(@$hys['settings']['page_featured_image']) ?> />on pages
+			        	<input type='checkbox' name='hys_options[page_featured_image]' value='1' <?= chckchckbox(@$hys['settings']['page_featured_image']) ?> /> on pages
 			        	</label> &nbsp; 
 			        	<label>
-			        	<input type='checkbox' name='hys_options[post_featured_image]' value='1' <?= chckchckbox(@$hys['settings']['post_featured_image']) ?> />on posts
+			        	<input type='checkbox' name='hys_options[post_featured_image]' value='1' <?= chckchckbox(@$hys['settings']['post_featured_image']) ?> /> on posts
 			        	</label><br />
 			        	<span style='width:170px;display:inline-block'>Use Secondary Image:</span>
 			        	<label>
@@ -620,7 +628,7 @@ function hys_crontimes( $schedules ) {
 			        	<input type='checkbox' name='hys_options[page_excerpts]' value='1' <?= chckchckbox(@$hys['settings']['page_excerpts']) ?> /> on pages
 			        	</label> &nbsp; 
 			        	<label>
-			        	<input type='checkbox' name='hys_options[post_excerpts]' value='1' <?= chckchckbox(@$hys['settings']['post_excerpts']) ?> />on posts
+			        	<input type='checkbox' name='hys_options[post_excerpts]' value='1' <?= chckchckbox(@$hys['settings']['post_excerpts']) ?> /> on posts
 			        	</label><br />
 				    </td>
 				</tr>

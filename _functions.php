@@ -262,14 +262,7 @@ function hys_return_meta($id = '') {
 				}
 				exit;
 			}
-		}
-
-		
-		
-		//jquery
-		if (@$hys['settings']['jquery'] == 1)
-			add_action('wp_enqueue_scripts', 'hys_load_jquery');
-			
+		}			
 		
 }
 
@@ -346,14 +339,6 @@ function hys_return_meta($id = '') {
 			if ($amobile == 1 || $amobile === true) {
 				$_SESSION['hys_mobile'] = 1; //is mobile
 				if ($usecookies) setcookie("hys_mobile", 1, time()+3600);
-				//refresh
-				sleep(1);
-				if(!headers_sent()) 
-					header('Location: '.$dest_url);
-				 else 
-					echo '<meta http-equiv="refresh" content="0;url='.$dest_url.'">';
-				die('redirecting to mobile site..');
-				exit;
 			} 
 			// not mobile
 			else {
@@ -362,9 +347,8 @@ function hys_return_meta($id = '') {
 			}
 		}
 		
-		//see if we're toggeling/ using the footer links
-		if ($subdomain == 'm.' || $subdomain_www == 'www.m.' || isset($_GET['mobile'])) {
-
+		//see if we're manually toggeling/ using the footer links
+		if ( isset($_GET['mobile']) ) {
 			if ($usecookies) {
 				$switch = ($_COOKIE['hys_mobile'] == 0) ? 1 : 0;
 				setcookie("hys_mobile", $switch, time()-3600);
@@ -372,12 +356,11 @@ function hys_return_meta($id = '') {
 			} else {
 				$_SESSION['hys_mobile'] = ($_SESSION['hys_mobile'] == 0) ? 1 : 0;
 			}
-			
 			// reload new site
 			if(!headers_sent()) 
 				header('Location: '.$dest_url);
 			 else 
-				echo '<meta http-equiv="refresh" content="0;url='.$dest_url.'">';
+			 	echo '<meta http-equiv="refresh" content="0;url='.$dest_url.'">';
 			die('redirecting..');
 			exit;
 		}	
@@ -986,15 +969,15 @@ function hys_load_jquery() {
 				</style>\n";
 		}
 		
-		
 		$header = "
 			<!-- heyyou HEADER INFO -->";
 		$header .= $admin_css;
 		
 		$header .= "
+		
 				<link rel='shortcut icon' href='{$hys['dir']}/res/imgs/favicon.ico' /> 
 				<link href='{$hys['dir']}/res/css/hys_style_admin.css' rel='stylesheet' type='text/css' />
-				<script type='text/javascript' src='{$hys['dir']}/res/js/js.js'></script>
+				<script type='text/javascript' src='{$hys['dir']}/res/js/heyyou.js'></script>
 				<script type='text/javascript' src='{$hys['dir']}/res/js/js_admin.js'></script>";
 		$header .= (isset($_GET['post']) && @$_GET['action'] == 'edit' && !empty($hys['config'])) ? "
 				<script src='{$hys['dir']}/res/js/mootools-1.2.4.js' type='text/javascript'></script>" : '';
@@ -1335,18 +1318,29 @@ function hys_load_jquery() {
 -------------------------------------------------------------*/
 	function hys_mce( $init ) {
 		global $hys;
+		
+		
+		if (function_exists('hys_custom_tinymce')) {
+			$custom_mce = hys_custom_tinymce();
+			if ($custom_mce == 'all') {
+				//nothing, default tinymce used
+			} else {
+				$init['theme_advanced_blockformats'] = $custom_mce['blockformats'];
+				$init['theme_advanced_buttons1'] = $custom_mce['buttons1'];
+				$init['theme_advanced_buttons2'] = $custom_mce['buttons2'];
+				$init['spellchecker_languages'] = '+English=en';
+			} 
+		} else {
+			$init['theme_advanced_blockformats'] = 'p,h1,h2,h3,h4,h5,h6,code';
+			$init['theme_advanced_buttons1'] = /*removeformat,*/ 'formatselect,styleselect,|,bold,italic,underline,'.
+				'yourhys_line,yourhys_space,|,link,unlink,|,justifyleft,justifycenter,justifyright'.
+				',|,bullist,blockquote,|,pastetext,|,wp_more';
+			$init['theme_advanced_buttons2'] = '';	
+			$init['spellchecker_languages'] = '+English=en';
+		}
 				
-		$init['spellchecker_languages'] = '+English=en';
-		
-		$init['theme_advanced_blockformats'] = 'p,h1,h2,h3,h4,h5,h6,code';
-		$init['theme_advanced_buttons1'] = /*removeformat,*/ 'formatselect,styleselect,|,bold,italic,underline,'.
-			'yourhys_line,yourhys_space,|,link,unlink,|,justifyleft,justifycenter,justifyright'.
-			',|,bullist,blockquote,|,pastetext,|,wp_more';
-		$init['theme_advanced_buttons2'] = '';
-		
 		$styles = '';
 		if (isset($hys['settings']['tinymce_css'])) {
-			
 			$numstyls = 0;
 			foreach ($hys['settings']['tinymce_css'] as $style)
 				if (!empty($style)) $numstyls++;
@@ -1624,6 +1618,31 @@ function hys_load_jquery() {
 	
 	
 	
+/*-------------------------------------------------------------
+ Name:      hys_header_keywords
+
+ Purpose:   heyyou header..
+ Receive:   - none -
+ Return:	- none -
+-------------------------------------------------------------*/
+	function hys_header_meta() {
+		global $hys;
+
+			echo "
+	<meta name='viewport' content='width=device-width'>";
+		//meta keywords and description, show if not empty and not default input placeholder instructions
+		$key_default = 'Add 5 keywords/phrases here seperated by comas for better SEO';
+		if (isset($hys['settings']['meta_keywords']) && !empty($hys['settings']['meta_keywords']) && ($key_default != $hys['settings']['meta_keywords']))
+		echo "
+	<meta name='keywords' content='{$hys['settings']['meta_keywords']}'>";
+		$pos = strpos($hys['settings']['meta_description'], 'of your website here for search engine descriptions, and better SEO');
+		if ($pos === false && !empty($hys['settings']['meta_description'])) {
+		echo "
+	<meta name='description' content='{$hys['settings']['meta_description']}'>\n";
+		}
+
+	}
+	
 
 /*-------------------------------------------------------------
  Name:      hys_header
@@ -1636,41 +1655,18 @@ function hys_load_jquery() {
 		global $hys;
 		
 		//if someone trys to get into the tutorial page whose not logged in, boot
-		if ((isset($hys['settings']['tutid']) && !empty($hys['settings']['tutid'])) && (get_the_ID() == $hys['settings']['tutid']) && !is_user_logged_in()) {
+		if ((isset($hys['settings']['tutid']) && !empty($hys['settings']['tutid'])) && (get_the_ID() == $hys['settings']['tutid']) && !is_user_logged_in())
 			die('please login to view this page.');
-		}
 				
-		echo "
-		
-	<!-- heyyou -->\n";
-		
-		if (@$hys['mobile'] == 1) {
+		// fav and apple touch icon, if defined in wp-admin > heyyou > settings
+		if (isset($hys['settings']['header_favicon']) && !empty($hys['settings']['header_favicon']))
 			echo "
-	<meta name='viewport' content='width=device-width'>";
-		}
-		
-		if (isset($hys['settings']['header_favicon']) && !empty($hys['settings']['header_favicon'])) {
+	<link rel='shortcut icon' href='".get_bloginfo('stylesheet_directory')."/{$hys['settings']['header_favicon']}' type='image/x-icon' /> ";
+		if (isset($hys['settings']['header_touchicon']) && !empty($hys['settings']['header_touchicon']))
 			echo "
-				<link rel='shortcut icon' href='".get_bloginfo('stylesheet_directory')."/{$hys['settings']['header_favicon']}' type='image/x-icon' /> ";
-		}
+	<link rel='apple-touch-icon' href='".get_bloginfo('stylesheet_directory')."/{$hys['settings']['header_touchicon']}'  /> ";
 		
-		echo "
-	<link rel='apple-touch-icon' href='".get_bloginfo('stylesheet_directory')."/images/apple-touch-icon.png' />";
-		
-		$key_default = 'Add 5 keywords/phrases here seperated by comas for better SEO';
-
-		if (isset($hys['settings']['meta_keywords']) && !empty($hys['settings']['meta_keywords']) && ($key_default != $hys['settings']['meta_keywords']))
-		echo "
-	<meta name='keywords' content='{$hys['settings']['meta_keywords']}'>";
-		
-		$meta_default = 'Add a brief description of your website here for search engine descriptions, and better SEO, limit to 150-200 characters.';
-		if (isset($hys['settings']['meta_description']) && !empty($hys['settings']['meta_description']) && ($meta_default != $hys['settings']['meta_description']))
-		echo "
-	<meta name='description' content='{$hys['settings']['meta_description']}'>\n";
-		
-		echo "
-	<link rel='stylesheet' type='text/css' href='".get_bloginfo('wpurl').'/wp-content/plugins/heyyou/res/css/hys_style.css'."' /> ";
-	
+		//custom styles for tutorial page..
 		$styles = '';
 		if (isset($hys['settings']['tutid']) && !empty($hys['settings']['tutid']) && !is_user_logged_in())
 			$styles .= ".page-item-{$hys['settings']['tutid']}, .menu-item-{$hys['settings']['tutid']} { display:none !important }";		
@@ -1681,62 +1677,118 @@ function hys_load_jquery() {
 	<style type='text/css'>
 	{$styles}
 	</style>\n";
-		
-		//include jQuery plugins.. from heyyou settings
-		$jquery_plugins = array(
-			'jquery_opacityrollovers' 	=> 'jquery.opacityrollover.js',
-			'jquery_cycle' 				=> 'jquery.cycle.js',
-			'jquery_fx' 				=> 'jquery.effects.js',
-			'jquery_color' 				=> 'jquery.color.js',
-		);
-		
-		if (isset($hys['settings']['header_js']) && !empty($hys['settings']['header_js'])) {
+	
+	if (@$hys['settings']['jquery_lightbox'] == 1 && @$hys['settings']['jquery_lightbox_assign'] == 1) {
 		echo "
-	<script type='text/javascript' src='".get_bliginfo('stylesheet_directory')."/{$hys['settings']['header_js']}'></script>";
-		}
-		echo "
-	<script type='text/javascript' src='{$hys['dir']}/res/js/js.js'></script>";
-
-		foreach ($jquery_plugins as $kjq => $vjq) {
-			if (@$hys['settings'][$kjq] == 1) {
-				if ($kjq != 'jquery') 
-					echo "	
-	<script type='text/javascript' src='http://davidsword.me/_use/jquery/{$vjq}'></script>";
-			}
-		}
-	echo "
-	<!--[if lt IE 9]><script src='http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js'></script><![endif]-->
-	";
-		if (@$hys['settings']['jquery_lightbox'] == 1) {
-			echo "
-	<script type='text/javascript' src='http://davidsword.me/_use/jquery/jquery.lightbox.js'></script>
-	<link rel='stylesheet' href='http://davidsword.me/_use/jquery/css/jquery.lightbox.css' />\n";
-			if (@$hys['settings']['jquery_lightbox_assign'] == 1) {
-			echo "
 	<script type='text/javascript'>
-	$(function() {
-	    $('.attachments a, .hys_attach ul li .attach_image a, ul.photo_gallery li a').lightBox({
-	        imageLoading: 'http://davidsword.me/_use/jquery/css/lightbox-ico-loading.gif',
-	        imageBtnPrev: 'http://davidsword.me/_use/jquery/css/lightbox-btn-prev.gif',
-	        imageBtnNext: 'http://davidsword.me/_use/jquery/css/lightbox-btn-next.gif',
-	        imageBtnClose:'http://davidsword.me/_use/jquery/css/lightbox-btn-close.gif',
-	        imageBlank:   'http://davidsword.me/_use/jquery/css/lightbox-blank.gif'
+	jQuery(function() {
+	    jQuery('.attachments a, .hys_attach ul li .attach_image a, ul.photo_gallery li a').lightBox({
+	        imageLoading: '{$hys['dir']}/res/imgs/lightbox-ico-loading.gif',
+	        imageBtnPrev: '{$hys['dir']}/res/imgs/lightbox-btn-prev.gif',
+	        imageBtnNext: '{$hys['dir']}/res/imgs/lightbox-btn-next.gif',
+	        imageBtnClose:'{$hys['dir']}/res/imgs/lightbox-btn-close.gif',
+	        imageBlank:   '{$hys['dir']}/res/imgs/lightbox-blank.gif'
 	    });
 	});
-	</script>";
-			}
-		}		
+	</script>
+	";
+	}
+}
+
 	
-		
-//LIGHTBOX...		
-if (@$hys['settings']['lightbox'] == 1 && (@$hys['hys_page_config']['disable_lightbox'] != 1)) {
-		echo "
-	<link rel='stylesheet' href='".str_replace('/heyyou','/hylb',$hys['dir'])."/css/lightbox.css' type='text/css' media='screen' />
-	<script src='".str_replace('/heyyou','/hylb',$hys['dir'])."/js/prototype.js' type='text/javascript'></script>
-	<script src='".str_replace('/heyyou','/hylb',$hys['dir'])."/js/scriptaculous.js?load=effects,builder' type='text/javascript'></script>
-	<script src='".str_replace('/heyyou','/hylb',$hys['dir'])."/js/lightbox.js' type='text/javascript'></script>";
-			
-	if (@$hys['settings']['lightboxcustom'] != 1) {
+function hys_enqueue_scripts() {
+    global $hys;
+    
+    //jQuery
+	if (@$hys['settings']['jquery'] == 1)
+	    wp_enqueue_script( 'jquery' , $hys['dir'].'/res/js/jquery.1.7.1.js'); 
+
+    //heyyou javascript
+    wp_register_script( 'heyyou_js', "{$hys['dir']}/res/js/heyyou.js");
+    wp_enqueue_script( 'heyyou_js' );
+    
+    //motools
+    if(@$hys['settings']['mootools'] == 1) {
+	    wp_register_script( 'mootools', "{$hys['dir']}/res/js/mootools-1.2.4.js");
+	    wp_enqueue_script( 'mootools' );
+    }
+    
+    //animated more/less
+	if (@$hys['settings']['animated_moreless'] == 1) {
+	    wp_register_script( 'animated_moreless', "{$hys['dir']}/res/js/moreless.js");
+	    wp_enqueue_script( 'animated_moreless' );
+	}
+	
+	//include jQuery plugins.. from heyyou settings
+	$jquery_plugins = array(
+		'jquery_opacityrollovers' 	=> 'jquery.opacityrollover.js',
+		'jquery_cycle' 				=> 'jquery.cycle.js',
+		'jquery_fx' 				=> 'jquery.effects.js',
+		'jquery_color' 				=> 'jquery.color.js',
+	);
+	
+	//include jquery lightbox..
+	if (@$hys['settings']['jquery_lightbox'] == 1) {
+	    wp_register_script( 'jquery_lightbox', "{$hys['dir']}/res/js/jquery.lightbox.js");
+	    wp_enqueue_script( 'jquery_lightbox' );
+	    wp_register_style( 'jquery_lightbox', "{$hys['dir']}/res/css/jquery.lightbox.css");
+	    wp_enqueue_style('jquery_lightbox');
+	}
+	
+    //javascript header
+	if (isset($hys['settings']['header_js']) && !empty($hys['settings']['header_js'])) {
+	    wp_register_script( 'header_js', get_bloginfo('stylesheet_directory')."/{$hys['settings']['header_js']}");
+	    wp_enqueue_script( 'header_js' );
+	}
+	
+	//include jQuery plugins.. from heyyou settings
+	$jquery_plugins = array(
+		'jquery_opacityrollovers' 	=> 'jquery.opacityrollover.js',
+		'jquery_cycle' 				=> 'jquery.cycle.js',
+		'jquery_fx' 				=> 'jquery.effects.js',
+		'jquery_color' 				=> 'jquery.color.js',
+	);
+	foreach ($jquery_plugins as $kjq => $vjq) {
+		if (@$hys['settings'][$kjq] == 1) {
+			wp_register_script( $kjq, "{$hys['dir']}/res/js/{$vjq}");
+			wp_enqueue_script( $kjq );
+		}
+	}
+	
+	//lightbox
+	if (@$hys['settings']['lightbox'] == 1 && (@$hys['hys_page_config']['disable_lightbox'] != 1)) {
+	    wp_register_script( 'prototype', str_replace('/heyyou','/hylb',$hys['dir'])."/js/prototype.js");
+	    wp_enqueue_script( 'prototype' );
+	    wp_register_script( 'scriptaculous', str_replace('/heyyou','/hylb',$hys['dir'])."/js/scriptaculous.js?load=effects,builder");
+	    wp_enqueue_script( 'scriptaculous' );
+	    wp_register_script( 'lightbox', str_replace('/heyyou','/hylb',$hys['dir'])."/js/lightbox.js");
+	    wp_enqueue_script( 'lightbox' );
+
+	    wp_register_style( 'lightbox', str_replace('/heyyou','/hylb',$hys['dir'])."/css/lightbox.css" );
+	    wp_enqueue_style('lightbox');
+	}
+	
+	//css time..
+    wp_register_style( 'hys_style', get_bloginfo('wpurl').'/wp-content/plugins/heyyou/res/css/hys_style.css' );
+    wp_enqueue_style('hys_style');
+}    
+
+
+
+	
+/*-------------------------------------------------------------
+ Name:      hys_footer
+
+ Purpose:   add some scripts and such
+ Receive:   - none -
+ Return:	- none -
+-------------------------------------------------------------*/
+function hys_footer() {
+	global $hys;
+	echo "
+	<!--[if lt IE 9]><script src='http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js'></script><![endif]-->\n";
+	if (@$hys['settings']['lightbox'] == 1 && (@$hys['hys_page_config']['disable_lightbox'] != 1)) {
+		if (@$hys['settings']['lightboxcustom'] != 1) {
 		echo "
 	<script type='text/javascript'>
 		<!--
@@ -1747,51 +1799,12 @@ if (@$hys['settings']['lightbox'] == 1 && (@$hys['hys_page_config']['disable_lig
 			labelImage: 'Image', labelOf: 'of'
 		}, window.LightboxOptions || {});
 		//-->
-	</script>";
+	</script>\n";
+		}
 	}
-	
 }
 
 
-	
-	if (@$hys['settings']['animated_moreless'] == 1) {
-		?>
-	<script type='text/javascript'>
-		jQuery(document).ready(function() {  
-			jQuery('a.hys_readmore').attr('onclick','');
-			jQuery('a.hys_readless').attr('onclick','');
-	
-			// onclick MORE: let's do so stuff
-			jQuery('.hys_readmore').click( function() {
-				$getid = jQuery(this).attr('id').replace('morelink', '');
-				jQuery('#moreless'+$getid).slideDown();
-				jQuery(this).hide();
-			} );
-			
-			// onclick LESS: let's do so stuff
-			jQuery('.hys_readless').click( function() {
-				$getid = jQuery(this).attr('id').replace('lesslink', '');
-				jQuery('#moreless'+$getid).slideUp('slow',function(){ jQuery('#morelink'+$getid+'').fadeIn(); });
-			} );
-		});
-	</script>
-		<?
-	}
-		
-
-//MOOTOOLS...
-if(@$hys['settings']['mootools'] == 1)
-	echo "
-		<script src='{$hys['dir']}/res/js/mootools-1.2.4.js' type='text/javascript'></script>\n";
-
-		
-		
-		echo "
-		
-	<!-- /heyyou -->\n\n";
-	}
-	
-	
 /*-------------------------------------------------------------
  Name:      hys_social
 
@@ -2061,6 +2074,25 @@ function  hys_attach_attachments($heyyou_post_id) {
 		return hys_mobile_link($phrase); // deciprecated
 	}
 	
+
+/*-------------------------------------------------------------
+ Name:      hys_tweets_shortcode
+
+ Purpose:   return list of twitter posts from RSS feed
+ Receive:   [hys_tweets id='' count='' refresh_rate='']
+ Return:	string with tweets wrap in tags
+-------------------------------------------------------------*/
+
+	function hys_tweets_shortcode( $atts ) {
+		extract( shortcode_atts( array(
+			'id' 			=> 264304328,
+			'count' 		=> 1,
+			'refresh_rate' 	=> 14400
+		), $atts ) );
+		return hys_twitter_feed($id, $count, $refresh_rate);
+	}
+
+	
 /*-------------------------------------------------------------
  Name:      hys_twitter_feed
 
@@ -2069,34 +2101,18 @@ function  hys_attach_attachments($heyyou_post_id) {
  			option containing the latest TWEETS, when called.
  Return:	string with tweets
 -------------------------------------------------------------*/
-	function hys_twitter_feed( $id = '264304328', $count = 1 , $refresh_rate = 7200 ) {
+	function hys_twitter_feed( $id = '264304328', $count = 1 , $refresh_rate = 14400 ) {
 
-		//if nothing exsists...
-		if (!get_option('hys_twitter_expire')) {
-			add_option( 'hys_twitter_expire', (time()+$refresh_rate));
-			add_option( 'hys_twitter_tweets', get_tweets($id,$count));
-		}
-		
-		//if exsists, but expired
-		if (get_option('hys_twitter_expire') < time()) {
-			$temp_old = get_option('hys_twitter_tweets');
-			update_option( 'hys_twitter_expire', (time()+$refresh_rate));
+		if ( false === ( $get_tweets = get_transient( 'hys_twitter_tweets' ) ) ) {
 			$get_tweets = get_tweets($id,$count);
-			$get_tweets = ($get_tweets) ? $get_tweets : $temp_old; //if error, use old ones..
-			update_option( 'hys_twitter_tweets', $get_tweets);			
+		  set_transient( 'hys_twitter_tweets', $get_tweets , $refresh_rate );
 		}
 		
-		//tweet
-		return get_option('hys_twitter_tweets');
+		return $get_tweets;
+
 	}
 		
-		
-		
-		
-		
-		
 	function get_tweets($id = '264304328', $count = 1) {	
-		
 		$feed_url 					= "http://twitter.com/statuses/user_timeline/{$id}.rss";			  
 		$ch 						= @curl_init($feed_url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -2174,6 +2190,7 @@ function  hys_attach_attachments($heyyou_post_id) {
 		
 		//loop through cats+posts for this page, get hys_post from get_posts() array
 		$hysi = 0;
+				
 		foreach ($heyyou_posts as $heyyou_category_id => $heyyou_posts_array) {
 			
 			//group categories
@@ -2211,6 +2228,7 @@ function  hys_attach_attachments($heyyou_post_id) {
 						## ########################################## ##
 						$return .= ($pc != $posts_offst) ? hys_lines('secondary_line') : "";
 						$pc++;
+						
 					}
 				}	
 				
@@ -2270,12 +2288,18 @@ function  hys_attach_attachments($heyyou_post_id) {
 		$line_befor = @($hys['hys_page_config']['line_before_list'] == 1) ? hys_lines(1) : '';
 		$line_after = @($hys['hys_page_config']['line_after_list'] == 1) ? hys_lines(1) : '';
 		
+		//if there's no posts to be returned..
+		if (empty($return)) {
+			$return .= wpautop($hys['hys_page_config']['noposts_output_format']);
+		}
+		$noposts = (empty($return)) ? " hys_noposts" : '';
+		
 		// RETURN LIST
 		return 	$anchors.
 				$list_title. 										// << heyyou title
 				$line_befor.
 				@$hys['hys_page_config']['before_heyyou'].
-				"<div class='hys_output hys_output_{$parent}'>".
+				"<div class='hys_output hys_output_{$parent}{$noposts}'>".
 					$return.										// << heyyou output, list of heyyou posts
 				"</div>".
 				@$hys['hys_page_config']['after_heyyou'].
@@ -2636,7 +2660,7 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 			$endifdefined_esc 	= "\%endif:defined:".$token."\%";
 			
 			//if the output has if:defined arugments
-			if (strpos($output_format, $ifdefined)) {
+			if (strpos(strtolower($output_format), $ifdefined)) {
 			
 				//isolate the code between the clause
 				$isolate = substr_replace($output_format, '', 0, (strpos($output_format, $ifdefined)+strlen($ifdefined)));
@@ -2657,6 +2681,33 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 			}
 		}						
 	}
+	
+	// different than meta %if:defined%'s we have to see if it's used for %if:defined:attach%
+	//if the output has if:defined arugments
+	if (strpos(strtolower($output_format), '%if:defined:attach%')) {
+		$ifdefined 			= "%if:defined:attach%";
+		$ifdefined_esc 		= "\%if:defined:attach\%";
+		$endifdefined 		= "%endif:defined:attach%";
+		$endifdefined_esc 	= "\%endif:defined:attach\%";
+		//isolate the code between the clause
+		$isolate = substr_replace($output_format, '', 0, (strpos($output_format, $ifdefined)+strlen($ifdefined)));
+		$isolate = substr_replace($isolate, '', strpos($isolate, $endifdefined), strlen($isolate));
+		
+		//see if this post even has attachments
+		$attach_post_images 	= attachments_get_attachments($hyspost->ID); 
+		$attach_total_images 	= count($attach_post_images);
+		$has_attachs = ($attach_total_images > 0 && isset($attach_post_images[0]['id'])) ? true : false;
+		
+		//if this post doesn't have attachments, remove clause and content+token between
+		if (!$has_attachs)
+			$output_format = preg_replace("({$ifdefined_esc}(.+?){$endifdefined_esc})is", "", $output_format);
+
+		//regardless: remove the %if:defined:...% arguments
+		$output_format = str_replace(array($ifdefined,$endifdefined),'',$output_format);
+	}
+	
+	
+	
 	
 	//remove attachments from list if it's on single page or autoplacement is on
 	$showsingleatt = @$hys_page_config['single_showattchinpage'];
@@ -2700,13 +2751,6 @@ function hys_shortcode( $atts ) {
 	return hys_output(get_heyyou($cat));
 	
 }
-
-
-
-
-
-
-
 
 
 
@@ -2948,7 +2992,7 @@ function hys_shortcode( $atts ) {
  Return:	current (URL)
 -------------------------------------------------------------*/
 	function hys_return_url() {
-		return (!isset($_SERVER['HTTPS']) || empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'off') 
+		return (!isset($_SERVER['HTTPS']) || empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) == 'off') 
 			? "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'] 
 			: "https://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 	}
@@ -4216,6 +4260,24 @@ function my_insert_rewrite_rules( $rules )
 //}
 
 
+
+//in the admin, if a <!--more--> tag doesn't apear at the beggining of a line, move it there.
+
+add_filter('content_save_pre','hys_fix_position_of_more');
+
+function hys_fix_position_of_more($the_content) {
+	//Find: <!--more--> and extract it from that line,
+	$lines = explode("\n", $the_content);
+	$mr = '<!--more-->';
+	foreach ($lines as $key => $aline) {
+		if (strpos($aline, $mr)) {
+			//put a beginning of that line
+			$lines[$key] = $mr.str_replace($mr,'',$aline);
+			break;
+		}
+	}
+	return implode("\n", $lines);
+}
 
 
 

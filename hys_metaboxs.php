@@ -969,6 +969,17 @@ for ($i = 0; $i != 15; $i++) {
 			<?php  }  ?>
 			
 			
+			
+			<!-- Message when no Posts -->
+				<h5 class='format_title'><a onclick="showhide('noposts_output_format');" >Message when no Posts</a></h5>
+				<div id='noposts_output_format' <?=(!isset($hys['hys_page_config']['noposts_output_format']) || empty($hys['hys_page_config']['noposts_output_format'])) ? "style='display:none;'" : '' ?>>
+					<textarea name='hys_page_config[noposts_output_format]' style='width:100%;height:44px !important;font-size:10px;'><?php echo @$hys['hys_page_config']['noposts_output_format']; ?></textarea>
+					<br />
+					<br />
+				</div><!--/cat_output_format-->
+			
+			
+			
 			<!-- Blocks HTML Output format -->
 
 					<h5 class='format_title'><a class='<?=(!empty($hys['hys_page_config']['singleformat'])) ? "blacklink" : '' ?>' id='' onclick="showhide('single_output_format');" >Single Page (hypg) HTML output format</a></h5>

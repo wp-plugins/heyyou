@@ -3,17 +3,17 @@ Contributors: davidsword, heyshauna.com
 Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
-Tested up to: 3.4.1
-Stable tag: 1.3.1
+Tested up to: 3.4.2
+Stable tag: 1.3.2
 
-heyyou is a plugin framework that supplies resources for rapid development & adds unique dynamic custom post types directly in a Wordpress Page
+heyyou is a plugin adds unique dynamic custom post types directly in a Wordpress Page & a framework that supplies options for rapid development
 
 
 == Description ==
 
 ** If you expereince any issues: before rating, please contact: we will help you ** 
 
-This plugin (currently in alpha stage) is intended as a developers framework - it's goal to turn Wordpress into more of a CMS by adding a wide range of functionalities, settings, and functions to easily:
+This plugin (currently in beta stage) is intended as a developers framework - it's goal to turn Wordpress into more of a CMS by adding a wide range of functionalities, settings, and functions to easily:
 
 1. Add (dynamic) Custom Post Types directly within a Wordpress Page - below the pages main content
 2. Serve as a Development Framework - housing an assortment of presets with an extensive admin settings page
@@ -69,6 +69,7 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 	* Outputs the dynamic custom post types under their corresponding pages
 	* Adds .mobile class to < body > when detected
 	* Javascript instant-reveal "..read more" replace <! -- more -- > *see documentation*
+	* shortcode for retreving text list of recent tweets
 * *& much more.. (documentation still being written)*
 
 
@@ -76,6 +77,11 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 
 * heyshauna sites
 	* [heyshauna.com](http://heyshauna.com/)
+	* [joeink.ca](http://joeink.ca)
+	* [steminteriordesign.com](http://steminteriordesign.com)
+	* [judegriebel.com](http://judegriebel.com)
+	* [susanpoint.com](http://susanpoint.com)
+	* [spokendress.com](http://spokendress.com)
 	* [pushfestival.ca](http://pushfestival.ca/)
 	* [lissavino.com](http://lissavino.com/)
 	* [greenspacedesigns.com](http://greenspacedesigns.com/)
@@ -95,6 +101,7 @@ This plugin (currently in alpha stage) is intended as a developers framework - i
 	* *& much more on the way*
 * David Sword sites
 	* [davidsword.ca](http://davidsword.ca/)
+	* [ianmorris.ca](http://ianmorris.ca/)
 	* [interioracademy.com](http://interioracademy.com/)
 	* [shaunbalbar.ca](http://shaunbalbar.ca/)
 	* [createddifferently.com](http://createddifferently.com/)
@@ -119,7 +126,7 @@ The following plugins are hard coded into heyyou - they were edited enough that 
 
 This plugin is a *very large* framework design specifically for development of websites by [heyshauna.com](http://heyshauna.com/) & [davidsword.ca](http://davidsword.ca/). It essentially has the functionality of 20+ plugins (see "Features" list in description). *heyyou* is not likely to be compatible with all themes or plugins and is recommended for intermediate-to-advance Wordpress users only that are committed to experimenting with this plugin. **Always** backup your database and files before installing a plugin of this scale. It is recommended that potential users test this plugin in a test environment prior to installing on a live site. Please view the documentation at : [hey-you.ca](http://hey-you.ca/)
 
-`ALL Documentation and plugin are at ALPHA LEVEL, the plugin is currently being developed / written.`
+`ALL Documentation and plugin are at BETA LEVEL, the plugin is currently being developed / written.`
 
 [hey-you.ca](http://hey-you.ca/)
 
@@ -172,22 +179,39 @@ Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-f
 
 == Changelog ==
 
+
+= 1.3.2 =
+* Sept 29, 2012
+* added: TinyMCE "fullscreen" button back by default
+* added: TinyMCE customization function `hys_custom_tinymce()`, allowing modification of buttons per/theme
+* added: twitter shortcode [hys_tweets id='' count='' refresh_rate='']
+* added: "message to display when no posts" to show dynamic text on empty hys post pages.. adds class hys_noposts to hys_output
+* added: %if:defined..% arguments can now be in upper or lower case
+* changed: twitter feed from get_option to transient
+* changed: ties using external resources, every js and img now from self..  
+* changed: name of js.js to heyyou.js
+* changed: header scripts and styles now use enqueue_script/enqueue_style
+* changed: move ie7-9 HTML5 compat to footer for cleaner header
+* fixed: %if:defined:attach% argument can now be used to hide gallery related info when using %attach% in output format instead of auto-gallery placement
+* fixed: issue where <!--more--> tag was inserting self on a new line between <h#> and other tags. <!--more--> is now pushed to beggining of line.. which still might result in HTML breaking as a tag might open on previous line and close after <!--more-->
+* fixed: issue where mobile redirect may of taken to https instead of http because of unanticipated capitalization of $_SERVER['HTTPS'] variable.
+* removed: auto redirecting of normal site to mobile on first load (this stops error from happening on mobile Wordpress apps, also allows for resposive web design)
+
 = 1.3.1 =
 * July 23rd, 2012
-* fixed issue with force download where if !allow_url_fopen, errors would occur
-* fixed issue where non-admins could see advance (developer) heyyou options/setting
-* fixed max length of string in text drop-down for form select media lists
-
+* fixed: issue with force download where if !allow_url_fopen, errors would occur
+* fixed: issue where non-admins could see advance (developer) heyyou options/setting
+* fixed: max length of string in text drop-down for form select media lists
 
 = 1.3 = 
 * July 17th, 2012
-* fixed issue where posts were posting to bottom, regardless if "new posts: top" was set
+* fixed: issue where posts were posting to bottom, regardless if "new posts: top" was set
 * added: hyperlink to lightbox notice
 
 = 1.2 = 
 * June 10th, 2012
-* fixed viewport for more tablet friendly rendering
-* removed dynamic viewport pixel width option
+* fixed: viewport for more tablet friendly rendering
+* removed: dynamic viewport pixel width option
 
 = 1.1 =
 * June 5th, 2012
@@ -480,6 +504,10 @@ Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-f
 * PTC - build
 
 == Upgrade Notice ==
+
+= 1.3.2 =
+* loading jQuery and other lightbox resources from new directory
+* changed jQuery's lighbox's  prefix from "$(.." to Wordpress's "jQuery(..", may break some sites jQuery Lightbox
 
 = 0.0.0.0.1 =
 * jQuery $() may be undefined.. using wp_enqueue_scripts now including actual script..
