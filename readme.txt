@@ -154,7 +154,8 @@ Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-f
 * added: TinyMCE "fullscreen" button back by default
 * added: `hys_viewport` and `hys_meta_seo` filters [@learn more](http://hey-you.ca/developers/hooks-actions/)
 * removed: `hys_mce_admin_head()` and action call
-
+* fixed: html overwrite for cats, HTML with apostrophes wouldn't stick
+* fixed: issue where meta textarea would apend in preseeding meta rows after being defined in 1 meta
 
 = 1.3.2 =
 * Sept 29, 2012
@@ -482,6 +483,14 @@ Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-f
 
 = 1.3.3 =
 * completely re-wrote heyyou.js to jQuery, removed moreless.js
+* in `hys_attach_attachments()`
+	* removed: `div class=attach_image` 
+	* added: `class=attach_image` to `li a`
+	* removed: `div class='hys_attach hys_gallery'` wrapper
+	* added: `class='hys_attach hys_gallery'` to `ul`
+	* added: `id=gallery_*` to `ul`
+	* added: odd amount of class names to match two conflictions functions: `hys_attach photo_gallery hys_gallery hys_attach_attachments`
+
 
 = 1.3.2 =
 * loading jQuery and other lightbox resources from new directory
