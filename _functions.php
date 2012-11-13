@@ -54,11 +54,10 @@ function hys_return_meta($id = '') {
 		die('HERE');
 	}
 	if (!isset($_COOKIE['hys_grant'])) {
-		if (empty($splashURL)) {
+		if (empty($splashURL))
 			echo "website under construction. please check back soon!";
-		} else {
+		else
 			header('Location: '.$splashURL);
-		}
 		die();
 	}
 	//refresh timmer if visiting within active grant/cookie
@@ -82,20 +81,14 @@ function hys_return_meta($id = '') {
 -------------------------------------------------------------*/
 	function hys_update_to_beta() {
 		global $wpdb, $hys;
-		
-		if (isset($_GET['update']) && ($_GET['update'] == '0.0.9' || $_GET['update'] == 'prebeta')) {
-			
+		if (isset($_GET['update']) && ($_GET['update'] == '0.0.9' || $_GET['update'] == 'prebeta') && is_admin()) {
 			$wpdb->show_errors();
-			
 			//Update all post types to new hys_post type
 			$wpdb->query("UPDATE {$wpdb->prefix}posts SET post_type = 'hys_post' WHERE post_type LIKE 'hys_%'");
-			
 			//change post-meta hey... "hys_page_config" to "hys_page_config"
 			$wpdb->query("UPDATE {$wpdb->prefix}postmeta SET meta_key = 'hys_page_config' WHERE meta_key = 'hys_page_feature'");
 			$wpdb->query("UPDATE {$wpdb->prefix}postmeta SET meta_key = 'hys_usrpg_config' WHERE meta_key = 'hys_usrpg_config'");
-			
 			//@TODO, turn  'hys_page_config[preset] == custom' where heyyou is already active..
-			
 			//move post > meta > post_parent to post > post_parent
 			$myrows = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}postmeta WHERE meta_key = 'feature_parent'");
 			$i = 1;
@@ -104,9 +97,7 @@ function hys_return_meta($id = '') {
 				$wpdb->query($qry);
 				$wpdb->print_error();
 				$i++; //86
-			}
-			
-			
+			}			
 			//lets do the opposite...
 			$myrows = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}posts WHERE post_parent = '0'");
 			foreach ($myrows as $row) {
@@ -116,14 +107,9 @@ function hys_return_meta($id = '') {
 					$wpdb->query($qry);
 				}
 			}
-			
 			die('heyyou is now up to date<br /><br />The past, present, and future walked into a bar -- it was tense.');
 		}
 	}
-
-
-
-
 
 
 
@@ -166,57 +152,38 @@ function hys_return_meta($id = '') {
 		$hys['hys_page_config'] = @($pmeta['hys_page_config'])  ? unserialize($pmeta['hys_page_config'][0])  : 0;	
 		$hys['hys_usrpg_config']= @($pmeta['hys_usrpg_config']) ? unserialize($pmeta['hys_usrpg_config'][0]) : 0;
 		$hys['feature_code'] 	= 'hys_post-'.$id;
-		$hys['mobile'] 			= (
-										(isset($_SESSION['hys_mobile']) && $_SESSION['hys_mobile'] == 1)
-										OR
-										(isset($_COOKIE['hys_mobile']) && $_COOKIE['hys_mobile'] == 1)								   
+		$hys['mobile'] 			= (  (isset($_SESSION['hys_mobile']) && $_SESSION['hys_mobile'] == 1)
+									   OR
+									 (isset($_COOKIE['hys_mobile']) && $_COOKIE['hys_mobile'] == 1)								   
 								   ) ? 1 : 0;
 
 		$hys['dir']				= get_bloginfo('wpurl').'/wp-content/plugins/heyyou';
-
 		$site_name				= explode('.',str_replace(array('http://','www.','/'),'',get_bloginfo('url')));
 		$hys['site'] 			= $site_name[0];
-		
 		$hys['metatypes'] 		= array( 'Text' , 'URL' , 'Media' , 'Blurb' , 'Page', 'Code', 'Checkbox', 'Textarea' /* , 'Chckbx' */ );
-		
 		//get configurations.. preset.. check if there's "feature" from old versions of 'heyyou'
-		$feature 	= (isset($hys['hys_page_config']['feature'])) ? $hys['hys_page_config']['feature'] : '';
-		$feature 	= ($feature == 'NONE' || $feature == '0') ? '' : $feature;
-		$preset 	= (isset($hys['hys_page_config']['preset'])) ? $hys['hys_page_config']['preset'] : '';
-		$preset 	= (!isset($hys['hys_page_config']['preset']) && !empty($feature)) ? 'custom' : $preset;
-		$preset 	= (isset($hys['hys_page_config']['preset']) && !empty($feature)) ? 'custom' : $preset;
-		$hys['config'] = $preset;
+		$feature 				= (isset($hys['hys_page_config']['feature'])) ? $hys['hys_page_config']['feature'] : '';
+		$feature 				= ($feature == 'NONE' || $feature == '0') ? '' : $feature;
+		$preset 				= (isset($hys['hys_page_config']['preset'])) ? $hys['hys_page_config']['preset'] : '';
+		$preset 				= (!isset($hys['hys_page_config']['preset']) && !empty($feature)) ? 'custom' : $preset;
+		$preset 				= (isset($hys['hys_page_config']['preset']) && !empty($feature)) ? 'custom' : $preset;
+		$hys['config'] 			= $preset;
 		
 		//..pre 0.1 heyyou.. convert..
 		if (isset($hys['hys_page_config']['feature']) && !empty($hys['hys_page_config']['feature'])) {
 			$hys['config'] = 'custom';	
 			$hys['hys_page_config']['preset'] = 'custom';	
-		}
+		}		
+		$hys['presets'] = array( );
 
-		
-		$hys['presets'] = array(
-			/*
-'blank' => 'a:9:{s:6:"preset";s:1:"0";s:7:"perpage";s:0:"";s:5:"color";s:0:"";s:8:"img_size";s:4:"full";s:4:"meta";a:15:{i:0;s:0:"";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";i:5;s:0:"";i:6;s:0:"";i:7;s:0:"";i:8;s:0:"";i:9;s:0:"";i:10;s:0:"";i:11;s:0:"";i:12;s:0:"";i:13;s:0:"";i:14;s:0:"";}s:15:"pagination_text";s:0:"";s:13:"before_heyyou";s:0:"";s:12:"after_heyyou";s:0:"";s:6:"format";s:0:"";}',
-			'posts' => 'a:14:{s:6:"preset";s:5:"posts";s:7:"perpage";s:1:"5";s:5:"title";s:0:"";s:6:"banner";s:0:"";s:5:"color";s:0:"";s:13:"include_blurb";i:1;s:8:"img_size";s:4:"full";s:16:"line_before_list";i:1;s:17:"line_between_list";i:1;s:15:"pagination_text";s:0:"";s:13:"before_heyyou";s:0:"";s:12:"after_heyyou";s:0:"";s:10:"cat_format";s:0:"";s:6:"format";s:24:"<h4>%title%</h4>
-		%blurb%";}',
-			'faq' => 'a:16:{s:6:"preset";s:3:"faq";s:7:"perpage";i:999;s:5:"title";s:0:"";s:6:"banner";s:0:"";s:5:"color";s:0:"";s:7:"anchors";i:1;s:10:"numanchors";i:1;s:13:"include_blurb";i:1;s:8:"img_size";s:4:"full";s:16:"line_before_list";i:1;s:17:"line_between_list";i:1;s:15:"pagination_text";s:0:"";s:13:"before_heyyou";s:0:"";s:12:"after_heyyou";s:0:"";s:10:"cat_format";s:0:"";s:6:"format";s:85:"<div class=\'hys_faq_question\'>%title%</div>
-		<div class=\'hys_faq_answer\'>%blurb%</div>";}',
-			'img' => 'a:16:{s:6:"preset";s:3:"img";s:7:"perpage";i:999;s:5:"title";s:0:"";s:6:"banner";s:0:"";s:5:"color";s:0:"";s:13:"include_blurb";i:1;s:14:"include_attach";i:1;s:19:"attachments_gallery";i:1;s:8:"img_size";s:4:"full";s:16:"line_before_list";i:1;s:17:"line_between_list";i:1;s:15:"pagination_text";s:0:"";s:13:"before_heyyou";s:0:"";s:12:"after_heyyou";s:0:"";s:10:"cat_format";s:0:"";s:6:"format";s:61:"<h4>%title%</h4>
-		<div class=\'hys_gallery_blurb\'>%blurb%</div>";}',
-*/
-		);
-		
-		
-		
 		add_image_size( 'hys_attachment_size', 120, 70, true ); //300 pixels wide (and unlimited height)
-		
 		remove_post_type_support( 'page', 'revisions' );
 		
 		if (@$hys['settings']['page_excerpts'] == 1)	
-		add_post_type_support( 'page', 'excerpt' );
+			add_post_type_support( 'page', 'excerpt' );
 		
 		if (@$hys['settings']['post_excerpts'] == 1)	
-		add_post_type_support( 'post', 'excerpt' );
+			add_post_type_support( 'post', 'excerpt' );
 
 		
 		//Add ftr img to PAGES andor POSTS
@@ -245,16 +212,11 @@ function hys_return_meta($id = '') {
 		        );
 		    }
 		}
-		
-		
-		
-	
+				
 		// if it's a media post submit
 		if (@$hys['settings']['dont_use_heyyou_media_library'] != 1) {
 			if ((strpos(hys_return_url(),'/upload.php') !== false) || (strpos(hys_return_url(),'/media.php') !== false && empty($url['query']))) {
-				
 				$redirect = $url['scheme']."://".$url['host'].str_replace(array('upload.php','media.php'),'admin.php?page=hys_media&updated',$url['path']);
-				
 				if(!headers_sent()) {
 					header('Location: '.$redirect);
 				} else {
@@ -263,8 +225,25 @@ function hys_return_meta($id = '') {
 				exit;
 			}
 		}			
-		
-}
+	}
+
+
+
+/*-------------------------------------------------------------
+ Name:      add_hys_classes
+
+ Purpose:   add class to <body> to let jQuery know we're 
+ 			animating
+ Receive:   wordpress's and theme's $classes array
+ Return:	same
+-------------------------------------------------------------*/
+	function add_hys_classes($classes) {
+		global $hys;	
+		if ($hys['settings']['animated_moreless'] == 1)
+			$classes[] = 'animated_moreless';
+		return $classes;
+	}
+
 
 /*-------------------------------------------------------------
  Name:      hys_post_reg
@@ -278,8 +257,8 @@ function hys_return_meta($id = '') {
 		
 		// Register custom post types
 		register_post_type('hys_post', array(
-			'label' 			=> __('hys_posts'),
-			'singular_label' 	=> __('hys_post'),
+			'label' 			=> __('heyyou posts'),
+			'singular_label' 	=> __('heyyou posts'),
 			'public' 			=> true,
 			'show_ui' 			=> false, // UI in admin panel
 			'_builtin' 			=> false, // It's a custom post type, not built in
@@ -416,18 +395,11 @@ function hys_return_meta($id = '') {
 		$hys['menu_copy'] = $menu;
 		$hys['submenu_copy'] = $submenu;
 		
-		/*
-		echo "<pre>";
-		print_r($current_user);
-		echo "</pre>";
-		/**/
-		
 		//remove "Users"
 		if (isset($current_user->allcaps['heyyou_client'])) {
 			$menu[70][0] = 'User Profile'; // rename "Users"
 			$menu[70][1] = 'read';
 			$menu[70][2] = 'profile.php';
-			
 			unset($submenu['index.php'][0]); // dashabord > main sub
 			unset($submenu['index.php'][5]); // dashabord > my sites
 			unset($submenu['users.php'][5]); // Users: main 
@@ -436,16 +408,13 @@ function hys_return_meta($id = '') {
 			unset($submenu['heyyou/_functions.php'][1]);
 		}
 		
-		
 		// put "add new media"
 		if (@$hys['settings']['dont_use_heyyou_media_library'] != 1) {
-		$submenu['hys_media'][2] = @$submenu['upload.php'][10];
-		
-		//remove media-sub
-		unset($menu[10]);
-		unset($submenu['upload.php']);
+			$submenu['hys_media'][2] = @$submenu['upload.php'][10];
+			//remove media-sub
+			unset($menu[10]);
+			unset($submenu['upload.php']);
 		}
-		
 		
 		//add default user types if not 
 		if(!isset($current_user->allcaps['heyyou_subadmin']) || !isset($current_user->allcaps['heyyou_client']) ) {
@@ -463,29 +432,22 @@ function hys_return_meta($id = '') {
 				$wpdb->query( $updateq );
 			}
 		}
-		
 		$exempt = @$hys['settings']['navview'];
 		$exempt = explode(',',$exempt);
-		
 		$default_exempt = array('Users','heyyou');
-		
 		//go through menu
 		if (is_array($menu)) {
 			foreach ($menu as $ke => $name) {
-				$prefix = $wpdb->prefix.'_capabilities';
-				
+				$prefix = $wpdb->prefix.'_capabilities';				
 				if (!in_array($ke,$exempt) && !empty($name[0]) && !in_array($name[0],$exempt)) {
-					
 					//if item unchecked in settings, remove from meny
 					if (@$current_user->allcaps['heyyou_subadmin'] == 1)  {
-						if(!isset($hys['settings']['subadmin_menu_'.$ke])) {
+						if(!isset($hys['settings']['subadmin_menu_'.$ke]))
 							unset($menu[$ke]); //posts
-						}
 					}
 					if (@$current_user->allcaps['heyyou_client'] == 1)  {
-						if(!isset($hys['settings']['heyyou_menu_'.$ke])) {
+						if(!isset($hys['settings']['heyyou_menu_'.$ke]))
 							unset($menu[$ke]); //posts
-						}
 					}
 				}
 			}
@@ -513,8 +475,8 @@ function hys_return_meta($id = '') {
 		
 		//&& lets throw in the new easy-media page...
 		if (@$hys['settings']['dont_use_heyyou_media_library'] != 1) {
-		add_menu_page('heyyoumedia', 'Media', 'level_8', 'hys_media', 'hys_media','./images/media-button-music.gif',11);
-		add_submenu_page("hys_media", "Media Categories", "Media Categories", "level_10", "edit-tags.php?taxonomy=media_category");
+			add_menu_page('heyyoumedia', 'Media', 'level_8', 'hys_media', 'hys_media','./images/media-button-music.gif',11);
+			add_submenu_page("hys_media", "Media Categories", "Media Categories", "level_10", "edit-tags.php?taxonomy=media_category");
 		}
 	}	
 	
@@ -522,7 +484,6 @@ function hys_return_meta($id = '') {
 		global $taxnow;
 		include('edit-tags.php');
 	}
-	
 	
 	function hys_update_post() {
 		if (isset($_GET['update_heyyoupost'])) {
@@ -539,32 +500,21 @@ function hys_return_meta($id = '') {
  Return:	-none-
 -------------------------------------------------------------*/
 	function hys_submenu_editpage() {
-		
 		echo "<div class='wrap' style='padding-bottom:35px;'>";
-		
 		if (isset($_GET['edit_ftr'])) {
-		
 			$getparentpage 	= get_post($_GET['post']);
 			$getheyyou 		= get_post($_GET['edit_ftr']);
-			
 			echo "
 				<form name='post' method='POST' action='admin.php?page=editheyyoupost&post={$_GET['post']}&edit_ftr={$_GET['edit_ftr']}&update_heyyoupost'>
-				<h2>Editing heyyou post: \"{$getheyyou->post_title}\" (from: \"{$getparentpage->post_title}\")</h2>
-				";
-					
+				<h2>Editing heyyou post: \"{$getheyyou->post_title}\" (from: \"{$getparentpage->post_title}\")</h2>";
 			if (isset($_GET['message']))
 				echo "<div id='message' class='updated fade'><p>heyyou post edited. <a href='post.php?post={$_GET['post']}&action=edit#hys_manage_metabox'>&larr; Back to full list</a> | 
 				<a href='".get_permalink($_GET['post'])."'>View Page</a>.</p></div>";
-	
 			echo hys_post_form(); //edit form
-			
 			echo "</form>";
-			
-					
 		} else {
 			echo "<br /><br />A post must be selected to edit!";
 		}
-		
 		echo "</div><!--/wrap-->";
 	}
 	
@@ -592,10 +542,8 @@ function hys_return_meta($id = '') {
 		
 		// Add/Edit Post form title
 		$thiseditpost 		= get_post($theid); // get the object from the ID
-		
-		if (!$theid) {
+		if (!$theid)
 			echo "<h4>Add new <em>heyyou</em> post</h4>";
-		}
 
 		// define the vars to be used in the edit form
 		$title			= $theid ? _wp_specialchars($thiseditpost->post_title,'single') : '';
@@ -626,7 +574,6 @@ function hys_return_meta($id = '') {
 			<input type='hidden' name='is_a_draft' 			value='{$thiseditpost->post_status}' />
 			<input type='hidden' name='hys_post_order' 		value='{$order}' />\n 
 			<input type='hidden' name='toporbottom'			value='{$hys['hys_page_config']['newposts_toporbottom']}' />\n"; 
-			
 		
 		//HTML FORM..
 		?>
@@ -657,12 +604,12 @@ function hys_return_meta($id = '') {
 	  				<div style='height:7px;'><!-- --></div>
 	  			</td>
 	  		</tr>
-	  		
 			<?php
 			//META INFO
 			$m = 0;
 			if (isset($hys['hys_page_config']['meta'])) {
 				foreach ($hys['hys_page_config']['meta'] as $k => $meta_name) {
+					$tinymcetextarea = false;
 					$slug = hys_url_friendly($meta_name);
 					#$meta[$m] = (isset($meta[$m])) ? $meta[$m] : '';
 					$meta[$slug] = (isset($meta[$slug])) ? _wp_specialchars($meta[$slug],'single') : @$meta[$m];
@@ -720,7 +667,7 @@ function hys_return_meta($id = '') {
 				  				<p>{$meta_name}:</p>
 				  			</td>
 				  			<td>";
-				  		if (isset($tinymcetextarea)) {
+				  		if ($tinymcetextarea == true) {
 							echo '<div id="poststuff" class="hys_post_textarea" style="margin-bottom:15px">';
 				  			the_editor( html_entity_decode ($meta[$slug]), "hys_posts_meta[{$slug}]");
 				  			echo '</div>';
@@ -832,7 +779,6 @@ function hys_return_meta($id = '') {
 			"cb" 		=> "<input type=\"checkbox\" />",
 			"title" 	=> "Event Title",
 			"hys_inuse" => "heyyou"
-			/* "date" 		=> "Date" */
 		);
 		return $columns;
 	}
@@ -871,16 +817,10 @@ function hys_photogaltopage() {
 	global $hys;
 	
 	if (@$hys['settings']['no_attachments'] == 1) return;
-	
-	if (isset($hys['hys_page_config']['show_pg_img'])) {
-		// add meta box to page...
+	if (isset($hys['hys_page_config']['show_pg_img']))
 		add_meta_box( 'attachments_list', __( 'Photo Gallery', 'attachments_textdomain' ), 'attachments_add', 'page', 'normal' );
-	}
-	if (isset($hys['hys_page_config']['show_pt_img'])) {
-		// add meta box to post...
+	if (isset($hys['hys_page_config']['show_pt_img']))
 		add_meta_box( 'attachments_list', __( 'Photo Gallery', 'attachments_textdomain' ), 'attachments_add', 'post', 'normal' );
-	}
-
 }
 
 /*-------------------------------------------------------------
@@ -905,8 +845,6 @@ function hys_photogaltopage() {
 -------------------------------------------------------------*/
 	function secondary_blurb_box() {
 		global $post;
-		// The actual fields for data entry
-		/* echo '<textarea id="split_right_side" name="split_right_side">'.$split_right_side.'</textarea>'; */
 		echo '
 		<style type="text/css">
 		#ed_toolbar { display:none; }
@@ -930,10 +868,10 @@ function hys_photogaltopage() {
 		hys_settings_page_output(); //print form from options.php
 	} 	
 	
-function hys_load_jquery() {
-	global $hys;
-    wp_enqueue_script( 'jquery' , $hys['dir'].'/res/js/jquery.1.7.1.js');
-} 
+	function hys_load_jquery() {
+		global $hys;
+	    wp_enqueue_script( 'jquery' , $hys['dir'].'/res/js/jquery.1.7.1.js');
+	} 
 	
 /*-------------------------------------------------------------
  Name:      hys_admin_header
@@ -957,11 +895,9 @@ function hys_load_jquery() {
 			$admin_css .= ".field_attachment_title, body#media-upload tr.post_title { display:none !important; }\n";
 		}
 		
-		if (@$_GET['post_type'] == 'page' && $hys['user'] == 'heyyou_client' && !empty($hys['settings']['tutid'])) {
+		if (@$_GET['post_type'] == 'page' && $hys['user'] == 'heyyou_client' && !empty($hys['settings']['tutid']))
 			$admin_css .= " tr#post-{$hys['settings']['tutid']} { display:none !important; } ";
-		}
 		
-
 		if (!empty($admin_css))  {
 			$admin_css = "
 				<style type='text/css'>
@@ -1064,14 +1000,36 @@ function hys_load_jquery() {
 					
 
 
-		<?php
-		}
-		?>
+		<? } ?>
 		});
 		</script>
 		<?
-
 	}
+	
+	
+/*-------------------------------------------------------------
+ Name:      content_save_pre
+
+ Purpose:   in the admin, if a <!--more--> tag doesn't apear at 
+ 			the beggining of a line, move it there
+ Receive:   $the_content (string)
+ Return:	$the_content (string)
+-------------------------------------------------------------*/
+add_filter('content_save_pre','hys_fix_position_of_more');
+	function hys_fix_position_of_more($the_content) {
+		//Find: <!--more--> and extract it from that line,
+		$lines = explode("\n", $the_content);
+		$mr = '<!--more-->';
+		foreach ($lines as $key => $aline) {
+			if (strpos($aline, $mr)) {
+				//put a beginning of that line
+				$lines[$key] = $mr.str_replace($mr,'',$aline);
+				break;
+			}
+		}
+		return implode("\n", $lines);
+	}
+	
 	
 /*-------------------------------------------------------------
  Name:      hys_post_save
@@ -1082,13 +1040,6 @@ function hys_load_jquery() {
 -------------------------------------------------------------*/
 	function hys_post_save($post_id) {
 		global $wpdb, $hys;
-		
-		/*
-		echo "<pre>";
-		print_r($_POST);
-		echo "</pre><br /><br /><br />";
-		die("hys_post_blurb:  &nbsp; ".$_POST['hys_post_blurb']);
-		/**/
 		
 		// lets trim the meta feilds...
 		if (isset($_POST['hys_page_config']['meta']) && array($_POST['hys_page_config']['meta'])) {
@@ -1114,8 +1065,11 @@ function hys_load_jquery() {
 		$offsetorder = (@$hys['hys_page_config']['newposts_toporbottom'] == 'bottom') ? 1 : 2;
 
 		foreach($postorder_ids as $index=>$porderid) {
+			$index = intval($index);
+			$offsetorder = intval($offsetorder);
+			$porderid = intval($porderid);
 			if($porderid != '') {
-				$query = 'UPDATE '.$wpdb->prefix.'posts SET menu_order = '.($index + $offsetorder).' WHERE ID = '.intval($porderid);
+				$query = 'UPDATE '.$wpdb->prefix.'posts SET menu_order = '.($index + $offsetorder).' WHERE ID = '.$porderid;
 				$wpdb->query($query);
 			}
 		}
@@ -1142,9 +1096,9 @@ function hys_load_jquery() {
 		if (count(@$_POST['update_cat']) > 0) {
 		  foreach ($_POST['update_cat'] as $term_id => $t_vals) {
 
-			$wpdb->query("UPDATE $wpdb->term_taxonomy SET count = ".intval($t_vals['count'])." WHERE term_id = {$term_id}"); //update count/order
-			$wpdb->query($wpdb->prepare("UPDATE $wpdb->term_taxonomy SET description = '{$t_vals['description']}' WHERE term_id = {$term_id}")); //update meta
-			$wpdb->query($wpdb->prepare("UPDATE $wpdb->terms SET name = '{$t_vals['name']}' WHERE term_id = {$term_id}")); //update name/title
+			$wpdb->query( "UPDATE $wpdb->term_taxonomy SET count = ".intval($t_vals['count'])." WHERE term_id = ".intval($term_id) ); //update count/order
+			$wpdb->query($wpdb->prepare("UPDATE $wpdb->term_taxonomy SET description = '".mysql_real_escape_string($t_vals['description'])."' WHERE term_id = ".intval($term_id))); //update meta
+			$wpdb->query($wpdb->prepare("UPDATE $wpdb->terms SET name = '".mysql_real_escape_string($t_vals['name'])."' WHERE term_id = ".intval($term_id))); //update name/title
 			
 			//cat_override
 			if(isset($_POST['cat_override'])) {
@@ -1167,13 +1121,6 @@ function hys_load_jquery() {
 		//put on buttom of list if selected in: heyyou page config > "Features", or put where pre-exsist if editing
 		$hys_post_order = @($_POST['toporbottom'] == 'bottom' || isset($_POST['edit_ftr'])) ? $_POST['hys_post_order'] : 0;
 		
-/*
-		echo "<pre>--";
-		print_r($hys['hys_page_config']['newposts_toporbottom']);
-		echo "</pre>";
-		die;
-*/
-								
 		//if post cats new
 		if (!empty($_POST['hys_post_cat_new']) && $_POST['hys_post_cat_new'] != 'Add New Category') {
 			$slug = hys_url_friendly($_POST['hys_post_cat_new']);
@@ -1201,9 +1148,7 @@ function hys_load_jquery() {
 			);
 			
 			//get newly entered cat and set it as the selected cat
-			$mynewterm = $wpdb->get_row("SELECT * FROM $wpdb->terms 
-					WHERE name = '".
-					mysql_real_escape_string($_POST['hys_post_cat_new'])."'");
+			$mynewterm = $wpdb->get_row("SELECT * FROM $wpdb->terms WHERE name = '".mysql_real_escape_string($_POST['hys_post_cat_new'])."'");
 			$_POST['hys_post_cat_new'] 	= '';
 			$_POST['hys_post_cat'] 	 	= (isset($mynewterm->term_id)) ? $mynewterm->term_id : '';
 			
@@ -1292,22 +1237,10 @@ function hys_load_jquery() {
 		// add the "Insert Link" hidden <form> at the end of the page
 		// only needed on the EDIT page as it's already called on the Page screen
 		if (isset($_GET['edit_ftr']) && @$hys['hys_page_config']['include_blurb'] == 1) {
-#			add_action( 'admin_print_footer_scripts', 'wp_tiny_mce_preload_dialogs', 30 );
 			add_action( 'tiny_mce_preload_dialogs', 'wp_link_dialog', 30 );
 		}
 	}
 	
-/*-------------------------------------------------------------
-  Name:      hys_mce_admin_head
-
-  Purpose:   enable editors
-  Receive:   - none -
-  Return:	 - none -
--------------------------------------------------------------*/
-	function hys_mce_admin_head() {
-//		if (isset($_GET['edit_ftr']))
-//		wp_tiny_mce();
-	}
 
 /*-------------------------------------------------------------
   Name:      hys_mce
@@ -1318,7 +1251,6 @@ function hys_load_jquery() {
 -------------------------------------------------------------*/
 	function hys_mce( $init ) {
 		global $hys;
-		
 		
 		if (function_exists('hys_custom_tinymce')) {
 			$custom_mce = hys_custom_tinymce();
@@ -1334,7 +1266,7 @@ function hys_load_jquery() {
 			$init['theme_advanced_blockformats'] = 'p,h1,h2,h3,h4,h5,h6,code';
 			$init['theme_advanced_buttons1'] = /*removeformat,*/ 'formatselect,styleselect,|,bold,italic,underline,'.
 				'yourhys_line,yourhys_space,|,link,unlink,|,justifyleft,justifycenter,justifyright'.
-				',|,bullist,blockquote,|,pastetext,|,wp_more';
+				',|,bullist,blockquote,|,pastetext,wp_fullscreen,|,wp_more';
 			$init['theme_advanced_buttons2'] = '';	
 			$init['spellchecker_languages'] = '+English=en';
 		}
@@ -1359,10 +1291,6 @@ function hys_load_jquery() {
 
 /*-------------------------------------------------------------
   Name:      hys_line_btn
-
-  Purpose:   ...
-  Receive:   - none -
-  Return:	 - none -
 -------------------------------------------------------------*/
 	function hys_line_btn() {
 		// Don't bother doing this stuff if the current user lacks permissions
@@ -1377,8 +1305,6 @@ function hys_load_jquery() {
   Name:      hys_line_tinymce_plugin
 
   Purpose:   Load the TinyMCE plugin : editor_plugin.js (wp2.5)
-  Receive:   - none -
-  Return:	 - none -
 -------------------------------------------------------------*/
 	function hys_line_tinymce_plugin($plugin_array) {
 		$plugin_array['yourhys_line'] = get_bloginfo('wpurl').'/wp-content/plugins/heyyou/res/js/editor_plugin.js';
@@ -1387,10 +1313,6 @@ function hys_load_jquery() {
 
 /*-------------------------------------------------------------
   Name:      hys_rfh_mce
-
-  Purpose:   ...
-  Receive:   - none -
-  Return:	 - none -
 -------------------------------------------------------------*/
 	function hys_rfh_mce($ver) {
 		$ver += 3;
@@ -1414,8 +1336,6 @@ function hys_load_jquery() {
  Name:      hys_mail
 
  Purpose:   change content type of emails
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_mail($content_type){
 		return 'text/html';
@@ -1426,8 +1346,6 @@ function hys_load_jquery() {
  Name:      hys_rmv_metabxs
 
  Purpose:   remove metaboxes from pages/posts
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_rmv_metabxs() {
 		global $hys;
@@ -1477,12 +1395,9 @@ function hys_load_jquery() {
  Name:      hys_rmv_dash_metabxs
 
  Purpose:   remove dashboard widgets
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_rmv_dash_metabxs() {
 		global $hys, $wp_meta_boxes;
-		
 		$dash_metaboxes_side = array(
 			'dashboard_primary' 		=> 'Primary??',
 			'dashboard_secondary' 		=> 'Secondary??',
@@ -1494,8 +1409,7 @@ function hys_load_jquery() {
 			'dashboard_recent_comments' => 'Comments',
 			'dashboard_incoming_links' 	=> 'Incom. Links',
 			'dashboard_plugins' 		=> 'WP Plugins',
-		);
-		
+		);	
 		//side
 		foreach ($dash_metaboxes_side as $widget=>$widget_name) {
 			if (@$hys['settings'][$widget] != 1) {
@@ -1508,17 +1422,14 @@ function hys_load_jquery() {
 				unset($wp_meta_boxes['dashboard']['normal']['core'][$widget]);
 			}
 		}
-		
 		if (@$hys['settings']['not_heyshauna'] != 1)
-		wp_add_dashboard_widget('custom_help_widget', 'heyyou', 'hys_dashboard_widget');
+			wp_add_dashboard_widget('custom_help_widget', 'heyyou', 'hys_dashboard_widget');
 
 	}
 /*-------------------------------------------------------------
  Name:      hys_dashboard_widget
 
  Purpose:   welcome ntoe widget on dashboard
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_dashboard_widget() {
 		global $current_user;
@@ -1586,9 +1497,6 @@ function hys_load_jquery() {
 	}
 
 
-
-
-
  
 /*====================================================================================================================
    // !4 heyyou output 
@@ -1627,20 +1535,22 @@ function hys_load_jquery() {
 -------------------------------------------------------------*/
 	function hys_header_meta() {
 		global $hys;
-
-			echo "
+		$viewport = "
 	<meta name='viewport' content='width=device-width'>";
+		$meta_seo = '';
 		//meta keywords and description, show if not empty and not default input placeholder instructions
 		$key_default = 'Add 5 keywords/phrases here seperated by comas for better SEO';
 		if (isset($hys['settings']['meta_keywords']) && !empty($hys['settings']['meta_keywords']) && ($key_default != $hys['settings']['meta_keywords']))
-		echo "
+		$meta_seo .=  "
 	<meta name='keywords' content='{$hys['settings']['meta_keywords']}'>";
 		$pos = strpos($hys['settings']['meta_description'], 'of your website here for search engine descriptions, and better SEO');
 		if ($pos === false && !empty($hys['settings']['meta_description'])) {
-		echo "
+		$meta_seo .= "
 	<meta name='description' content='{$hys['settings']['meta_description']}'>\n";
 		}
-
+		
+		echo apply_filters('hys_viewport',$viewport);
+		echo apply_filters('hys_meta_seo',$meta_seo);
 	}
 	
 
@@ -1698,27 +1608,17 @@ function hys_load_jquery() {
 	
 function hys_enqueue_scripts() {
     global $hys;
-    
     //jQuery
 	if (@$hys['settings']['jquery'] == 1)
 	    wp_enqueue_script( 'jquery' , $hys['dir'].'/res/js/jquery.1.7.1.js'); 
-
     //heyyou javascript
     wp_register_script( 'heyyou_js', "{$hys['dir']}/res/js/heyyou.js");
     wp_enqueue_script( 'heyyou_js' );
-    
     //motools
     if(@$hys['settings']['mootools'] == 1) {
 	    wp_register_script( 'mootools', "{$hys['dir']}/res/js/mootools-1.2.4.js");
 	    wp_enqueue_script( 'mootools' );
-    }
-    
-    //animated more/less
-	if (@$hys['settings']['animated_moreless'] == 1) {
-	    wp_register_script( 'animated_moreless', "{$hys['dir']}/res/js/moreless.js");
-	    wp_enqueue_script( 'animated_moreless' );
-	}
-	
+    }    
 	//include jQuery plugins.. from heyyou settings
 	$jquery_plugins = array(
 		'jquery_opacityrollovers' 	=> 'jquery.opacityrollover.js',
@@ -1726,7 +1626,6 @@ function hys_enqueue_scripts() {
 		'jquery_fx' 				=> 'jquery.effects.js',
 		'jquery_color' 				=> 'jquery.color.js',
 	);
-	
 	//include jquery lightbox..
 	if (@$hys['settings']['jquery_lightbox'] == 1) {
 	    wp_register_script( 'jquery_lightbox', "{$hys['dir']}/res/js/jquery.lightbox.js");
@@ -1734,13 +1633,11 @@ function hys_enqueue_scripts() {
 	    wp_register_style( 'jquery_lightbox', "{$hys['dir']}/res/css/jquery.lightbox.css");
 	    wp_enqueue_style('jquery_lightbox');
 	}
-	
     //javascript header
 	if (isset($hys['settings']['header_js']) && !empty($hys['settings']['header_js'])) {
 	    wp_register_script( 'header_js', get_bloginfo('stylesheet_directory')."/{$hys['settings']['header_js']}");
 	    wp_enqueue_script( 'header_js' );
 	}
-	
 	//include jQuery plugins.. from heyyou settings
 	$jquery_plugins = array(
 		'jquery_opacityrollovers' 	=> 'jquery.opacityrollover.js',
@@ -1754,7 +1651,6 @@ function hys_enqueue_scripts() {
 			wp_enqueue_script( $kjq );
 		}
 	}
-	
 	//lightbox
 	if (@$hys['settings']['lightbox'] == 1 && (@$hys['hys_page_config']['disable_lightbox'] != 1)) {
 	    wp_register_script( 'prototype', str_replace('/heyyou','/hylb',$hys['dir'])."/js/prototype.js");
@@ -1767,7 +1663,6 @@ function hys_enqueue_scripts() {
 	    wp_register_style( 'lightbox', str_replace('/heyyou','/hylb',$hys['dir'])."/css/lightbox.css" );
 	    wp_enqueue_style('lightbox');
 	}
-	
 	//css time..
     wp_register_style( 'hys_style', get_bloginfo('wpurl').'/wp-content/plugins/heyyou/res/css/hys_style.css' );
     wp_enqueue_style('hys_style');
@@ -1850,16 +1745,13 @@ function hys_social($using_shortcode = 0) {
 		global $post, $hys;
 		
 		//run filter
-		$thecontent = hys_output_filter($thecontent);
-
-		$return 	= '';
-		
-		$social = hys_social();
-		
+		$thecontent 		= hys_output_filter($thecontent);
+		$return 			= '';
+		$social 			= hys_social();
 		$page_blurb_content = hys_moreless($thecontent, "-page".get_the_ID());
 		
 		if (isset($hys['hys_page_config']) && is_array($hys['hys_page_config']))
-		$hys['hys_page_config']['hideoutput'] = (isset($hys['hys_page_config']['hideoutput'])) ? $hys['hys_page_config']['hideoutput'] : 0;
+			$hys['hys_page_config']['hideoutput'] = (isset($hys['hys_page_config']['hideoutput'])) ? $hys['hys_page_config']['hideoutput'] : 0;
 		
 		//if we're not hidding the output, get hys_post output
 		if ((@$hys['hys_page_config']['hideoutput'] != 1))
@@ -1876,11 +1768,9 @@ function hys_social($using_shortcode = 0) {
 			) {
 			$return .= hys_photo_gallery(get_the_ID());
 		}
-		
 		//if it's a single page, don't show page blurb, just heyyou
 		if (isset($_GET['hypg']))
 			return hys_output().$social;
-					
 		//handle password
 		if (empty($post->post_password)) {
 			return $page_blurb_content.$return; //no pass, return everything
@@ -1890,7 +1780,6 @@ function hys_social($using_shortcode = 0) {
 			else
 				return $thecontent; // just the pass req notice
 		}
-
 	}
 	
 	
@@ -1929,7 +1818,6 @@ function hys_social($using_shortcode = 0) {
 					<div class='hys_altertmsg_toggel'> 
 						<div id='morelink<?= $post->ID ?>' class='hys_readmore hys_fake_link underconclickmsg'> <?= $underconmsg ?> </div>
 					</div> 
-					
 					<div id='hys_undercon_msg' class='hys_moreless hys_undercon_msg' style='  display:none; <?php 
 							echo (@$hys['settings']['undercon_reveal'] == 1 || (@$hys['settings']['undercon_sess'] == 1 || @$hys['settings']['undercon_cook'] == 1)) 
 																						? " display:block !important;" : ''; ?>'>
@@ -1957,7 +1845,7 @@ function hys_social($using_shortcode = 0) {
 /*-------------------------------------------------------------
  Name:      hys_attach_attachments
 
- Purpose:   Gallery attachment builder for HEYYOU posts
+ Purpose:   create attachment gallery for HEYYOU posts
  Receive:   id of gallery parent
  Return:	array(string of attach gallerized, lightbox links
  			for hidden gallery, & first link to hidden gallery
@@ -1971,7 +1859,7 @@ function  hys_attach_attachments($heyyou_post_id) {
 	$lightbox_links_first 	= '';
 	
 	//add attachments
-	if (/* @$hys['hys_page_config']['attachments_gallery'] && */ function_exists('attachments_get_attachments')) {
+	if (function_exists('attachments_get_attachments')) {
 	
 		$post_images 	= attachments_get_attachments($heyyou_post_id); 
 		$total_images 	= count($post_images);
@@ -1979,8 +1867,7 @@ function  hys_attach_attachments($heyyou_post_id) {
 			$attachments .= "
 			
 			<!-- HEYYOU POST ATTACHMENTS -->
-			<div class='hys_attach hys_gallery'>
-				<ul>\n";
+				<ul class='hys_attach photo_gallery hys_gallery hys_attach_attachments' id='gallery_{$heyyou_post_id}'>\n";
 			for ($i = 0; $i < $total_images; $i++) {
 				if (isset($post_images[$i]) && get_post($post_images[$i]['id'])) {
 					$req_size = (!empty($hys['hys_page_config']['img_size'])) ? $hys['hys_page_config']['img_size'] : 'large';
@@ -2001,11 +1888,10 @@ function  hys_attach_attachments($heyyou_post_id) {
 					}				
 					$attachments .= "
 					<li>
-					  <div class='attach_image'>
-						<a href='{$lrg_download[0]}' rel='lightbox[gallery{$heyyou_post_id}]' title=\"{$lbtitle}\">".
+						<a class='attach_image' href='{$lrg_download[0]}' rel='lightbox[gallery{$heyyou_post_id}]' title=\"{$lbtitle}\">".
 							wp_get_attachment_image( $post_images[$i]['id'], 'thumbnail', 1 ).
 						"</a>
-					  </div>\n";
+					  \n";
 					
 					if (@$hys['hys_page_config']['show_pg_img_printlabel'] == 1) {
 						if (@$hys['settings']['attach_use_titles'] == 1) {
@@ -2031,7 +1917,6 @@ function  hys_attach_attachments($heyyou_post_id) {
 					$attachments .= "
 					</li>";
 				}
-				
 				if (isset($lrg_download) && is_array($lrg_download) && isset($lrg_download[0])) {
 					//Add "%lightbox_gallery%" Lightbox Link
 					if (empty($lightbox_links_first)) {
@@ -2045,15 +1930,14 @@ function  hys_attach_attachments($heyyou_post_id) {
 			}
 			$attachments .= "
 				</ul>
-			</div>
 			<!-- END HEYYOU POST ATTACHMENTS -->
-			
 			";
 		}
 	}
-	
 	return array('attachments' => $attachments, 'lightboxlinks' => $lightbox_links, 'lightboxlinksfirst' => $lightbox_links_first);
 }
+
+
 /*-------------------------------------------------------------
  Name:      mobile_link_f
 
@@ -2082,7 +1966,6 @@ function  hys_attach_attachments($heyyou_post_id) {
  Receive:   [hys_tweets id='' count='' refresh_rate='']
  Return:	string with tweets wrap in tags
 -------------------------------------------------------------*/
-
 	function hys_tweets_shortcode( $atts ) {
 		extract( shortcode_atts( array(
 			'id' 			=> 264304328,
@@ -2102,14 +1985,11 @@ function  hys_attach_attachments($heyyou_post_id) {
  Return:	string with tweets
 -------------------------------------------------------------*/
 	function hys_twitter_feed( $id = '264304328', $count = 1 , $refresh_rate = 14400 ) {
-
 		if ( false === ( $get_tweets = get_transient( 'hys_twitter_tweets' ) ) ) {
 			$get_tweets = get_tweets($id,$count);
-		  set_transient( 'hys_twitter_tweets', $get_tweets , $refresh_rate );
+		    set_transient( 'hys_twitter_tweets', $get_tweets , $refresh_rate );
 		}
-		
 		return $get_tweets;
-
 	}
 		
 	function get_tweets($id = '264304328', $count = 1) {	
@@ -2135,9 +2015,8 @@ function  hys_attach_attachments($heyyou_post_id) {
 			$_SESSION['twitter_xml_out'] = serialize($xml_out);		
 			$xml = $xml_out;
 		} else {
-			return false; // CANCEL FUNCTION, USE OLD TWEET
+			return false; // abort abort abort
 		}
-
 		$i = 1;
 		$tweets = "<ul class='hys_tweets'>";
 		$the_tweets = '';
@@ -2231,7 +2110,6 @@ function  hys_attach_attachments($heyyou_post_id) {
 						
 					}
 				}	
-				
 				if ($pgmethod == 'moreless' && $pc == ($perpg+1) && $num_psts > $perpg) {
 					$return .= "
 					<a class='hys_fake_link hys_readmore'  id='hys_morelink_{$heyyou_category_id}' 
@@ -2242,9 +2120,7 @@ function  hys_attach_attachments($heyyou_post_id) {
 				}
 				$hysi++;		
 			}
-			
 			$anchors 	.= "</p><!--/hys_anchors-->";
-			
 			if ($pgmethod == 'moreless' && ($num_psts > $perpg)) {
 				$return .= "
 				<a class='hys_fake_link hys_readless' id='hys_lesslink_{$heyyou_category_id}'
@@ -2253,16 +2129,13 @@ function  hys_attach_attachments($heyyou_post_id) {
 				  >{$hys['settings']['less']}</a>
 				</div>";
 			}
-			
 			//pagination for categories
 			if ($num_pgs > 1 && $pgmethod != 'moreless') {
 				// Determin the "Pages:" text
 				$pagestit = @(empty($hys['settings']['pages'])) ? $hys['settings']['pages'] : "Pages: ";
 				$pagestit = @(!empty($hys['hys_page_config']['pagination_text'])) ? $hys['hys_page_config']['pagination_text'] : $pagestit;
-				
 				$return .= "<div class='hys_pagination_line'>".hys_lines(2)."</div>				
 				<div class='hys_pagination'><ul><li id='hys_pagination_title'>{$pagestit} </li>";
-				
 				for ($p = 1; $p != ($num_pgs+1); $p++) {
 					$selct = (($pg == $p && $heyyou_category_id == $ct) || ($heyyou_category_id != $ct && $p == 1)) ? " class='active'": '';
 					$return .= "<li{$selct}><a href='?pg={$p}&ct={$heyyou_category_id}#c{$heyyou_category_id}'>{$p}</a></li>";
@@ -2277,7 +2150,6 @@ function  hys_attach_attachments($heyyou_post_id) {
 			if (!isset($_GET['hypg']) || (isset($_GET['hypg']) && in_array($_GET['hypg'],$heyyou_posts_array))) {
 				$return .= "</div><!--/hys_block_cat hys_block_cat_{$heyyou_category_id}-->";
 			}
-			
 			$return	.= @$hys['hys_page_config']['after_cats_heyyou'];
 			$return .= @($hys['hys_page_config']['line_between_cats'] == 1) ? hys_lines(2) : '';
 		}
@@ -2316,6 +2188,17 @@ function  hys_attach_attachments($heyyou_post_id) {
  Return:	string of attachments
 -------------------------------------------------------------*/
 	function hys_photo_gallery($id = '') {
+		return hys_attach_page_attachments($id);
+	}
+
+/*-------------------------------------------------------------
+ Name:      hys_attach_page_attachments
+
+ Purpose:   create attachment gallery for PAGES
+ Receive:   id of gallery parent
+ Return:	string of attachments
+-------------------------------------------------------------*/
+	function hys_attach_page_attachments($id = '') {
 		global $post,$hys;
 		
 		if (!function_exists('attachments_get_attachments')) return;
@@ -2327,49 +2210,39 @@ function  hys_attach_attachments($heyyou_post_id) {
 		$return 		= '';
 		
 		if ($total_att > 0 && isset($attachments[0]['id'])) {
-		    $return .= '<ul class="photo_gallery hys_gallery" id="gallery_'.$id.'">';
+		    $return .= '<ul class="hys_attach photo_gallery hys_gallery hys_attach_page_attachments" id="gallery_'.$id.'">';
 		    for ($i=0; $i < $total_att; $i++) {
-				
 				// remove single quote to not break links
 		    	$attachments[$i]['title']      	 = str_replace(array("'"),'&rsquo;',$attachments[$i]['title']);
 		    	$attachments[$i]['caption']      = str_replace(array("'"),'&rsquo;',$attachments[$i]['caption']);
-		    	
 		    	$size_full = ($hys['mobile'] == 1) ? 'medium' : 'large';
-		    	
 		    	//get image urls
 		    	$thumbnail 	= wp_get_attachment_image_src($attachments[$i]['id'], 'thumbnail');
 				$full 		= wp_get_attachment_image_src($attachments[$i]['id'], $size_full);
-				
 				//construct the title(s)
 				$title = $lbtitle =(!empty($attachments[$i]['caption'])) ? $attachments[$i]['caption'] : '';									
-
 				//if we're printing the labeling
 				$txt_title  = str_replace("'",'&rsquo;',strip_tags($title)); //remove "<br />" from titles for alt=''s
-				
 				if (@$hys['settings']['attach_use_titles'] == 1) {
 					$lbtitle = $attachments[$i]['title']; //title=title
 					$lbtitle .= (!empty($attachments[$i]['caption'])) ? " --- {$attachments[$i]['caption']}" : ''; //add caption
 					$lbtitle = (empty($attachments[$i]['title'])) ? str_replace(' --- ','',$lbtitle) : $lbtitle; //remove "---" if ONLY caption
 				}				
-				
 				//the thumbnail
 				$return .= "\n<li>
 				<a rel='lightbox[{$post->ID}]' title=\"{$lbtitle}\" href='{$full[0]}'>
 					<img src='{$thumbnail[0]}' alt='{$txt_title}' style='width:{$size[0]}px;height:{$size[0]}px;' />
 				</a>";
-				
 				$opttitle = (@$hys['hys_page_config']['show_pg_img_printlabel'] == 1 && !empty($attachments[$i]['title'])) ? 
 					"<span class='hys_page_gallery_title attach_title'>{$attachments[$i]['title']}</span> " : '';
 				$optcaption = (@$hys['hys_page_config']['show_pg_img_printlabel'] == 1 && !empty($attachments[$i]['caption'])) ? 
 					"<span class='hys_page_gallery_caption attach_caption'>{$attachments[$i]['caption']}</span> " : '';
-
 				if (@$hys['hys_page_config']['show_pg_img_printlabel'] == 1) {
 					$return .= "<span class='hys_page_gallery_label hys_page_gallery_label_{$attachments[$i]['id']}'>
 									{$opttitle}
 									{$optcaption}
 								</span>";				
 				}
-				
 				$return .= "</li>\n\n";
 		    }
 		    $return .= '</ul>';
@@ -2377,7 +2250,6 @@ function  hys_attach_attachments($heyyou_post_id) {
 		
 		return $return;
 	}
-	
 	
 	
 /*-------------------------------------------------------------
@@ -2390,11 +2262,8 @@ function  hys_attach_attachments($heyyou_post_id) {
 -------------------------------------------------------------*/
 	function hys_output_cat_title($cat,$post_id = '') {
 		global $hys, $anchors;
-		
 		$post_id = (empty($post_id)) ? get_the_ID() : intval($post_id);
-		
 		if (is_object($cat)) {
-				
 			//get category meta: title / blurb / html format (older heyyou's)
 			$cat_meta = @unserialize($cat->description); 
 			// if the descrition is serialized (older heyyou's)
@@ -2406,15 +2275,11 @@ function  hys_attach_attachments($heyyou_post_id) {
 				$cat_format =  get_post_meta($cat->term_id, 'cat_override');	
 				$cat_override_format	= (isset($cat_format[0])) ? $cat_format[0] : array();
 			}
-		
 			$anchors .= "<h6 class='hys_anchor_cat'>{$cat->name}</h6>";
-		
 			//get cat format for post
 			$pmeta 	= get_post_custom($post_id);
 			$hys_page_config = @($pmeta['hys_page_config'])  ? unserialize($pmeta['hys_page_config'][0])  : 0;	
-			
 			$format = (isset($hys_page_config['cat_format']) && !empty($hys_page_config['cat_format'])) ? $hys_page_config['cat_format'] : "<h3>%title%</h3>";
-			
 			return str_replace(
 				array(
 					'%title%',
@@ -2453,26 +2318,21 @@ function  hys_attach_attachments($heyyou_post_id) {
 function hys_output_post($hyspost, $i, $cat, $parent = '') {
 	global $hys, $anchors, $anchors_count;
 	
-	$hyspost 	= (is_integer($hyspost)) ? get_post($hyspost) : $hyspost;
-		
-	$parent 	= (empty($parent)) ? get_the_ID() : intval($parent);
-	
+	$hyspost 			= (is_integer($hyspost)) ? get_post($hyspost) : $hyspost;
+	$parent 			= (empty($parent)) ? get_the_ID() : intval($parent);
 	// meta	
-	$meta 		=  get_post_meta($hyspost->ID, 'meta');	
-	$meta 		= (isset($meta[0])) ? $meta[0] : array();
-
+	$meta 				=  get_post_meta($hyspost->ID, 'meta');	
+	$meta 				= (isset($meta[0])) ? $meta[0] : array();
 	//get custom heyyou incase we're calling from a different page
-	$hysmeta 		 = get_post_custom($parent);
-	$hys_page_config = @($hysmeta['hys_page_config'])  ? unserialize($hysmeta['hys_page_config'][0])  : 0;
-	
+	$hysmeta 		 	= get_post_custom($parent);
+	$hys_page_config 	= @($hysmeta['hys_page_config'])  ? unserialize($hysmeta['hys_page_config'][0])  : 0;
 	// attachments
-	$get_atth 	= hys_attach_attachments($hyspost->ID);
-	$lb_links   = $get_atth['lightboxlinks'];
-	$attchmts 	= $get_atth['attachments'];
-	$lb_first 	= $get_atth['lightboxlinksfirst'];
-	
+	$get_atth 			= hys_attach_attachments($hyspost->ID);
+	$lb_links   		= $get_atth['lightboxlinks'];
+	$attchmts 			= $get_atth['attachments'];
+	$lb_first 			= $get_atth['lightboxlinksfirst'];
 	// content
-	$post_content = hys_moreless_($hyspost->post_content);
+	$post_content 		= hys_moreless_(do_shortcode($hyspost->post_content));
 	
 	// Single hypg: alter content
 	if (!isset($_GET['hypg']) && @$hys_page_config['single_altr_morelesslink'] == 1) {
@@ -2483,10 +2343,8 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 		$post_content 	= wpautop($first_chunk)."
 							<a href='?hypg={$hyspost->ID}' class='hys_fake_link hys_readmore'>{$hys['settings']['more']}</a>\n\n";
 	}
-	if (isset($_GET['hypg'])) {
-		$post_content 	= (@$hys_page_config['single_moreless'] == 1) 
-							? hys_moreless_($hyspost->post_content) : wpautop($hyspost->post_content);
-	}
+	if (isset($_GET['hypg']))
+		$post_content 	= (@$hys_page_config['single_moreless'] == 1) ? hys_moreless_($hyspost->post_content) : wpautop($hyspost->post_content);
 	
 	// date
 	$the_date = date(get_option('date_format'), strtotime($hyspost->post_date));
@@ -2497,7 +2355,7 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 	$anchors .= "<a href='#hys".($anchors_count)."'>".($i).". {$hyspost->post_title}</a><br />";
 	
 	// for custom "more/less" buttons
-	$title_moreless = "<a class='hys_fake_link hys_readmore'  id='' onclick=\"showhide('moreless{$hyspost->ID}'); ".
+	$title_moreless = "<a class='hys_fake_link hys_readmore auto_hidecontent'  id='morelink{$hyspost->ID}' onclick=\"showhide('moreless{$hyspost->ID}'); ".
 					  "showhide('morelink{$hyspost->ID}');\" >".$post_title."</a>";
 	$self_more = "<a class='hys_fake_link hys_readmore'  id='self_morelink{$hyspost->ID}' ".
 		"onclick=\"showhide('moreless{$hyspost->ID}'); showhideinlineblock('self_morelink{$hyspost->ID}'); ".
@@ -2520,8 +2378,9 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 	$back_link 	   .= "</a></div><!--/hys_back-->";
 	$single_link 	= "<a href='?hypg={$hyspost->ID}' class='hys_single_link'>{$hys['settings']['more']}</a>";
 	$single_url 	= "?hypg={$hyspost->ID}";
-	
-	$thisheyyou = get_heyyou();
+
+	// this output
+	$thisheyyou 	= get_heyyou();
 	
 	// NXT / PRV on single pages
 	$prev_link  = '';
@@ -2530,11 +2389,9 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 		$siblings = array();
 		//remove the cateogies, only thing we want is id's
 		foreach ($thisheyyou as $cid => $category_posts) {
-			foreach ($category_posts as $aheyyoupostid => $aheyyoupost) {
+			foreach ($category_posts as $aheyyoupostid => $aheyyoupost)
 				$siblings[] = $aheyyoupostid;
-			}
 		}
-		
 		foreach ($siblings as $thekey => $theid) {
 			if ($theid == $_GET['hypg']) {
 				$prev_link  = (isset($siblings[$thekey-1])) ? '<a href="?hypg='.($siblings[$thekey-1]).'">Prev</a>' : '';
@@ -2544,8 +2401,6 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 	}
 	
 	
-	
-		
 	//avaliable tokens and their replacements
 	$replace_this = array(
 		'%id%', '%ID%',
@@ -2706,31 +2561,20 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 		$output_format = str_replace(array($ifdefined,$endifdefined),'',$output_format);
 	}
 	
-	
-	
-	
 	//remove attachments from list if it's on single page or autoplacement is on
 	$showsingleatt = @$hys_page_config['single_showattchinpage'];
 	$attchmts = ($showsingleatt == 1 || @$hys_page_config['autoattach'] == 1) ? '' : $attchmts;
-	
-	$i++;
-	
+	$i++;	
 	$anchors_count++;
 	
-	
 	//do it!
-	return  "\n<div class='hys_post_post hys-{$hyspost->ID} hys_post-{$parent}'>\n<div id='hys".($anchors_count-1)."'></div>\n".
+	return  "\n<div id='".hys_url_friendly($hyspost->post_title)."-{$hyspost->ID}' class='hys_post_post hys-{$hyspost->ID} hys_post-{$parent}'>\n<div id='hys".($anchors_count-1)."'></div>\n".
 					str_replace(
 						$replace_this,
 						$with_this,
 						$output_format
 					)."</div>\n\n".$lb_links.$attchmts;
-	
-
 }
-
-
-
 
 
 /*-------------------------------------------------------------
@@ -2742,23 +2586,13 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 -------------------------------------------------------------*/
 function hys_shortcode( $atts ) {
 	global $hys;
-	
 	extract( shortcode_atts( array(
-		#'id'  => get_the_ID(),
 		'cat' => ''
 	), $atts ) );
-	
 	return hys_output(get_heyyou($cat));
-	
 }
 
 
-
-
-
-
-
- 
 /*====================================================================================================================
    // !Global Functions 
 --------------------------------------------------------------------------------------------------------------------*/
@@ -2773,10 +2607,8 @@ function hys_shortcode( $atts ) {
 -------------------------------------------------------------*/
  	function get_heyyou($category = '',$page_id = '') {
  		global $post, $hys;
- 		
  		//if page isn't set, get current page
  		$page_id = (empty($page_id)) ? @$post->ID : intval($page_id);
- 	
 		//get posts & categories to sort by
 		$get_heyyou_posts_argg = array(
 			'post_type' 		=> 'hys_post',
@@ -2790,10 +2622,7 @@ function hys_shortcode( $atts ) {
 		$get_taxonomies 		= get_taxonomies();
 		$myterms 				= get_terms('hys_post_cats', 'orderby=count&hide_empty=0');			
 		$return 				= array();
-		
-		
 		if (isset($myterms)) { // if there are categories:
-			
 			//get the parent TERM (the feature_code, so hys_post -> hys_post-xxx)
 			$parent_term_id = '';
 			foreach ($myterms as $k => $cat)
@@ -2801,7 +2630,6 @@ function hys_shortcode( $atts ) {
 					$parent_term_id = $cat->term_id;
 			
 			$using_categories = (isset($hys['hys_page_config']['include_cats']) && $hys['hys_page_config']['include_cats'] == 1) ? true : false;
-			
 			if ($using_categories) {
 				//run though the cats and posts, build into an array
 				$feature_post_arr = array();
@@ -2819,14 +2647,12 @@ function hys_shortcode( $atts ) {
 					}
 				}
 			}
-			
 			//get "uncategorized" posts
 			foreach($get_heyyou_posts as $k => $f_post) {
 				$return['uncategorized'][$f_post->ID] = $f_post;
 				//$return['uncategorized'][$f_post->ID] = $f_post; //@TODO: fix typo
 			}
 		}
-		
 		// if we're only returning a specific category
 		if (!empty($category)) {
 			$return_cat = array();
@@ -2836,11 +2662,9 @@ function hys_shortcode( $atts ) {
 				$catterm = get_term_by('name', $category, 'hys_post_cats');
 				$category = $catterm->term_id;
 			}
-			
 			$return_cat[$category] = @$return[$category];
 			return $return_cat;
 		}
-		
 		return $return;
  	}
 
@@ -2853,18 +2677,9 @@ function hys_shortcode( $atts ) {
 -------------------------------------------------------------*/
 	function hys_return_id() {
 		global $post;
-		
 		//check the current post
 		if (is_object($post) && isset($post->ID) && !empty($post->ID)) 
 			return $post->ID;
-		
-		//if not check workpress
-/*
-		$id = get_the_ID();
-		if (!empty($id)) 
-			return $id;
-*/
-		
 		//if not check request
 		if (isset($_GET['post']) && !empty($_GET['post'])) 
 			return intval($_GET['post']);
@@ -2877,7 +2692,6 @@ function hys_shortcode( $atts ) {
 			if (!empty($id)) 
 			return $id;
 		}
-		
 		// if nothing else, it's the front page
 		return intval(get_option('page_on_front'));
 	}
@@ -2891,9 +2705,7 @@ function hys_shortcode( $atts ) {
 -------------------------------------------------------------*/
 	function hys_current_user_role() {
 		global $current_user, $wp_roles, $wpdb;
-		
 		get_currentuserinfo();
-		
 		$current_user = wp_get_current_user();
 		$roles = $current_user->roles;
 		$role = array_shift($roles);
@@ -2947,6 +2759,20 @@ function hys_shortcode( $atts ) {
 		}
 		//Send back text
 		return $Text;
+		/* // @TODO: below may be a better cutter..
+		$int++;
+		if(strlen($Text)>$int) {
+			$subex = substr($Text,0,$int-5);
+			$exwords = explode(" ",$subex);
+			$excut = -(strlen($exwords[count($exwords)-1]));
+			if($excut<0) {
+				return substr($subex,0,$excut).$cut_off_string;
+			} else {
+				return $subex;
+			}
+		} else {
+			return $Text;
+		} */
 	}
 
 /*-------------------------------------------------------------
@@ -2958,9 +2784,9 @@ function hys_shortcode( $atts ) {
 -------------------------------------------------------------*/
 	function hys_get_next_in_order($post_type) {
 		global $wpdb;
-		$next = $wpdb->get_row("SELECT menu_order FROM $wpdb->posts 
-									ORDER BY menu_order DESC LIMIT 1");
-		return (isset($next->menu_order)) ? (($next->menu_order)+1) : die('ERROR FINDING NEXT IN ORDER: SEND EMAIL TO supprt WITH THIS ERROR: <code>#hys_get_next_in_order(false)</code>');
+		$next = $wpdb->get_row("SELECT menu_order FROM $wpdb->posts ORDER BY menu_order DESC LIMIT 1");
+		return (isset($next->menu_order)) ? (($next->menu_order)+1) : 
+		die('ERROR FINDING NEXT IN ORDER: SEND EMAIL WITH THIS ERROR: <code>#hys_get_next_in_order(false)</code>');
 	}
 
 /*-------------------------------------------------------------
@@ -2975,13 +2801,9 @@ function hys_shortcode( $atts ) {
    		global $wpdb;
    		// get the id to edit
    		$id = intval($id);
-   		
    		//make publish = 1, make draft = 0
    		$showhide = ($showhide == true || $showhide == 1) ? 'publish' : 'draft';
-   		
-   		$wpdb->query("
-			UPDATE $wpdb->posts SET post_status = '{$showhide}'
-			WHERE ID = {$id}");
+   		$wpdb->query("UPDATE $wpdb->posts SET post_status = '{$showhide}' WHERE ID = {$id}");
 		return;
    }  
 /*-------------------------------------------------------------
@@ -3005,14 +2827,9 @@ function hys_shortcode( $atts ) {
  Return:	true/false
 -------------------------------------------------------------*/
 	function hys_validate_email($email) {
-	  // First, we check that there's one @ symbol, 
-	  // and that the lengths are right.
 	  if (!ereg("^[^@]{1,64}@[^@]{1,255}$", $email)) {
-	    // Email invalid because wrong number of characters 
-	    // in one section or wrong number of @ symbols.
 	    return false;
 	  }
-	  // Split it into sections to make life easier
 	  $email_array = explode("@", $email);
 	  $local_array = explode(".", $email_array[0]);
 	  for ($i = 0; $i < sizeof($local_array); $i++) {
@@ -3023,8 +2840,6 @@ function hys_shortcode( $atts ) {
 	      return false;
 	    }
 	  }
-	  // Check if domain is IP. If not, 
-	  // it should be valid domain name
 	  if (!ereg("^\[?[0-9\.]+\]?$", $email_array[1])) {
 	    $domain_array = explode(".", $email_array[1]);
 	    if (sizeof($domain_array) < 2) {
@@ -3090,18 +2905,12 @@ function hys_shortcode( $atts ) {
 -------------------------------------------------------------*/
 	function hys_moreless($origText,$id = false,$pragraph_2_br = false) {		
 		global $hys;
-		
 		$Text = $origText;
-		
 		$mre = "<!--more-->";
-		// lets find the more/less cut off and change it from span back to a comment
 		$Text = preg_replace("(<p><span id=\"more-(.+?)\"></span></p>)is", $mre, $Text);
-		// incase it's not wrapped in <span> tags
 		$Text = preg_replace("(<span id=\"more-(.+?)\"></span>)is", $mre, $Text);
-
 		// find if there is <!--more--> in this blurb
 		$is_more_less = strpos($Text, $mre);
-		
 		//paragraphing...
 		$is_no_p = strpos($Text,'<p>');
 		if (!$is_no_p) {
@@ -3118,12 +2927,10 @@ function hys_shortcode( $atts ) {
 				#$Text = preg_replace("(<br />)is", "", $Text);
 			$Text = wpautop(trim($Text));
 		}
-		
 		// if the more/less is in use...
 		if ($is_more_less) {
 			//define an id if one was not included
 			$id = (!$id || $id == 0) ? rand(5,999) : $id;						
-			
 			//if removing <p>'s for chopping...
 			if ($pragraph_2_br) {
 				//change parragraphs into line breaks
@@ -3138,8 +2945,6 @@ function hys_shortcode( $atts ) {
 				$Text = preg_replace("(</p>)is", "<br /><br />", $Text);
 				#$Text = preg_replace("(<br />)is", "", $Text);
 			}
-			
-			
 			//divid/explode the string
 			$thetext = explode($mre, $Text);
 			
@@ -3151,12 +2956,9 @@ function hys_shortcode( $atts ) {
 				$thetext[0] = substr_replace($thetext[0], '', $lastchars, strlen($thetext[0]));
 				$movep = "<p>";
 			}
-			
 			$hidden_more_content = $movep.$thetext[1];
-			
 			//this is iffy... it's to solve if there's a line-break after <!--more-->
 			$hidden_more_content = str_replace('<p><br />','<p>',$hidden_more_content);
-			
 			//form the html
 			$Text = "
 			<!-- visible CONTENT -->
@@ -3205,18 +3007,16 @@ function hys_make_moreless($first,$second,$id='',$readmore_text='',$readless_tex
     $readmore_text = (empty($readmore_text)) ? 'read more' : $readmore_text;
     $readless_text = (empty($readless_text) && isset($hys['settings']['less']) ) ? $hys['settings']['less'] : $readless_text;
     $readless_text = (empty($readless_text)) ? 'read less' : $readless_text;
-
-        $id = (empty($id)) ? 'moreless_'.hys_random() : $id;
-        //form the html
-        return "
-            <div class='hys_entry' id='entry{$id}'>{$first}</div>
-            <a class='hys_fake_link hys_readmore' id='morelink{$id}' onclick=\"showhide('moreless{$id}'); showhide('morelink{$id}')\" >{$readmore_text}</a>             
-            <div id='moreless{$id}' class='hys_moreless' style='display:none;'>{$second}
-                <div class='hys_readless_holder'>
-                    <a class='hys_fake_link hys_readless' id='lesslink{$id}' onclick=\"showhide('moreless{$id}'); showhideinlineblock('morelink{$id}')\">{$readless_text}</a>
-                </div>
+    $id = (empty($id)) ? 'moreless_'.hys_random() : $id;
+    //form the html
+    return "
+        <div class='hys_entry' id='entry{$id}'>{$first}</div>
+        <a class='hys_fake_link hys_readmore' id='morelink{$id}' onclick=\"showhide('moreless{$id}'); showhide('morelink{$id}')\" >{$readmore_text}</a>             
+        <div id='moreless{$id}' class='hys_moreless' style='display:none;'>{$second}
+            <div class='hys_readless_holder'>
+                <a class='hys_fake_link hys_readless' id='lesslink{$id}' onclick=\"showhide('moreless{$id}'); showhideinlineblock('morelink{$id}')\">{$readless_text}</a>
             </div>
-        ";
+        </div>";
 }
 
 
@@ -3253,10 +3053,6 @@ function hys_make_moreless($first,$second,$id='',$readmore_text='',$readless_tex
 			$string .= $characters[mt_rand(0, (strlen($characters)-1))];
 		return $string;
 	}
-
-
-
-
 
 
 /*====================================================================================================================
@@ -3322,7 +3118,6 @@ function hys_make_moreless($first,$second,$id='',$readmore_text='',$readless_tex
 				'type' 	=> str_replace(array('/pdf','image/','audio/','jpeg','application.'),array('.PDF','.','.','jpg','.'),$attch->post_mime_type),
 			);
 		}
-		
 		foreach ($get_categories as $category) {
 			if ($category->name != 'Uncategorized') {
 				$return .= "<optgroup label='{$category->name}'>";				
@@ -3341,7 +3136,6 @@ function hys_make_moreless($first,$second,$id='',$readmore_text='',$readless_tex
 						'order' => 'ASC',
 						'orderby' => 'title'
 					);
-					
 					$ticker = 0;
 					$posts = get_posts( $args );
 					foreach ($posts as $apost) {
@@ -3352,7 +3146,6 @@ function hys_make_moreless($first,$second,$id='',$readmore_text='',$readless_tex
 				$return .= "</optgroup>";
 			}
 		}
-		
 		$return .= ($numofcats > 0) ? "<optgroup label='Uncategorized'>" : '';
 		if (is_array($array_of_files)) {
 			foreach ($array_of_files as $afile) {
@@ -3361,7 +3154,6 @@ function hys_make_moreless($first,$second,$id='',$readmore_text='',$readless_tex
 			}
 		}
 		$return .= ($numofcats > 0) ? "</optgroup>" : '';
-
 		return "".$return;
 	}
 
@@ -3399,9 +3191,9 @@ function hys_make_moreless($first,$second,$id='',$readmore_text='',$readless_tex
 		if (!is_array($sel)) return;
 		foreach ($sel as $k => $time) {
 			if ($time == 'ampm')
-			$sel['ampm'] = (!isset($sel['ampm'])) ? date('a') : $sel['ampm'];
+				$sel['ampm'] = (!isset($sel['ampm'])) ? date('a') : $sel['ampm'];
 			else 
-			$sel[$time] = (!isset($sel[$time])) ? 00 : intval($sel[$time]);
+				$sel[$time] = (!isset($sel[$time])) ? 00 : intval($sel[$time]);
 		}
 		//add 12 hours if PM
 		$sel['hour'] = ($sel['ampm'] == 'pm' && $sel['hour'] != 12) 
@@ -3434,7 +3226,6 @@ function hys_make_moreless($first,$second,$id='',$readmore_text='',$readless_tex
 		$thehour 		= date('G', strtotime($preselectdate));
 		$theampm 		= ($thehour > 12) ? 'pm' : 'am';
 		$thehour 		= ($thehour > 12) ? $thehour - 12 : $thehour;
-
 		//make drop downs for month,day,year
 		$m = "<select name='{$prefix}[month]' />";
 		for ($i = 1; $i <= 12; $i++) {
@@ -3460,7 +3251,6 @@ function hys_make_moreless($first,$second,$id='',$readmore_text='',$readless_tex
 					date('Y', mktime(0,0,0,1,1,$i))."</option>";
 		}
 		$y .= "</select>";
-		
 		$min = "<select name='{$prefix}[min]'>
 					<option>00</option>
 					<option>15</option>
@@ -3482,7 +3272,6 @@ function hys_make_moreless($first,$second,$id='',$readmore_text='',$readless_tex
 					date('H', mktime($i,0,0,1,1,2009))."</option>";
 		}
 		$h .= "</select>";
-		
 		$ampoptions = array('pm','am');
 		$ampm = "<select name='{$prefix}[ampm]'>";
 		foreach ($ampoptions as $key=>$value) {
@@ -3576,36 +3365,14 @@ function disable_stuff( $data ) {
 
 
 
-
-
-
-
-
-
-
-
-
 /*====================================================================================================================
    // !Future  //  Sort  //  ect
 --------------------------------------------------------------------------------------------------------------------*/
 
-
-
-function hys_linkify($str) { return hys_linkafy($str); }
-function hys_linkafy($str) {
-	return ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]","<a href=\"\\0\">\\0</a>", $str);
-}
-
-
-
-
-
-
-
-
-
-
-
+	function hys_linkify($str) { return hys_linkafy($str); }
+	function hys_linkafy($str) {
+		return ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]","<a href=\"\\0\">\\0</a>", $str);
+	}
 
 /*-------------------------------------------------------------
  Name:      hys_settings_default
@@ -3639,62 +3406,58 @@ function hys_linkafy($str) {
 		}
 		*/
 	}
-
-
-
-
-
-
-
-
-
-//set server time to wordpress time:
-function hys_get_timezone() {
 	
-    $timezones = array( 
-        '-12'	=>'Pacific/Kwajalein', 
-        '-11'	=>'Pacific/Samoa', 
-        '-10'	=>'Pacific/Honolulu', 
-        '-9'	=>'America/Juneau', 
-        '-8'	=>'America/Los_Angeles', 
-        '-7'	=>'America/Denver', 
-        '-6'	=>'America/Mexico_City', 
-        '-5'	=>'America/New_York', 
-        '-4'	=>'America/Caracas', 
-        '-3.5'	=>'America/St_Johns', 
-        '-3'	=>'America/Argentina/Buenos_Aires', 
-        '-2'	=>'Atlantic/Azores',
-        '-1'	=>'Atlantic/Azores', 
-        '0'		=>'Europe/London', 
-        '1'		=>'Europe/Paris', 
-        '2'		=>'Europe/Helsinki', 
-        '3'		=>'Europe/Moscow', 
-        '3.5'	=>'Asia/Tehran', 
-        '4'		=>'Asia/Baku', 
-        '4.5'	=>'Asia/Kabul', 
-        '5'		=>'Asia/Karachi', 
-        '5.5'	=>'Asia/Calcutta', 
-        '6'		=>'Asia/Colombo', 
-        '7'		=>'Asia/Bangkok', 
-        '8'		=>'Asia/Singapore', 
-        '9'		=>'Asia/Tokyo', 
-        '9.5'	=>'Australia/Darwin', 
-        '10'	=>'Pacific/Guam', 
-        '11'	=>'Asia/Magadan', 
-        '12'	=>'Asia/Kamchatka' 
-    ); 
-
-	$timezone = trim(get_option('timezone_string'));
 	
-	return (empty($timezone)) ? $timezones[get_option('gmt_offset')] : $timezone;
-}
+/*-------------------------------------------------------------
+ Name:      hys_get_timezone
+
+ Purpose:   set server time to wordpress time:
+ Receive:   - none -
+ Return:	- none -
+-------------------------------------------------------------*/
+	function hys_get_timezone() {
+	    $timezones = array( 
+	        '-12'	=>'Pacific/Kwajalein', 
+	        '-11'	=>'Pacific/Samoa', 
+	        '-10'	=>'Pacific/Honolulu', 
+	        '-9'	=>'America/Juneau', 
+	        '-8'	=>'America/Los_Angeles', 
+	        '-7'	=>'America/Denver', 
+	        '-6'	=>'America/Mexico_City', 
+	        '-5'	=>'America/New_York', 
+	        '-4'	=>'America/Caracas', 
+	        '-3.5'	=>'America/St_Johns', 
+	        '-3'	=>'America/Argentina/Buenos_Aires', 
+	        '-2'	=>'Atlantic/Azores',
+	        '-1'	=>'Atlantic/Azores', 
+	        '0'		=>'Europe/London', 
+	        '1'		=>'Europe/Paris', 
+	        '2'		=>'Europe/Helsinki', 
+	        '3'		=>'Europe/Moscow', 
+	        '3.5'	=>'Asia/Tehran', 
+	        '4'		=>'Asia/Baku', 
+	        '4.5'	=>'Asia/Kabul', 
+	        '5'		=>'Asia/Karachi', 
+	        '5.5'	=>'Asia/Calcutta', 
+	        '6'		=>'Asia/Colombo', 
+	        '7'		=>'Asia/Bangkok', 
+	        '8'		=>'Asia/Singapore', 
+	        '9'		=>'Asia/Tokyo', 
+	        '9.5'	=>'Australia/Darwin', 
+	        '10'	=>'Pacific/Guam', 
+	        '11'	=>'Asia/Magadan', 
+	        '12'	=>'Asia/Kamchatka' 
+	    ); 
+		$timezone = trim(get_option('timezone_string'));
+		return (empty($timezone)) ? $timezones[get_option('gmt_offset')] : $timezone;
+	}
 
 
+/*-------------------------------------------------------------
+ Name:      hys_recount_media_count
 
-
-
-
-
+ Purpose:   as the function says
+-------------------------------------------------------------*/
 	function hys_recount_media_count($media_term) {
 		global $wpdb;
 		$args = array(
@@ -3721,12 +3484,14 @@ function hys_get_timezone() {
 		$wpdb->update( $wpdb->term_taxonomy, array('count'=>$count), array( 'term_id' => $media_term->term_id ) );
 	}
 
+/*-------------------------------------------------------------
+ Name:      hys_media
 
+ Purpose:   custom media page
+-------------------------------------------------------------*/
 	function hys_media() {
 		global $post, $hys,$wpdb;
-		
 		$dleteme = false;
-		
 		// RECATEGORIZE SELECTED
 		if (isset($_POST['change_select_media_cats']) && $_POST['change_select_media_cats'] != '0' && is_array($_POST['hys_media_select'])) {
 			if (count($_POST['hys_media_select']) > 0) {
@@ -3738,8 +3503,6 @@ function hys_get_timezone() {
 				}
 			}
 		}
-		
-		
 		// DELETE SELECTED
 		if (isset($_POST['delete_selected_media']) || isset($_POST['delete_selected_media_btm'])) {
 			$todelete = count($_POST['hys_media_select']);
@@ -3757,40 +3520,30 @@ function hys_get_timezone() {
 				$dleteme = true;
 			}
 		}
-		
-		
-		$media_ids_shown = array();
-		
-		
+		$media_ids_shown = array();		
 		?>
 	<div class="wrap">
 		<div id="icon-upload" class="icon32"><br /></div>
 	<h2>Media Library <a href="media-new.php" class="button add-new-h2">Add New</a></h2>
 	
-	<?
-	if (isset($_GET['posted'])) {
+	<? if (isset($_GET['posted'])) {
 		?><div id="message" class="updated"><p>Media updated.</p></div><?
 	}
-	
 	elseif (isset($_GET['change_select_media_cats'])) {
 		?><div id="message" class="updated"><p>Media items moved.</p></div><?
 	}
-	
 	elseif (isset($_GET['deleted']) || $dleteme) {
 		?><div id="message" class="updated"><p>Media attachment(s) permanently deleted.</p></div><?
-	}
-	 else {
+	} else {
 		echo "<br />";
 	}
 	
 	//list cats...
 	$redomediacats 	= get_terms('media_category','hide_empty=0&order=ASC');
 	$media 			= get_posts('post_type=attachment&numberposts=-1&order=ASC&orderby=title');
-	
 	$number_of_media_items = count($media);
 	$media_thumb_cap = 9999999999999999999999999;
 	$show_thumbnails = (@$hys['settings']['media_layout'] != 'list') ? true : false;
-
 
 	// if a media item had an action, recount all media categories
 	// @TODO: find a more efficient way of doing this.
@@ -3804,16 +3557,12 @@ function hys_get_timezone() {
 			hys_recount_media_count($acat);
 		}
 	}
-	
 	$mediacats 	= get_terms('media_category','hide_empty=0&order=ASC');
-
 ?>
 
 <form id="deletemulti" name='deletemulti' class'deletemulti' action="admin.php?page=hys_media&amp;hys_media_action" method="post">
-
 	<div class="alignleft actions" style='padding-bottom:10px;'>
 		<input type="submit" name="delete_selected_media" id="doaction" class="button-secondary action" value="Delete Selected Media" onclick='return showNotice.warn();' />
-	
 		<select name='change_select_media_cats' onChange="this.form.submit()">
 			<optgroup label='Selecting a new category will submit form'>
 				<option value='0'>Change Category</option>
@@ -3837,8 +3586,7 @@ function hys_get_timezone() {
 			</optgroup>
 		</select>
 	</div><!--/alignleft actions-->
-
-<table class="wp-list-table widefat fixed media" cellspacing="0">
+  <table class="wp-list-table widefat fixed media" cellspacing="0">
 	<thead>
 	<tr>
 		<th scope='col' id='cb' class='manage-column column-cb check-column'  style="">&nbsp;<? hys_space(10) ?></th>
@@ -3851,17 +3599,7 @@ function hys_get_timezone() {
 	</tfoot>
 	<tbody id="the-list">
 	
-	
 	<?
-	/**
-	============================
-	============================
-	============================
-	============================
-	============================
-	*/
-	
-	
 	// Cycle through categories,
 	foreach ($redomediacats as $acat) {
 		
@@ -3873,7 +3611,6 @@ function hys_get_timezone() {
 			<tr id='post-<?= $mediaid ?>' class='author-self status-inherit' valign="top"><!-- alternate-->
 				<td>
 					<ul class='hys_media_library_list <?= ($show_thumbnails) ? 'media_list_thumbnails' : "no_thumbnails media_list_text" ?>'>
-		
 					<?
 					// GET POSTS FOR CAT
 					$args = array(
@@ -3890,22 +3627,16 @@ function hys_get_timezone() {
 						'order' => 'ASC',
 						'orderby' => 'title'
 					);
-					
 					$ticker = 0;
-					
 					// The Query
 					$get_posts = get_posts( $args );
-					
 					// The Loop
 					foreach ($get_posts as $apost) {
-					
 						if (!in_array($apost->ID,$media_ids_shown))
 						hys_media_output_row($apost);
 						$media_ids_shown[] = $apost->ID;
 						$ticker++;
 					}
-
-
 		endif; //$acat->term_id != '1'
 	}
 	?>
@@ -3916,7 +3647,6 @@ function hys_get_timezone() {
 				<td class='hys_media_cat_title' >Uncategorized.. <!--<span style='color:#999;'>(<?= $extra ?> files)</span>--></td>
 			</tr>
 			<tr id='post-<?= $mediaid ?>' class='author-self status-inherit' valign="top"><!-- alternate-->
-				
 				<td>
 					<ul class='hys_media_library_list <?= ($show_thumbnails) ? 'media_list_thumbnails' : "no_thumbnails media_list_text" ?>'>
 					<?
@@ -3935,10 +3665,8 @@ function hys_get_timezone() {
 						'order' => 'ASC',
 						'orderby' => 'title'
 					);
-					
 					// The Query
-					$get_posts = get_posts( $args );
-					
+					$get_posts = get_posts( $args );					
 					// The Loop
 					foreach ($get_posts as $apost) {
 					
@@ -3946,8 +3674,6 @@ function hys_get_timezone() {
 						hys_media_output_row($apost);
 						$media_ids_shown[] = $apost->ID;
 					}
-					
-					
 					// UNCATEGORIZED
 					$args = array(
 						'post_type' => 'attachment',
@@ -3956,46 +3682,37 @@ function hys_get_timezone() {
 						'order' => 'ASC',
 						'orderby' => 'title'
 					);
-					
 					// The Query
 					$get_posts = get_posts( $args );
-					
 					// The Loop
 					foreach ($get_posts as $apost) {
-						
 						if (!in_array($apost->ID,$media_ids_shown))
 						hys_media_output_row($apost);
 						
 					}
-					
-					
-?>
+					?>
 					</ul>
 				</td>
 			</tr>
 	</tbody>
 </table>
-
 		<div class="alignleft actions" style='padding:10px 0;'>
-<input type="submit" name="delete_selected_media_btm" id="doaction" class="button-secondary action" value="Delete Selected Media" onclick='return showNotice.warn();' />
+			<input type="submit" name="delete_selected_media_btm" id="doaction" class="button-secondary action" value="Delete Selected Media" onclick='return showNotice.warn();' />
 		</div>
+		<br class="clear" />
 
-<br class="clear" />
-
-</form>
-</div>
-
+		</form>
+		</div>
 		<? 
-
-		echo "<small style='color:white'>".get_num_queries()." queries = ".(get_num_queries()/count($media))." per media item</small>";
+		//echo "<small style='color:white'>".get_num_queries()." queries = ".(get_num_queries()/count($media))." per media item</small>";
 	}
 	
 	
-	
-	
-	
-	
-	
+/*-------------------------------------------------------------
+ Name:      hys_media_output_row
+
+ Purpose:   ,,,
+-------------------------------------------------------------*/
 	function hys_media_output_row($amedia) {
 		global $hys;
 		
@@ -4057,39 +3774,32 @@ function hys_get_timezone() {
 	
 	
 	
-	
+/*-------------------------------------------------------------
+ Name:      hys_download
+
+ Purpose:   force download a URL
+-------------------------------------------------------------*/
 	function hys_download($filename) {
 		global $hys;
-		
-		/*
-		echo "<pre>";
-		print_r($_SERVER);
-		echo "</pre>";
-		/**/
 		
 		if (ini_get('allow_url_fopen') != 1) {
 			header('Location: '.$filename);
 			exit;
 			die;
 		} else {
-		
 			// required for IE, otherwise Content-disposition is ignored
 			if(ini_get('zlib.output_compression'))
 			  ini_set('zlib.output_compression', 'Off');
-			
 			// addition by Jorg Weske
 			$file_extension = strtolower(substr(strrchr($filename,"."),1));
-			
-			if( $filename == "" ) 
-			{
+			if( $filename == "" ) {
 			  //echo "ERROR: download file NOT SPECIFIED <!--. USE force-download.php?file=filepath-->";
 			  //exit;
 			} elseif ( ! file_exists( $filename ) )  {
 			  //echo "ERROR: File not found";
 			  //exit;
 			};
-			switch( $file_extension )
-			{
+			switch( $file_extension ) {
 			  case "pdf": $ctype="application/pdf"; break;
 			  case "exe": $ctype="application/octet-stream"; break;
 			  case "zip": $ctype="application/zip"; break;
@@ -4120,35 +3830,35 @@ function hys_get_timezone() {
 
 
 
+/*-------------------------------------------------------------
+ Name:      
 
+ Purpose:   
+-------------------------------------------------------------*/
 function wt_get_category_count($input = '') {
 	global $wpdb;
-	if($input == '')
-	{
+	if($input == '') {
 		$category = get_the_category();
 		return $category[0]->category_count;
-	}
-	elseif(is_numeric($input))
-	{
-		$SQL = "SELECT $wpdb->term_taxonomy.count FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id=$wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.term_id=$input";
+	} elseif(is_numeric($input)) {
+		$SQL = "SELECT $wpdb->term_taxonomy.count FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id=$wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.term_id=".intval($input);
 		return $wpdb->get_var($SQL);
-	}
-	else
-	{
-		$SQL = "SELECT $wpdb->term_taxonomy.count FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id=$wpdb->term_taxonomy.term_id AND $wpdb->terms.slug='$input'";
+	} else {
+		$SQL = "SELECT $wpdb->term_taxonomy.count FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id=$wpdb->term_taxonomy.term_id AND $wpdb->terms.slug='".mysql_real_escape_string($input)."'";
 		return $wpdb->get_var($SQL);
 	}
 }
 
 
 
-/**
- * get the object ID of a menu item ID
- * used when wanting to force-hightlight the "products" page when viewing a single project
- *
- * @since 0.1
- * @author roi_davidsword
- */	
+/*-------------------------------------------------------------
+ Name:   	hys_ids_of_nav_menu 
+
+ Purpose:   get the object ID of a menu item ID used when 
+ 			wanting to force-hightlight the "products" page 
+ 			when viewing a single project
+-------------------------------------------------------------*/
+
 	function hys_ids_of_nav_menu($nav_slug, $reverse_array = false) {                              
 	    $terms   = get_terms('nav_menu');
 	    $term_id = '';
@@ -4176,6 +3886,11 @@ function wt_get_category_count($input = '') {
 	}
 
 
+/*-------------------------------------------------------------
+ Name:   	hys_get_feature_image_src 
+
+ Purpose:   ...
+-------------------------------------------------------------*/
 
 function hys_get_feature_image_src($id = '',$size = 'full') {
 	$id = (empty($id)) ? get_the_ID() : $id;
@@ -4184,12 +3899,14 @@ function hys_get_feature_image_src($id = '',$size = 'full') {
 
 
 
-/**
- * warn users of removed lightbox, provide solution on how to fix
- *
- * @since 0.1
- * @author roi_davidsword
- */	
+
+/*-------------------------------------------------------------
+ Name:   	showAdminMessages 
+
+ Purpose:   warn users of removed lightbox, provide solution on 
+ 			how to fix
+-------------------------------------------------------------*/
+
 function showAdminMessages() {
 	global $hys;
     if( isset( $_GET['dismiss_lb_notice'] ) )
@@ -4261,24 +3978,7 @@ function my_insert_rewrite_rules( $rules )
 
 
 
-//in the admin, if a <!--more--> tag doesn't apear at the beggining of a line, move it there.
-
-add_filter('content_save_pre','hys_fix_position_of_more');
-
-function hys_fix_position_of_more($the_content) {
-	//Find: <!--more--> and extract it from that line,
-	$lines = explode("\n", $the_content);
-	$mr = '<!--more-->';
-	foreach ($lines as $key => $aline) {
-		if (strpos($aline, $mr)) {
-			//put a beginning of that line
-			$lines[$key] = $mr.str_replace($mr,'',$aline);
-			break;
-		}
-	}
-	return implode("\n", $lines);
-}
-
+	
 
 
 /*--------------------------------------------------------------------------------------------------------------------

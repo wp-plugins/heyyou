@@ -4,9 +4,9 @@ Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 
-heyyou is a plugin adds unique dynamic custom post types directly in a Wordpress Page & a framework that supplies options for rapid development
+heyyou adds unique dynamic custom post types directly in a Wordpress Page & acts as a framework that supplies options for rapid development
 
 
 == Description ==
@@ -31,8 +31,8 @@ This plugin (currently in beta stage) is intended as a developers framework - it
 	* drag and drop ordering of posts
 	* create categories of posts within a page
 	* add "attachments" with a checkbox to create galleries for posts
-	* an interface to eaisly add meta fields to lists, ie: "Age", "Media"
-	* outputting: a simple textarea with %macros% placeholders and HTML for formatting the posts output (useful for: FAQ, Staff Listing, Press Releases, ect.)
+	* an interface to eaisly add meta fields to posts lists, ie: "Age", "Avatar"
+	* outputting: a simple textarea with `%macro%`'s placeholders and HTML for formatting the posts output (useful for: FAQ, Staff Listing, Press Releases, ect.)
 	* outputting: can bypass default %macros% output and use PHP in your theme instead
 	* importing/exporting for transferring/duplicating page configurations
 * Custom Media Library:
@@ -44,7 +44,7 @@ This plugin (currently in beta stage) is intended as a developers framework - it
 * Page Options (Options in setting page to add the following into a pages 'heyyou page settings' metabox):
 	* Add secondary blurb to pages (to use in template)
 	* Add Twitter / Facebook social buttons
-	* Dynamic Page Meta Field(s) (for things like having a featured image's "Photo Credit" meta field - easier to use than Wordpress's custom fields)
+	* Dynamic Page Meta Field(s) (for things like having a page "Photo Credit" meta field - easier to use than Wordpress's custom fields)
 	* Hide Wordpress Page title
 	* Hide Wordpress Page Content (.entry-content)
 	* Set a hexadecimal color (for themes that use a different color on every page)
@@ -73,42 +73,6 @@ This plugin (currently in beta stage) is intended as a developers framework - it
 * *& much more.. (documentation still being written)*
 
 
-= SHOWCASE: Live sites powered by heyyou =
-
-* heyshauna sites
-	* [heyshauna.com](http://heyshauna.com/)
-	* [joeink.ca](http://joeink.ca)
-	* [steminteriordesign.com](http://steminteriordesign.com)
-	* [judegriebel.com](http://judegriebel.com)
-	* [susanpoint.com](http://susanpoint.com)
-	* [spokendress.com](http://spokendress.com)
-	* [pushfestival.ca](http://pushfestival.ca/)
-	* [lissavino.com](http://lissavino.com/)
-	* [greenspacedesigns.com](http://greenspacedesigns.com/)
-	* [kiddpivot.org](http://kiddpivot.org/)
-	* [visionselective.org](http://visionselective.org/)
-	* [cocoondesigns.ca](http://cocoondesigns.ca/)
-	* [eponymous.ca](http://eponymous.ca/)
-	* [kiddpivot.org](http://kiddpivot.org/)
-	* [leisuretravel2000.ca](http://leisuretravel2000.ca/)
-	* [thomascannell.com](http://thomascannell.com/)
-	* [wenweidance.ca](http://wenweidance.ca/)
-	* [lesliemcguffin.com](http://lesliemcguffin.com/)
-	* [trenchgallery.com](http://trenchgallery.com/)
-	* [newmusic.org](http://newmusic.org/)
-	* [ekistics.ca](http://ekistics.ca/)
-	* [playwrightstheatre.com](http://playwrightstheatre.com/)
-	* *& much more on the way*
-* David Sword sites
-	* [davidsword.ca](http://davidsword.ca/)
-	* [ianmorris.ca](http://ianmorris.ca/)
-	* [interioracademy.com](http://interioracademy.com/)
-	* [shaunbalbar.ca](http://shaunbalbar.ca/)
-	* [createddifferently.com](http://createddifferently.com/)
-	* [expbc.com](http://expbc.com/)
-	* [hey-you.ca](http://hey-you.ca/)
-
-
 
 = CREDIT: External Plugins =
 
@@ -122,9 +86,9 @@ The following plugins are hard coded into heyyou - they were edited enough that 
 	* built into heyyou as well, for adding secondary images in a single click
 
 
-= NOTICE: Important!!! =
+= NOTICE: Important! =
 
-This plugin is a *very large* framework design specifically for development of websites by [heyshauna.com](http://heyshauna.com/) & [davidsword.ca](http://davidsword.ca/). It essentially has the functionality of 20+ plugins (see "Features" list in description). *heyyou* is not likely to be compatible with all themes or plugins and is recommended for intermediate-to-advance Wordpress users only that are committed to experimenting with this plugin. **Always** backup your database and files before installing a plugin of this scale. It is recommended that potential users test this plugin in a test environment prior to installing on a live site. Please view the documentation at : [hey-you.ca](http://hey-you.ca/)
+This plugin is a *very large* framework design specifically for development of websites built around framework. It essentially has the functionality of 20+ plugins (see "Features" list in description). *heyyou* is not likely to be compatible with all themes or plugins and is recommended for intermediate-to-advance Wordpress users only that are committed to experimenting with this plugin. **Always** backup your database and files before installing a plugin of this scale. It is recommended that potential users test this plugin in a test environment prior to installing on a live site. Please view the documentation at : [hey-you.ca](http://hey-you.ca/). Please contact if experiencing issues before nagative rating.
 
 `ALL Documentation and plugin are at BETA LEVEL, the plugin is currently being developed / written.`
 
@@ -154,11 +118,13 @@ This is very different then using Wordpress `register_post_type()` method as the
 
 = What type of Pages are dynamic custom post types useful for? =
 
-The entire origin of this project bases from wanting the following within a Wordpress page:
+Having a list of posts directly within a wordpress page is great for any page that requires a long list of formatted data. Any WYSIWYG editor fails at this as it's hard to move around, hide, and keep formating the same throughout 10+ chunks of information. The entire origin of this project bases from wanting the following within a Wordpress page:
 
  * A FAQ listing, simple, directly below a pages content
  * Staff BIO listing
+ * list of services, each with a heading and floating image
  * Simple news posts (paginated titles + date + description)
+ * Menu, food list
 
 = How do I add Posts to a page? =
 
@@ -179,10 +145,19 @@ Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-f
 
 == Changelog ==
 
+= 1.3.3 =
+* Nov 13, 2012
+* changed: animated moreless into a body class instead of custom jQuery script
+* changed: heyyou.js from javascript to jQuery, handles `auto_hidecontent` body class animation for more/less
+* changed: `hys_post` labels to `heyyou posts` for metabox in appearance > menus
+* changed: cleaned code, line spacing, removing commented out code ect,
+* added: TinyMCE "fullscreen" button back by default
+* added: `hys_viewport` and `hys_meta_seo` filters [@learn more](http://hey-you.ca/developers/hooks-actions/)
+* removed: `hys_mce_admin_head()` and action call
+
 
 = 1.3.2 =
 * Sept 29, 2012
-* added: TinyMCE "fullscreen" button back by default
 * added: TinyMCE customization function `hys_custom_tinymce()`, allowing modification of buttons per/theme
 * added: twitter shortcode [hys_tweets id='' count='' refresh_rate='']
 * added: "message to display when no posts" to show dynamic text on empty hys post pages.. adds class hys_noposts to hys_output
@@ -504,6 +479,9 @@ Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-f
 * PTC - build
 
 == Upgrade Notice ==
+
+= 1.3.3 =
+* completely re-wrote heyyou.js to jQuery, removed moreless.js
 
 = 1.3.2 =
 * loading jQuery and other lightbox resources from new directory

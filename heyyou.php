@@ -3,7 +3,7 @@
 Plugin Name: heyyou
 Plugin URI: http://hey-you.ca/
 Description: heyyou puts posts into pages - easily.
-Version: 1.3.2
+Version: 1.3.3
 Author: David Sword
 Author URI: http://davidsword.ca/
 License: GPL2
@@ -69,7 +69,7 @@ License: GPL2
     add_filter('tiny_mce_version',      'hys_rfh_mce');         # change version
     add_action('admin_init',            'hys_line_btn');        # add line button
     add_action('admin_init',            'hys_mce_admin_init');  # enable additional editors
-    add_action('admin_head',            'hys_mce_admin_head');  # enable additional editors
+//    add_action('admin_head',            'hys_mce_admin_head');  # enable additional editors
     add_filter('mce_css',               'hys_tinymce_css' );    # add tinymce css code
     add_action('admin_menu',            'hys_rmv_metabxs');
     add_action('wp_dashboard_setup',    'hys_rmv_dash_metabxs');
@@ -79,7 +79,7 @@ License: GPL2
     
     add_action('init',                  'hys_clean_wp_head');   # remove 'unessisary' added header info
     add_action('wp_enqueue_scripts',    'hys_enqueue_scripts');	# load js and css
-    
+    add_filter('body_class',            'add_hys_classes');     # add hys_moreless animation option to bodyclass
     add_action('wp_head',               'hys_header_meta', 0);  # edit head, put last
     add_action('wp_head',               'hys_header', 999);     # edit head, put last
     add_action('the_content',           'hys_content');         # main placement of heyyou on page !important
