@@ -3,7 +3,7 @@
 Plugin Name: heyyou
 Plugin URI: http://hey-you.ca/
 Description: heyyou puts posts into pages - easily.
-Version: 1.3.3
+Version: 1.3.4
 Author: David Sword
 Author URI: http://davidsword.ca/
 License: GPL2
@@ -55,7 +55,8 @@ License: GPL2
     add_action('admin_init',            'hys_photogaltopage');  # add 'attachments` plugin to page
     add_action('admin_menu',            'hys_admin_nav');       # main settings page
     add_action('admin_head',            'hys_admin_header');    # add css to admin header
-    add_action('post_updated',          'hys_post_save');       # save post
+    if (!(isset($_GET['page']) && $_GET['page'] == 'editheyyoupost'))
+	    add_action('post_updated',          'hys_post_save');       # save post, when adding new
     add_action('admin_init',            'hys_metabox');         # hys_metaboxs.php: main with page config
     add_action('save_post',             'hys_metabox_save');    # hys_metaboxs.php: save meta box
     add_action('admin_init',            'hys_metabox_mang');    # hys_metaboxs.php: manage the hys_posts metabox
@@ -76,8 +77,6 @@ License: GPL2
     
     
     // !4: heyyou output
-    
-    add_action('init',                  'hys_clean_wp_head');   # remove 'unessisary' added header info
     add_action('wp_enqueue_scripts',    'hys_enqueue_scripts');	# load js and css
     add_filter('body_class',            'add_hys_classes');     # add hys_moreless animation option to bodyclass
     add_action('wp_head',               'hys_header_meta', 0);  # edit head, put last

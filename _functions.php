@@ -43,8 +43,6 @@ function hys_return_meta($id = '') {
 
  Purpose:   allow indiviuals with correct URL access to view site
  			(used for previewing under-dev sites)
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
  function hys_grant($splashURL = '') {
 	if (isset($_GET['grant']) || isset($_GET['preview']) || isset($_GET['heyshauna'])) {
@@ -76,8 +74,6 @@ function hys_return_meta($id = '') {
  Name:      hys_update_to_beta
 
  Purpose:   required to update from 0.0.x to 0.1.0
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_update_to_beta() {
 		global $wpdb, $hys;
@@ -120,18 +116,13 @@ function hys_return_meta($id = '') {
 
 /*-------------------------------------------------------------
  Name:      hys_load
-
- Purpose:   ...
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_load($id = '') {
 		global $wp, $wpdb, $hys, $post, $menu, $settingsmenu;
 				
-		if (!is_object($post)) {
-			$post = get_post(get_option('show_on_front')); //@TODO: confirm this fixing/does anything
-		}
-				
+		if (!is_object($post))
+			$post = get_post(get_option('show_on_front')); 	//@TODO: confirm this fixing/does anything
+															// probably doesn't as $post isn't loaded at init
 		// get the ID & META for page
 		$id 	= (!empty($id)) ? intval($id) : hys_return_id();
 		$pmeta 	= (!empty($id)) ? get_post_custom($id) : array();
@@ -148,7 +139,7 @@ function hys_return_meta($id = '') {
 		$hys['user']			= hys_current_user_role();
 		$hys['settings'] 		= get_option('hys_options');  //global settings
 		$hys['settings']		= (!isset($hys['settings']['installed'])) ? hys_default_settings(): $hys['settings'];
-		$hys['dir']				= WP_PLUGIN_URL.'/heyyou';	
+		$hys['dir']				= plugins_url('',__FILE__);	
 		$hys['hys_page_config'] = @($pmeta['hys_page_config'])  ? unserialize($pmeta['hys_page_config'][0])  : 0;	
 		$hys['hys_usrpg_config']= @($pmeta['hys_usrpg_config']) ? unserialize($pmeta['hys_usrpg_config'][0]) : 0;
 		$hys['feature_code'] 	= 'hys_post-'.$id;
@@ -157,10 +148,10 @@ function hys_return_meta($id = '') {
 									 (isset($_COOKIE['hys_mobile']) && $_COOKIE['hys_mobile'] == 1)								   
 								   ) ? 1 : 0;
 
-		$hys['dir']				= get_bloginfo('wpurl').'/wp-content/plugins/heyyou';
 		$site_name				= explode('.',str_replace(array('http://','www.','/'),'',get_bloginfo('url')));
 		$hys['site'] 			= $site_name[0];
 		$hys['metatypes'] 		= array( 'Text' , 'URL' , 'Media' , 'Blurb' , 'Page', 'Code', 'Checkbox', 'Textarea' /* , 'Chckbx' */ );
+
 		//get configurations.. preset.. check if there's "feature" from old versions of 'heyyou'
 		$feature 				= (isset($hys['hys_page_config']['feature'])) ? $hys['hys_page_config']['feature'] : '';
 		$feature 				= ($feature == 'NONE' || $feature == '0') ? '' : $feature;
@@ -176,22 +167,24 @@ function hys_return_meta($id = '') {
 		}		
 		$hys['presets'] = array( );
 
+		//on the blog page, there's no hys_page_config as it will overwrite blog posts
+//		$this_page = url_to_postid( "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'] );
+//		if ($this_page == get_option('page_for_posts')) {
+//			$hys['hys_page_config'] = 0;
+//		}
+
 		add_image_size( 'hys_attachment_size', 120, 70, true ); //300 pixels wide (and unlimited height)
 		remove_post_type_support( 'page', 'revisions' );
-		
 		if (@$hys['settings']['page_excerpts'] == 1)	
 			add_post_type_support( 'page', 'excerpt' );
-		
 		if (@$hys['settings']['post_excerpts'] == 1)	
 			add_post_type_support( 'post', 'excerpt' );
 
-		
 		//Add ftr img to PAGES andor POSTS
 		$add_thumbs_to_pages = array();
 		if (@$hys['settings']['page_featured_image'] == 1) $add_thumbs_to_pages[] = 'page';
 		if (@$hys['settings']['post_featured_image'] == 1) $add_thumbs_to_pages[] = 'post';
 		
-
 		if (isset($add_thumbs_to_pages[0]) && !empty($add_thumbs_to_pages[0])) 
 			add_theme_support('post-thumbnails', $add_thumbs_to_pages);
 		
@@ -199,7 +192,6 @@ function hys_return_meta($id = '') {
 		$add_thumbs_to_posts = array();
 		if (@$hys['settings']['page_secondary_image'] == 1) $add_thumbs_to_posts[] = 'page';
 		if (@$hys['settings']['post_secondary_image'] == 1) $add_thumbs_to_posts[] = 'post';
-		
 		
 		if (isset($add_thumbs_to_posts[0])) {
 			require('res/multiple-post-thumbnails/multi-post-thumbnails.php');
@@ -212,7 +204,6 @@ function hys_return_meta($id = '') {
 		        );
 		    }
 		}
-				
 		// if it's a media post submit
 		if (@$hys['settings']['dont_use_heyyou_media_library'] != 1) {
 			if ((strpos(hys_return_url(),'/upload.php') !== false) || (strpos(hys_return_url(),'/media.php') !== false && empty($url['query']))) {
@@ -249,8 +240,6 @@ function hys_return_meta($id = '') {
  Name:      hys_post_reg
 
  Purpose:   Register post type w wordpress
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_post_reg() {
 		global $hys; //hys_links
@@ -277,7 +266,7 @@ function hys_return_meta($id = '') {
 			'query_var' => true,
 			'rewrite' => array( 'slug' => 'hys_cat' ),
 		));
-		
+
 		// if we're using hys_post - create term to group with
 		if (!empty($hys['config']) && !term_exists( $hys['feature_code'], 'hys_post_cats')) {
 			wp_insert_term(
@@ -295,23 +284,18 @@ function hys_return_meta($id = '') {
  Name:      hys_checkmble
 
  Purpose:   checks if mobile or not, refreshs if requested
- Receive:   - none -
  Return:	boolen
 -------------------------------------------------------------*/
 	function hys_checkmble() {
 		global $hys;
-		
 		// if the SESSION hasn't been started, or another badly coded plugin calls it in a init instead of config.php
 		// use cookies instead
 		$usecookies = (!session_id()) ? true : false;
-		
 		$dest_url 		= str_replace(array('?mobile','&mobile'),'',hys_return_url());
 		$domain 		= $_SERVER['SERVER_NAME'];
 		$subdomain 		= substr_replace($domain, '', 2, strlen($domain));
 		$subdomain_www 	= substr_replace($domain, '', 4, strlen($domain));
-		
 		$detect = new Mobile_Detect();
-		
 		//if starting anew load
 		if ((!isset($_SESSION['hys_mobile']) && !$usecookies) || (!isset($_COOKIE['hys_mobile']) && $usecookies)) {
 			$amobile = $detect->isMobile();
@@ -325,7 +309,6 @@ function hys_return_meta($id = '') {
 				if ($usecookies && !headers_sent()) setcookie("hys_mobile", 0, time()+3600);
 			}
 		}
-		
 		//see if we're manually toggeling/ using the footer links
 		if ( isset($_GET['mobile']) ) {
 			if ($usecookies) {
@@ -348,10 +331,6 @@ function hys_return_meta($id = '') {
 
 
 
-
-
-
-
 /*====================================================================================================================
    // !2 heyyou admin 
 --------------------------------------------------------------------------------------------------------------------*/
@@ -360,8 +339,6 @@ function hys_return_meta($id = '') {
  Name:      hys_reg_options
 
  Purpose:   Register Settings for new menu item/page
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_reg_options() {
 		register_setting( 'hys_settings', 'hys_options' );
@@ -373,8 +350,6 @@ function hys_return_meta($id = '') {
 
  Purpose:   change the navigation based on the user types..
  			add user types if not added.
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_adminmenu() {
 		global $hys, $current_user, $menu, $submenu, $wpdb, $wp;
@@ -435,6 +410,9 @@ function hys_return_meta($id = '') {
 		$exempt = @$hys['settings']['navview'];
 		$exempt = explode(',',$exempt);
 		$default_exempt = array('Users','heyyou');
+		
+		
+		
 		//go through menu
 		if (is_array($menu)) {
 			foreach ($menu as $ke => $name) {
@@ -442,62 +420,84 @@ function hys_return_meta($id = '') {
 				if (!in_array($ke,$exempt) && !empty($name[0]) && !in_array($name[0],$exempt)) {
 					//if item unchecked in settings, remove from meny
 					if (@$current_user->allcaps['heyyou_subadmin'] == 1)  {
-						if(!isset($hys['settings']['subadmin_menu_'.$ke]))
+						if(!isset($hys['settings']['subadmin_menu_'.$ke])) {
 							unset($menu[$ke]); //posts
+						}
 					}
 					if (@$current_user->allcaps['heyyou_client'] == 1)  {
-						if(!isset($hys['settings']['heyyou_menu_'.$ke]))
+						if(!isset($hys['settings']['heyyou_menu_'.$ke])) {
 							unset($menu[$ke]); //posts
+						}
 					}
 				}
 			}
 		}
+		
 	}
+	
+/* // edit the admin menu
+add_action( 'admin_menu', 'websitename_clean_menu' );
+	function websitename_clean_menu() {
+		$user_id = get_current_user_id();
+		
+		if ($user_id != 1) {
+        remove_menu_page('link-manager.php');
+        #remove_menu_page('themes.php');
+        remove_menu_page('tools.php');
+        remove_menu_page('edit-comments.php');
+        #remove_menu_page('plugins.php');
+        #remove_submenu_page( 'themes.php', 'themes.php' );
+        #remove_submenu_page( 'themes.php', 'theme-editor.php' );
+        #remove_submenu_page( 'themes.php', 'themes.php?page=custom-background' );
+        #remove_submenu_page( 'themes.php', 'themes.php?page=thematic_opt' );
+        #remove_submenu_page( 'widgets.php', 'theme-editor.php' );
+        #remove_submenu_page( 'options-general.php', 'options-discussion.php' );
+        #remove_submenu_page( 'options-general.php', 'options-writing.php' );
+        #remove_submenu_page( 'options-general.php', 'options-reading.php' );
+        #remove_submenu_page( 'options-general.php', 'options-permalink.php' );
+        #remove_submenu_page( 'options-general.php', 'options-media.php' );
+        #remove_menu_page('upload.php');
+        #remove_menu_page('admin.php?page=w3tc_general');
+        #remove_menu_page('admin.php?page=better_wp_security');
+        #remove_menu_page('admin.php?page=wpcf7');
+        #remove_submenu_page( 'index.php', 'update-core.php' );
+        }
+    }
+	 */
 	
 
 /*-------------------------------------------------------------
  Name:      hys_create_edit_menus_and_columns
 
  Purpose:   Add heyyou plugin to menu, register settings
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_admin_nav() {
 		global $hys;
-		
 		//hys settings
 		add_menu_page('hys_settings_page', 'heyyou', 'level_8', __FILE__, 'hys_settings_page',WP_PLUGIN_URL.'/heyyou/res/imgs/favicon.png',126);
 		add_submenu_page( __FILE__, 'edit heyyou post', 'form', 'level_8', 'editheyyoupost', 'hys_submenu_editpage' );
-
 		//edit colounms output				
 		add_filter('manage_edit-page_columns', 'hys_edit_columns');
 		add_action('manage_pages_custom_column', 'hys_custom_columns');
-		
 		//&& lets throw in the new easy-media page...
 		if (@$hys['settings']['dont_use_heyyou_media_library'] != 1) {
 			add_menu_page('heyyoumedia', 'Media', 'level_8', 'hys_media', 'hys_media','./images/media-button-music.gif',11);
 			add_submenu_page("hys_media", "Media Categories", "Media Categories", "level_10", "edit-tags.php?taxonomy=media_category");
 		}
 	}	
-	
 	function hys_submenu_heyyoumedia() {
 		global $taxnow;
 		include('edit-tags.php');
 	}
-	
 	function hys_update_post() {
-		if (isset($_GET['update_heyyoupost'])) {
-			hys_post_save($_GET['post']);
+		if (isset($_GET['update_heyyoupost']) && $_POST['hys_post_title']) {
+			hys_post_save($_GET['post'],true);
 			header('Location: '.get_bloginfo('wpurl').'/wp-admin/admin.php?page=editheyyoupost&post='.$_GET['post'].'&edit_ftr='.$_GET['edit_ftr'].'&message=1');
 		}
 	}
 
 /*-------------------------------------------------------------
  Name:      hys_submenu_editpage
-
- Purpose:   ...
- Receive:   -none-
- Return:	-none-
 -------------------------------------------------------------*/
 	function hys_submenu_editpage() {
 		echo "<div class='wrap' style='padding-bottom:35px;'>";
@@ -574,7 +574,6 @@ function hys_return_meta($id = '') {
 			<input type='hidden' name='is_a_draft' 			value='{$thiseditpost->post_status}' />
 			<input type='hidden' name='hys_post_order' 		value='{$order}' />\n 
 			<input type='hidden' name='toporbottom'			value='{$hys['hys_page_config']['newposts_toporbottom']}' />\n"; 
-		
 		//HTML FORM..
 		?>
 	  	<br />
@@ -611,9 +610,7 @@ function hys_return_meta($id = '') {
 				foreach ($hys['hys_page_config']['meta'] as $k => $meta_name) {
 					$tinymcetextarea = false;
 					$slug = hys_url_friendly($meta_name);
-					#$meta[$m] = (isset($meta[$m])) ? $meta[$m] : '';
 					$meta[$slug] = (isset($meta[$slug])) ? _wp_specialchars($meta[$slug],'single') : @$meta[$m];
-					
 					//different media types
 					  # (URL)   = url field
 					  # (Media) = dropdown list of media
@@ -741,7 +738,7 @@ function hys_return_meta($id = '') {
 					<?php
 					if (@$hys['hys_page_config']['include_blurb'] == 1)  {
 						echo '<div id="poststuff" class="hys_post_textarea">';
-						the_editor($content, "hys_post_blurb");
+						the_editor(stripslashes($content), "hys_post_blurb");
 						echo "</div>";
 						?>
 						<table id="post-status-info" cellspacing="0">
@@ -771,8 +768,6 @@ function hys_return_meta($id = '') {
  Name:      temds10_edit_columns
 
  Purpose:   edit the colounms to the following:
- Receive:   -none-
- Return:	-none-
 -------------------------------------------------------------*/
 	function hys_edit_columns($columns) {
 		$columns = array(
@@ -787,8 +782,6 @@ function hys_return_meta($id = '') {
  Name:      temds10_custom_columns
 
  Purpose:   put content in custom colounms
- Receive:   -none-
- Return:	-none-
 -------------------------------------------------------------*/
 	function hys_custom_columns($column) {
 		global $hys, $post;
@@ -810,8 +803,6 @@ function hys_return_meta($id = '') {
 
  Purpose:   adds attachments plugin to specified page(s)
  			as option provides in heyyou
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 function hys_photogaltopage() {
 	global $hys;
@@ -827,8 +818,6 @@ function hys_photogaltopage() {
  Name:      hys_secondary_blurb
 
  Purpose:   return secondary blurb for page
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_secondary_blurb($id = '') {
 		$id = (empty($id)) ? get_the_ID() : intval($id);
@@ -840,8 +829,6 @@ function hys_photogaltopage() {
  Name:      secondary_blurb_box
 
  Purpose:   metabox for secondary blurb
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function secondary_blurb_box() {
 		global $post;
@@ -858,8 +845,6 @@ function hys_photogaltopage() {
  Name:      hys_settings_page
 
  Purpose:   Add heyyou plugin to menu
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_settings_page() {
 		global $hys;
@@ -877,8 +862,6 @@ function hys_photogaltopage() {
  Name:      hys_admin_header
 
  Purpose:   add to header
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_admin_header() {
 		global $hys, $post;
@@ -926,23 +909,24 @@ function hys_photogaltopage() {
  		$page_id = (empty($page_id)) ? @$post->ID : intval($page_id);
 		$get_taxonomies 		= get_taxonomies();
 		$myterms 				= get_terms('hys_post_cats', 'orderby=count&hide_empty=0');			
+		$using_categories = (isset($hys['hys_page_config']['include_cats']) && $hys['hys_page_config']['include_cats'] == 1) ? true : false;
+
 		if (isset($myterms)) { // if there are categories:
 			$parent_term_id = '';
 			foreach ($myterms as $k => $cat)
 				if ($cat->name == 'hys_post-'.$page_id)
 					$parent_term_id = $cat->term_id;
-			$using_categories = (isset($hys['hys_page_config']['include_cats']) && $hys['hys_page_config']['include_cats'] == 1) ? true : false;
 			if ($using_categories) {
 				//run though the cats and posts, build into an array
 				foreach ($myterms as $k => $cat) { //cycle through cats	
 					if ($cat->parent == $parent_term_id) // if the cat is in the parent (hys_post-xxx)
 						$numoflists++;
 				}
-			} else {
-				// there may be no cats, but are there uncategorized posts?
-				if (count(get_heyyou()) > 0) $numoflists = 1;
 			}
 		}
+		$getheyyou = get_heyyou();
+		if (isset($getheyyou['uncategorized']))
+			$numoflists++; //add uncategorized
 		
 		if ($numoflists > 0) {
 			$list_vars = '';
@@ -997,8 +981,6 @@ function hys_photogaltopage() {
 				revert: true,
 				onComplete: function(el,clone) { fnSubmit(); }
 			});
-					
-
 
 		<? } ?>
 		});
@@ -1035,12 +1017,12 @@ add_filter('content_save_pre','hys_fix_position_of_more');
  Name:      hys_post_save
 
  Purpose:   handle saving of content from hys_post_form()
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
-	function hys_post_save($post_id) {
+	function hys_post_save($post_id, $from_hardcall = false) {
 		global $wpdb, $hys;
 		
+		if (!isset($_POST['hys_post_title'])) return;
+				
 		// lets trim the meta feilds...
 		if (isset($_POST['hys_page_config']['meta']) && array($_POST['hys_page_config']['meta'])) {
 			$trimed_meta_feilds = array();
@@ -1054,9 +1036,6 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 		$post_id = (isset($post_id)) ? $post_id : intval($_GET['post']);
 		if (!isset($_POST['hys_post_noncename']) || !wp_verify_nonce( $_POST['hys_post_noncename'],'noncename_heyyou_post'))
 			return $post_id;
-//TURN OFF NOT AUTO SAVING... WE WANT META TO SAVE w/ AUTO SAVING
-#		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) 
-#			return $post_id;  
 		if( !current_user_can( 'edit_post', $post_id ) ) // check permissions
 			return $post_id;
 		
@@ -1080,7 +1059,6 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 			$_POST['hys_page_config'] = unserialize($importme);
 		}
 		
-		
 		//if DELETE selected posts
 		if (isset($_POST['selected_id'])) {
 			foreach ($_POST['selected_id'] as $theid => $dlt) {
@@ -1095,11 +1073,9 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 		//lets update the categories if applic
 		if (count(@$_POST['update_cat']) > 0) {
 		  foreach ($_POST['update_cat'] as $term_id => $t_vals) {
-
-			$wpdb->query( "UPDATE $wpdb->term_taxonomy SET count = ".intval($t_vals['count'])." WHERE term_id = ".intval($term_id) ); //update count/order
-			$wpdb->query($wpdb->prepare("UPDATE $wpdb->term_taxonomy SET description = '".mysql_real_escape_string($t_vals['description'])."' WHERE term_id = ".intval($term_id))); //update meta
-			$wpdb->query($wpdb->prepare("UPDATE $wpdb->terms SET name = '".mysql_real_escape_string($t_vals['name'])."' WHERE term_id = ".intval($term_id))); //update name/title
-			
+			$wpdb->query("UPDATE $wpdb->term_taxonomy SET count = ".intval($t_vals['count'])." WHERE term_id = ".intval($term_id) ); //update count/order
+			$wpdb->query("UPDATE $wpdb->term_taxonomy SET description = '".mysql_real_escape_string($t_vals['description'])."' WHERE term_id = ".intval($term_id)); //update meta
+			$wpdb->query("UPDATE $wpdb->terms SET name = '".mysql_real_escape_string($t_vals['name'])."' WHERE term_id = ".intval($term_id)); //update name/title			
 			//cat_override
 			if(isset($_POST['cat_override'])) {
 				foreach($_POST['cat_override'] as $blurb_term_id => $cat_override) {
@@ -1111,6 +1087,9 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 			
 		  }
 		}
+		
+
+		
 
 		// find the post date
 		$sel_post_date = (isset($_POST['sel_date'])) ? reconstruct_datedropdown($_POST['sel_date']) : '';
@@ -1155,7 +1134,6 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 			//add the last order +1
 			$termordr = intval($_POST['hys_post_cat_new_order']);
 			$wpdb->query("UPDATE $wpdb->term_taxonomy SET count = {$termordr} WHERE term_id = {$mynewterm->term_id}");
-
 		}
 		
 		$the_post_status = (isset($_POST['is_a_draft']) && $_POST['is_a_draft'] == 'draft') ? 'draft' : 'publish';
@@ -1165,28 +1143,28 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 			'post_type' 	=> 'hys_post',
 			'post_status' 	=> $the_post_status,			
 			'post_date' 	=> $sel_post_date,
-			'post_title' 	=> @$_POST['hys_post_title'],
-			'menu_order' 	=> $hys_post_order,
-			'post_content' 	=> @wp_filter_post_kses($_POST['hys_post_blurb']),
+			'post_title' 	=> $_POST['hys_post_title'],
+			'menu_order' 	=> intval($hys_post_order),
+			'post_content' 	=> $_POST['hys_post_blurb'],
 			'post_parent'	=> @intval($_POST['hys_parent_id'])
 		);
-
-		 // If update, delete it, then re-enter instead of updating: since this function was
-		 // hooked by post_updated()
+		
 		if (isset($_POST['edit_ftr']) && !empty($_POST['edit_ftr'])) {
-			$my_post['import_id'] = intval($_POST['edit_ftr']);
-			wp_delete_post(intval($_POST['edit_ftr']));
+			$new_id = intval($_POST['edit_ftr']);
+			$my_post['ID'] = $new_id;
+			$new_id = wp_insert_post( $my_post ); //<< this call's post_updated()
+			// this hook doesn't trigger for whatever reason, so lets add it
+			attachments_save($new_id);
+		} else {
+			$new_id = wp_insert_post($my_post,false);
 		}
 		
-		// insert (or update) the post into the database
-		$new_id = wp_insert_post( $my_post , false);
-
 		// show/publish new ALL updated/new posts
 		if ($the_post_status != 'draft') //@TODO: make sure this doesn't break anything
-		hys_showhide_post($new_id, 1);
+			hys_showhide_post(intval($new_id), 1);
 		
 		//add the meta
-		$hys_posts_meta = (isset($_POST['hys_posts_meta'])) ? $_POST['hys_posts_meta'] : array();
+		$hys_posts_meta = (isset($_POST['hys_posts_meta'])) ? $_POST['hys_posts_meta'] : get_post_meta(intval($new_id), 'meta',true);
 				
 		//add the grouping
 		$hys_posts_meta['hys_post_cat'] = @$_POST['hys_post_cat'];
@@ -1202,15 +1180,13 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 		}
 		
 		//add the meta
-		add_post_meta($new_id, 'meta', $hys_posts_meta);
+		delete_post_meta(intval($new_id), 'meta');
+		add_post_meta(intval($new_id), 'meta', $hys_posts_meta);
 		
 		//if there's attachments on the parent, don't give them to the heyyou post
 		if (isset($_POST['attachment_title_1']) && (isset($_POST['action']) && $_POST['action'] == 'editpost'))
-		delete_post_meta($new_id, '_attachments');
+			delete_post_meta($new_id, '_attachments');
 	}
-
-
-
 
 
 
@@ -1221,10 +1197,6 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 
 /*-------------------------------------------------------------
   Name:      hys_mce_admin_init
-
-  Purpose:   
-  Receive:   - none -
-  Return:	 - none -
 -------------------------------------------------------------*/
 	function hys_mce_admin_init() {
 		global $hys; 
@@ -1244,10 +1216,6 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 
 /*-------------------------------------------------------------
   Name:      hys_mce
-
-  Purpose:   ...
-  Receive:   - none -
-  Return:	 - none -
 -------------------------------------------------------------*/
 	function hys_mce( $init ) {
 		global $hys;
@@ -1324,12 +1292,16 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 	function hys_tinymce_css($wp) {
 		global $hys;
 		
-		$wp = get_bloginfo('stylesheet_directory')."/style_tinymce.css";
+		if (file_exists($hys['dir']."/style_tinymce.css")) {
+		$wp = $hys['dir']."/style_tinymce.css";
 		
 		if (isset($hys['settings']['header_tinymce']) && !empty($hys['settings']['header_tinymce']))
 			$wp = get_bloginfo('stylesheet_directory')."/{$hys['settings']['header_tinymce']}";
 				
 		return $wp;
+		} else {
+			return '';
+		}
 	}	
 	
 /*-------------------------------------------------------------
@@ -1461,35 +1433,7 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 						or email at <a href='mailto:info@heyshauna.com'>info@heyshauna.com</a>
 					</li>
 				</ul>
-		<br />		
-		david: <span style='color:#999;'>(technical support)</span>
-		<ul>
-			<li>
-				send a tweet to <a href='http://twitter.com/hey_support' target='_Blank'>@hey_support</a>
-			</li>
-			<li>
-				or email at <a href='mailto:support@heyshauna.com'>support@heyshauna.com</a>
-			</li>
-		</ul>
-		<!--
-		If you'd like to view how-to references for this panel, feel free to visit:<br />
-		<ul>
-			<li>
-				<a href=''>hey-you.ca - Basics - how-to</a>
-			</li>
-			<li>
-				<a href=''>hey-you.ca - Basics - FAQ</a>
-			</li>
-			<li>
-				<a href=''>wordpress.org - Admin Panel</a>
-			</li>
-			<li>
-				<a href=''>hey-you.ca - Blog</a>
-			</li>
-		</ul>
-		<br />
-		-->
-		<span style='color:#fff;font-family: Courier; font-size: 10px; '>
+		<span style='color:#F6F6F6;font-family: Courier; font-size: 10px; '>
 		".date("l F jS, Y, g:ia")."
 		</span>
 		</div>";	
@@ -1506,32 +1450,29 @@ add_filter('content_save_pre','hys_fix_position_of_more');
   Name:      hys_clean_wp_head
 
   Purpose:   remove defaults from wp_head
-  Receive:   - none -
-  Return:	 - none -
 -------------------------------------------------------------*/
-	function hys_clean_wp_head() {
-		remove_action( 'wp_head', 'rsd_link'); 
-		remove_action( 'wp_head', 'wlwmanifest_link');
-		remove_action( 'wp_head', 'index_rel_link'); 
-		remove_action( 'wp_head', 'parent_post_rel_link');
-		remove_action( 'wp_head', 'start_post_rel_link');
-		remove_action( 'wp_head', 'adjacent_posts_rel_link'); 
-		remove_action( 'wp_head', 'index_rel_link');
-		remove_action( 'wp_head', 'parent_post_rel_link', 10, 0);
-		remove_action( 'wp_head', 'start_post_rel_link', 10, 0);
-		remove_action( 'wp_head', 'adjacent_posts_rel_link', 10, 0);
-		remove_action( 'wp_head', 'wp_generator');
-		remove_action( 'wp_print_styles', 'wpcf7_enqueue_styles' );
-	}
-	
+
+remove_action('wp_head', 'index_rel_link');
+remove_action('wp_head', 'parent_post_rel_link', 10, 0);
+remove_action('wp_head', 'start_post_rel_link', 10, 0);
+remove_action('wp_head', 'adjacent_posts_rel_link', 10, 0);
+remove_action( 'wp_head', 'rsd_link'); 
+remove_action( 'wp_head', 'wlwmanifest_link');
+remove_action( 'wp_head', 'index_rel_link');
+remove_action( 'wp_head', 'wp_generator');
+remove_action( 'wp_print_styles', 'wpcf7_enqueue_styles' );
+add_filter( 'index_rel_link', 'disable_stuff' );
+add_filter( 'parent_post_rel_link', 'disable_stuff' );
+add_filter( 'start_post_rel_link', 'disable_stuff' );
+add_filter( 'previous_post_rel_link', 'disable_stuff' );
+add_filter( 'next_post_rel_link', 'disable_stuff' );
+
 	
 	
 /*-------------------------------------------------------------
  Name:      hys_header_keywords
 
  Purpose:   heyyou header..
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_header_meta() {
 		global $hys;
@@ -1542,11 +1483,11 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 		$key_default = 'Add 5 keywords/phrases here seperated by comas for better SEO';
 		if (isset($hys['settings']['meta_keywords']) && !empty($hys['settings']['meta_keywords']) && ($key_default != $hys['settings']['meta_keywords']))
 		$meta_seo .=  "
-	<meta name='keywords' content='{$hys['settings']['meta_keywords']}'>";
+	<meta name='keywords' content=\"".str_replace('"', "'", $hys['settings']['meta_keywords'])."\">";
 		$pos = strpos($hys['settings']['meta_description'], 'of your website here for search engine descriptions, and better SEO');
 		if ($pos === false && !empty($hys['settings']['meta_description'])) {
 		$meta_seo .= "
-	<meta name='description' content='{$hys['settings']['meta_description']}'>\n";
+	<meta name='description' content=\"".str_replace('"', "'", $hys['settings']['meta_description'])."\">\n";
 		}
 		
 		echo apply_filters('hys_viewport',$viewport);
@@ -1558,8 +1499,6 @@ add_filter('content_save_pre','hys_fix_position_of_more');
  Name:      hys_header
 
  Purpose:   heyyou header..
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_header() {
 		global $hys;
@@ -1580,7 +1519,7 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 		$styles = '';
 		if (isset($hys['settings']['tutid']) && !empty($hys['settings']['tutid']) && !is_user_logged_in())
 			$styles .= ".page-item-{$hys['settings']['tutid']}, .menu-item-{$hys['settings']['tutid']} { display:none !important }";		
-		if (@$hys['hys_page_config']['hidetitle'] == 1 || (@$hys['hys_page_config']['hidetitlesingle'] == 1 && isset($_GET['hypg'])))
+		if ((@$hys['hys_page_config']['hidetitle'] == 1 || (@$hys['hys_page_config']['hidetitlesingle'] == 1 && isset($_GET['hypg'])))  && !is_single())
 			$styles .= "h1.entry-title, .entry-title { display:none !important; }";
 			
 		if (!empty($styles)) echo "
@@ -1592,13 +1531,26 @@ add_filter('content_save_pre','hys_fix_position_of_more');
 		echo "
 	<script type='text/javascript'>
 	jQuery(function() {
-	    jQuery('.attachments a, .hys_attach ul li .attach_image a, ul.photo_gallery li a').lightBox({
+	    jQuery('.attachments a, .hys_attach ul li .attach_image a').lightBox({
 	        imageLoading: '{$hys['dir']}/res/imgs/lightbox-ico-loading.gif',
 	        imageBtnPrev: '{$hys['dir']}/res/imgs/lightbox-btn-prev.gif',
 	        imageBtnNext: '{$hys['dir']}/res/imgs/lightbox-btn-next.gif',
 	        imageBtnClose:'{$hys['dir']}/res/imgs/lightbox-btn-close.gif',
 	        imageBlank:   '{$hys['dir']}/res/imgs/lightbox-blank.gif'
 	    });
+	    if (jQuery('ul.photo_gallery')) {
+			jQuery('ul.photo_gallery').each( function (index) {
+				id = jQuery(this).attr('id')
+				newlightbos = 'ul#'+id+' li a';
+				jQuery(newlightbos).lightBox({
+			        imageLoading: '{$hys['dir']}/res/imgs/lightbox-ico-loading.gif',
+			        imageBtnPrev: '{$hys['dir']}/res/imgs/lightbox-btn-prev.gif',
+			        imageBtnNext: '{$hys['dir']}/res/imgs/lightbox-btn-next.gif',
+			        imageBtnClose:'{$hys['dir']}/res/imgs/lightbox-btn-close.gif',
+			        imageBlank:   '{$hys['dir']}/res/imgs/lightbox-blank.gif'
+				});		
+			})
+		}
 	});
 	</script>
 	";
@@ -1659,7 +1611,6 @@ function hys_enqueue_scripts() {
 	    wp_enqueue_script( 'scriptaculous' );
 	    wp_register_script( 'lightbox', str_replace('/heyyou','/hylb',$hys['dir'])."/js/lightbox.js");
 	    wp_enqueue_script( 'lightbox' );
-
 	    wp_register_style( 'lightbox', str_replace('/heyyou','/hylb',$hys['dir'])."/css/lightbox.css" );
 	    wp_enqueue_style('lightbox');
 	}
@@ -1675,8 +1626,6 @@ function hys_enqueue_scripts() {
  Name:      hys_footer
 
  Purpose:   add some scripts and such
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 function hys_footer() {
 	global $hys;
@@ -1705,8 +1654,6 @@ function hys_footer() {
 
  Purpose:   string of social buttons based on either pg config
  			or site-wide config and use in auto or with shrtcd
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 function hys_social_shrtcd(){
  return hys_social(1);
@@ -1738,8 +1685,6 @@ function hys_social($using_shortcode = 0) {
  Purpose:   !important. adds "hys_{$feature}_display() 
  			to end of the_content() hook. also enables
  			more/less to the_content() 
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_content($thecontent) {
 		global $post, $hys;
@@ -1801,8 +1746,6 @@ function hys_social($using_shortcode = 0) {
  Name:      hys_start
 
  Purpose:   adds under construction banner if on and function 
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	add_action('thematic_before','hys_under_con'); // themeatic
 	function hys_after_body() 	{ hys_start(); } //new
@@ -2046,8 +1989,6 @@ function  hys_attach_attachments($heyyou_post_id) {
  Name:      hys_output
 
  Purpose:   Output of config and data onto page
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_output($heyyou_posts = '', $parent = '') {
 		global $hys, $wp, $anchors, $anchors_count;
@@ -2107,7 +2048,6 @@ function  hys_attach_attachments($heyyou_post_id) {
 						## ########################################## ##
 						$return .= ($pc != $posts_offst) ? hys_lines('secondary_line') : "";
 						$pc++;
-						
 					}
 				}	
 				if ($pgmethod == 'moreless' && $pc == ($perpg+1) && $num_psts > $perpg) {
@@ -2247,7 +2187,6 @@ function  hys_attach_attachments($heyyou_post_id) {
 		    }
 		    $return .= '</ul>';
 		}
-		
 		return $return;
 	}
 	
@@ -2293,15 +2232,15 @@ function  hys_attach_attachments($heyyou_post_id) {
 					'%descript%'
 				),
 				array(
-					$cat->name,
-					$cat->name,
-					$cat_meta['title'],
-					$cat_meta['title'],
-					$cat_meta['title'],
-					$descript,
-					$descript,
-					$descript,
-					$descript
+					apply_filters('hys_filter_cat_title',$cat->name),
+					apply_filters('hys_filter_cat_name',$cat->name),
+					apply_filters('hys_filter_cat_meta_title',$cat_meta['title']),
+					apply_filters('hys_filter_cat_meta_title',$cat_meta['title']),
+					apply_filters('hys_filter_cat_meta_title',$cat_meta['title']),
+					apply_filters('hys_filter_cat_meta_descript',$descript),
+					apply_filters('hys_filter_cat_meta_descript',$descript),
+					apply_filters('hys_filter_cat_meta_descript',$descript),
+					apply_filters('hys_filter_cat_meta_descript',$descript)
 				),
 				$format
 			);
@@ -2422,22 +2361,24 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 	);
 	$with_this = array(
 		$hyspost->ID, $hyspost->ID,
-		$post_title,
-		$title_moreless,
-		$the_date,
-		$post_content,
-		$i,
-		'<!-- [DEPRECIATED] -->',$lb_first.$lb_links,
-		hys_lines(1), hys_lines(2),
-		$back_link,
-		$prev_link, $next_link,
-		$attchmts, $attchmts,
-		$lb_first,
-		$self_moreless,$self_more,$self_less,
-		$single_link,$single_link,
-		$single_url,$single_url,
-		hys_photo_gallery($hyspost->ID)
+		apply_filters('hys_filter_title',$post_title),
+		apply_filters('hys_filter_title_moreless',$title_moreless),
+		apply_filters('hys_filter_date',$the_date),
+		apply_filters('hys_filter_content',$post_content),
+		apply_filters('hys_filter_num',$i),
+		'<!-- [DEPRECIATED] -->',apply_filters('hys_filter_lb',$lb_first.$lb_links),
+		apply_filters('hys_filter_line',hys_lines(1)), apply_filters('hys_filter_line2',hys_lines(2)),
+		apply_filters('hys_filter_back',$back_link),
+		apply_filters('hys_filter_prev',$prev_link), apply_filters('hys_filter_next',$next_link),
+		apply_filters('hys_filter_attachments',$attchmts), apply_filters('hys_filter_attachments',$attchmts),
+		apply_filters('hys_filter_lb_first',$lb_first),
+		apply_filters('hys_filter_self_moreless',$self_moreless),apply_filters('hys_filter_self_more',$self_more),apply_filters('hys_filter_self_less',$self_less),
+		apply_filters('hys_filter_single_link',$single_link),apply_filters('hys_filter_single_link',$single_link),
+		apply_filters('hys_filter_single_url',$single_url),apply_filters('hys_filter_single_url',$single_url),
+		apply_filters('hys_filter_gallery',hys_photo_gallery($hyspost->ID))
 	);
+	
+	
 	
 	// output format
 	$format = (isset($_GET['hypg'])) ? 'singleformat': 'format';
@@ -2572,8 +2513,8 @@ function hys_output_post($hyspost, $i, $cat, $parent = '') {
 					str_replace(
 						$replace_this,
 						$with_this,
-						$output_format
-					)."</div>\n\n".$lb_links.$attchmts;
+						apply_filters('hys_filter_output_format',$output_format)
+					)."</div>\n\n".apply_filters('hys_filter_lb_links',$lb_links).apply_filters('hys_filter_attachments',$attchmts);
 }
 
 
@@ -3301,8 +3242,6 @@ function hys_make_moreless($first,$second,$id='',$readmore_text='',$readless_tex
  Name:      hys_get_thumbnail
 
  Purpose:   finds ands retirns ID
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_get_thumbnail($image_url, $size = 'thumbnail') {
 		$size = (in_array($size,array('thumbnail','medium','large','full'))) 
@@ -3378,8 +3317,6 @@ function disable_stuff( $data ) {
  Name:      hys_settings_default
 
  Purpose:   default options, run on register
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_settings_default() {
 		/*//@TODO: default options.. find out if exsists...
@@ -3412,8 +3349,6 @@ function disable_stuff( $data ) {
  Name:      hys_get_timezone
 
  Purpose:   set server time to wordpress time:
- Receive:   - none -
- Return:	- none -
 -------------------------------------------------------------*/
 	function hys_get_timezone() {
 	    $timezones = array( 
@@ -3551,7 +3486,8 @@ function disable_stuff( $data ) {
 		isset($_GET['deleted']) || 
 		(isset($_POST['change_select_media_cats']) && $_POST['change_select_media_cats'] != 0) || 
 		isset($_POST['delete_selected_media']) ||
-		isset($_GET['updated'])
+		isset($_GET['updated']) ||
+		isset($_GET['hys_media_action'])
 		) {
 		foreach ($redomediacats as $k => $acat) {
 			hys_recount_media_count($acat);
@@ -3606,7 +3542,7 @@ function disable_stuff( $data ) {
 		// if not default, print ct and it's inside photos
 		if ($acat->term_id != '1') : ?>
 			<tr>
-				<td class='hys_media_cat_title'><?=$acat->name?> <span style='color:#999;'>(<?= $acat->count ?> files)</span></td>
+				<td class='hys_media_cat_title'><?=$acat->name?> <? if ($acat->count > 0) { ?><span style='color:#999;'>(<?= $acat->count ?> files)</span><? } ?></td>
 			</tr>
 			<tr id='post-<?= $mediaid ?>' class='author-self status-inherit' valign="top"><!-- alternate-->
 				<td>
@@ -3976,6 +3912,54 @@ function my_insert_rewrite_rules( $rules )
 //    return $vars;
 //}
 
+
+
+function hys_closetags($html) {
+  preg_match_all("/<\/?(\w+)((\s+(\w|\w[\w-]*\w)(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)\/?>/i",$html,$result);
+  $tags = &$result[0]; $closeCnt = 0;
+  for ($i=count($tags)-1;$i>=0;$i--) {
+  if ($tags[$i]{strlen($tags[$i])-2}!='/') {
+  if ($tags[$i]{1}!='/') {
+  if (!$closeCnt) 
+  $html .= ''; 
+   else 
+   $closeCnt--;
+  } else {
+  $closeCnt++;
+  }
+  }
+  }
+  return $html;
+}
+
+
+// List pages (for admin options page drop down)
+
+function hys_list_pages($preselect) {
+$pages = get_pages('');
+foreach ($pages as $page) {
+$presel = ($page->ID == $preselect) ? " selected='selected'" : '';
+$ischild = ( !empty($page->post_parent) ) ? " &nbsp;&nbsp;&nbsp;&nbsp; " : '';
+echo "<option value='{$page->ID}'{$presel}>{$ischild}{$page->post_title}</option>\n";
+}
+}
+
+// list images in <option>
+
+function hys_list_images($preselect) {
+$pages = get_posts('post_type=attachment&numberposts=-1');
+foreach ($pages as $page) {
+$presel = ($page->ID == $preselect) ? " selected='selected'" : '';
+echo "<option value='{$page->ID}'{$presel}>".getp_chopstring($page->post_title)."</option>\n";
+}
+}
+
+
+// Get the current template
+
+function hys_this_template() {
+	return get_post_meta(get_the_ID(),'_wp_page_template',true);
+}
 
 
 	

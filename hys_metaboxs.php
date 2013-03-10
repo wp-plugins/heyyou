@@ -561,12 +561,16 @@
 	<!-- ====================================== -->
 	<!-- ====================================== -->
 	<!-- ====================================== -->
-	<div id="heyyou_tab_2" style='display:none;'>
-		
-		
+	<div id="heyyou_tab_2" style='display:none;'>		
 
 		<!-- ## FEATURE OPTIONS ## -->
 			<h4>heyyou Features</h4>
+			
+				<label>
+					Custom MetaBox Name:<br />
+					<input type='text' name='hys_page_config[custom_title_metabox]' placeholder="Manage heyyou posts" style='margin-top:0px;' value='<?php echo (!isset($hys['hys_page_config']['custom_title_metabox']) || empty($hys['hys_page_config']['custom_title_metabox'])) ? "" : $hys['hys_page_config']['custom_title_metabox']; ?>'  />
+				</label>						
+
 			
 			<!-- USE THE TITLE -->
 					<? $advanced_checked =  (!empty($hys['hys_page_config']['custom_title']) || !empty($hys['hys_page_config']['anchors']) || !empty($hys['hys_page_config']['numanchors'])) ? true : false; ?>
@@ -1162,7 +1166,8 @@ for ($i = 0; $i != 15; $i++) {
 	function hys_metabox_mang() {
 		global $hys;
 		if (isset($_GET['action']) && !empty($hys['config'])) {
-	    	add_meta_box( 'hys_manage_metabox', 'Manage heyyou posts', 'hys_metabox_mang_output', 'page', 'advanced' );
+			$title = (isset($hys['hys_page_config']['custom_title_metabox']) && !empty($hys['hys_page_config']['custom_title_metabox'])) ? $hys['hys_page_config']['custom_title_metabox'] : "Manage heyyou posts";
+	    	add_meta_box( 'hys_manage_metabox', $title, 'hys_metabox_mang_output', 'page', 'advanced' );
 		}
 	}	
 

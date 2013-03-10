@@ -4,7 +4,7 @@ Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 
 heyyou adds unique dynamic custom post types directly in a Wordpress Page & acts as a framework that supplies options for rapid development
 
@@ -144,6 +144,50 @@ Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-f
 4. 4-Steps to adding posts to a page ([full image here](http://hey-you.ca/overview/posts-for-pages/))
 
 == Changelog ==
+
+= 1.3.4 =
+* March 10, 2012
+* fixed: mis-count of number of lists in hys_manage_posts, causing sortables not to work for uncats and/or all
+* fixed: media categories, now able to assign cats while attaching via attachments
+* fixed: counter for items in media count shows nothing when recalculating
+* changed: method of plugin dir from WP_PLUGIN_URL to plugins_url()
+* fixed: semi-infin loop in `get_category_hierarchical_terms()` occuring while setting featured image.. 
+* fixed: loading speed of new 3.5 media gallery (changed method of getting thumnail URL to `hys_get_thumbnail()`)
+* fixed: bug where when adding hys_posts to wp menu, updating hys_post's would remove from wp menu
+* changed: logic for removing link's for next/prev in header
+* fixed: header meta description, allowing apostrophes 
+* fixed: wp-prepare error for now v3.5 req. 2 args, changed to update
+* changed: welcome message, less heyshauna
+* added: support for multiple lightbox galleries in ul.photo_gallery
+* removed: possibility of `hys_page_config` loading for `page_on_front`
+* fixed: and patched issue where `< Back` feild would get giberish html/code for back symbol
+* added: hys_closetags, hys_this_template, hys_list_images, hys_list_pages functions
+* added: the following filters for tweeking generated output:
+	* hys_filter_title
+	* hys_filter_title_moreless
+	* hys_filter_date
+	* hys_filter_content
+	* hys_filter_num
+	* hys_filter_lb
+	* hys_filter_line
+	* hys_filter_line2
+	* hys_filter_back
+	* hys_filter_prev
+	* hys_filter_next
+	* hys_filter_lb_first
+	* hys_filter_self_moreless
+	* hys_filter_self_more
+	* hys_filter_self_less
+	* hys_filter_single_link
+	* hys_filter_single_url
+	* hys_filter_gallery
+	* hys_filter_attachments
+	* hys_filter_cat_title
+	* hys_filter_cat_name
+	* hys_filter_cat_meta_title
+	* hys_filter_cat_meta_descript
+	* hys_filter_lb_links
+	* hys_filter_output_format
 
 = 1.3.3 =
 * Nov 13, 2012
@@ -480,6 +524,9 @@ Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-f
 * PTC - build
 
 == Upgrade Notice ==
+
+= 1.3.4 =
+* image categories might be messed up with get_category_hierarchical_terms() loop fix
 
 = 1.3.3 =
 * completely re-wrote heyyou.js to jQuery, removed moreless.js

@@ -1,4 +1,7 @@
 <?php
+
+
+
 /*
  ALL CREDITS FOR THIS TO ORIGINAL AUTHOR:
  ------------------------------------------------
@@ -44,22 +47,6 @@ global $units;
 
 $units = array( ' bytes', ' KB', ' MB', ' GB', ' TB', ' PB' );
 
-// environment check
-$wp_version = get_bloginfo( 'version' );
-if( !version_compare( PHP_VERSION, '5.2', '>=' ) || !version_compare( $wp_version, '3.0', '>=' ) )
-{
-    if( IS_ADMIN && ( !defined( 'DOING_AJAX' ) || !DOING_AJAX ) )
-    {
-        require_once ABSPATH.'/wp-admin/includes/plugin.php';
-        deactivate_plugins( __FILE__ );
-        wp_die( __('Attachments requires PHP 5.2 or higher, as will WordPress 3.2 and higher. It has been automatically deactivated.') );
-    }
-    else
-    {
-        return;
-    }
-}
-
 
 
 // =========
@@ -70,14 +57,13 @@ if( IS_ADMIN )
 {
 	// if not setup, don't worry about doing anything
 	global $hys;
-	if (@$hys['settings']['no_attachments'] == 1) return;
+//	if (@$hys['settings']['no_attachments'] == 1) return;
 
     add_action( 'admin_menu', 'attachments_init' );
     add_action( 'admin_head', 'attachments_init_js' );
     add_action( 'save_post',  'attachments_save' );
     add_action( 'admin_menu', 'attachments_menu' );
     add_action( 'admin_footer', 'attachments_footer_js' );
-    add_action( 'in_plugin_update_message-attachments/attachments.php', 'attachments_update_message' );
     add_filter( 'plugin_row_meta', 'attachments_filter_plugin_row_meta', 10, 2 );
 
     load_plugin_textdomain( 'attachments', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
@@ -88,33 +74,6 @@ if( IS_ADMIN )
 // =============
 // = FUNCTIONS =
 // =============
-
-/**
- * Includes our plugin update message
- *
- * @return void
- * @author Jonathan Christopher
- */
-function attachments_update_message()
-{ ?>
-<!--
-    <div style="color: #f00;padding-top:4px;">Attachments Pro is now available!</div>
-    <div style="font-weight:normal;padding-top:8px;">
-        <p><a href="http://mondaybynoon.com/store/attachments-pro/">Attachments Pro</a> is Attachments' big brother. With it come a number of often-requested features such as:</p>
-        <ul style="list-style:disc;padding-left:20px;margin-bottom:13px;overflow:hidden;zoom:1;">
-            <li style="width:48%;padding-right:2%;float:left;">Multiple Attachments instances on edit screens</li>
-            <li style="width:48%;padding-right:2%;float:left;">Customizable field labels and meta box title</li>
-            <li style="width:48%;padding-right:2%;float:left;">Unlimited number of fields per Attachment</li>
-            <li style="width:48%;padding-right:2%;float:left;">Ability to define rules limiting the availability of Attachments on edit screens</li>
-            <li style="width:48%;padding-right:2%;float:left;">Limit the number of Attachments that can be added</li>
-            <li style="width:48%;padding-right:2%;float:left;">Limit Attach-able Media items by file/mime type</li>
-            <li style="width:48%;padding-right:2%;float:left;">Shortcode support</li>
-            <li style="width:48%;padding-right:2%;float:left;">Auto-inclusion of Attachments content within the_content()</li>
-        </ul>
-        <p>Attachments has always been and <em>will always be free</em>. <a href="http://mondaybynoon.com/store/attachments-pro/">Attachments Pro</a> is <strong>available now</strong>. To find out more about the new features already added, and to stay up-to-date on what's to come, <a href="http://mondaybynoon.com/store/attachments-pro/">have a look at the details</a>. From there, you can make formal support and feature requests.</p>
-    </div>
--->
-<?php }
 
 
 /**
@@ -157,13 +116,7 @@ function attachments_options()
 	global $hys;
 	if (@$hys['settings']['no_attachments'] == 1) return;
 
-    ?>
-    <?php
-
-    if( isset( $_GET['dismisspro'] ) )
-    {
-        update_option( '_attachments_dismiss_pro', 1 );
-    }
+	update_option( '_attachments_dismiss_pro', 1 );
 
 ?>
 
@@ -415,8 +368,12 @@ function attachments_init_js()
  */
 function attachments_save($post_id)
 {
+
 	// if not setup, don't worry about doing anything
 	global $hys;
+	
+
+	
 	if (@$hys['settings']['no_attachments'] == 1) return;
 
     // verify this came from the our screen and with proper authorization,
@@ -453,6 +410,8 @@ function attachments_save($post_id)
             return $post_id;
         }
     }
+    
+    
 
     // OK, we're authenticated: we need to find and save the data
 
@@ -478,7 +437,7 @@ function attachments_save($post_id)
     // If we have attachments, there's work to do
     if( !empty( $attachment_ids ) )
     {
-
+    
         foreach ( $attachment_ids as $i )
         {
         	//@heyyou edit
@@ -486,6 +445,7 @@ function attachments_save($post_id)
         	
             if( !empty( $_POST['attachment_id_' . $i] ) && $the_attach_url )
             {
+
                 $attachment_id      = intval( $_POST['attachment_id_' . $i] );
 
                 $attachment_details = array(
@@ -500,8 +460,9 @@ function attachments_save($post_id)
 
                 // add individual attachment
                 add_post_meta( $post_id, '_attachments', $attachment_serialized );
-
+                
                 // save native Attach
+/*
                 if( get_option( 'attachments_store_native' ) == 'true' )
                 {
                     // need to first check to make sure we're not overwriting a native Attach
@@ -517,12 +478,11 @@ function attachments_save($post_id)
                         wp_update_post( $attach_post );
                     }
                 }
-
-            }
+*/
+            } 
         }
 
     }
-
 }
 
 
@@ -713,3 +673,6 @@ function attachments_filter_plugin_row_meta( $plugin_meta, $plugin_file )
         return $plugin_meta;
     }
 }
+
+
+?>

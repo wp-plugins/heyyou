@@ -32,7 +32,8 @@ $rl_path=ABSPATH."wp-content/plugins/".$rl_dir; //absolute server pather to plug
 $view_link="| <!--<a href='".get_option('siteurl')."/wp-admin/admin.php?page=$rl_dir/view.php'>View Media Categories</a>-->";
 
 $web_domain=@$_SERVER[HTTP_HOST];
-		
+
+
 if (!class_exists('mc')) {
     class mc {
         /**
@@ -116,6 +117,11 @@ if (!class_exists('mc')) {
 
 			//for making sure the rewrites show  'www.url.com/media/[media category slug]'
 			add_action('admin_init', 'flush_rewrite_rules');
+			
+			
+			
+
+			
         }
 		///
 		// Functions Called From Init
@@ -140,18 +146,14 @@ if (!class_exists('mc')) {
 			
         }
 		function create_my_taxonomies() {
-			register_taxonomy(
-				'media_category',
-				'media',
-				array(
-					'hierarchical' => true,
-					'label' => 'Media Categories',
-					'public' => true,
-					'show_ui' => true,
-					'query_var' => 'media_categories',
-					'rewrite' => array('slug' => 'media')
-				)
-			);
+		
+			register_taxonomy('media_category','attachment',array(
+				'hierarchical' => true,
+				'label' => 'Media Categories',
+				'show_ui' => true,
+				'query_var' => true,
+				'rewrite' => array('slug' => 'media')
+			));
 			
 			$isterm = term_exists( 'Uncategorized', 'media_category' ); // array is returned if taxonomy is given
 			$parent_term_id = '0'; // get numeric term id
@@ -177,6 +179,33 @@ if (!class_exists('mc')) {
 					$this->saveAdminOptions();
 				}
 			}
+			
+			
+			
+			
+/*
+			echo "--<pre>";
+			print_r($this->get_category_hierarchical_terms());
+			echo "</pre>--";
+*/
+
+/*
+			echo "--<pre>";
+			print_r(get_taxonomies());
+			echo "</pre>--";
+			die;
+		
+			$args = array(
+					'hide_empty' => false,
+					'hierarchical' => false,				
+					'taxonomy' => 'media_category'
+				);			
+			$categorias = get_categories($args);
+			echo "--<pre>";
+			print_r($categorias);
+			echo "</pre>--";
+*/
+
 			
 			
 		}
@@ -227,7 +256,14 @@ if (!class_exists('mc')) {
 			$html = '';
 			
 			//$ignor_this_displaying_of = (isset($_GET['attachbtn']) || (isset($_GET['s']) && !empty($_GET['s']))) ? true : false;
-			
+			$fields['media_category'] = array(
+					'label' => '',
+					'input' => 'hidden',
+					'html' =>  '',
+					'value' => '',
+					'helps' => ''
+				);
+
 			if (!isset($fields['media_library_categories']) /* && !$ignor_this_displaying_of */) {
 				
 				$categories = $this->get_category_hierarchical_terms();
@@ -273,7 +309,7 @@ if (!class_exists('mc')) {
 					}
 				$html .= "</div><!--/hys_media_select_categorys-->";
 
-				$label = 'Media Categories';
+				$label = 'Media Categories ..';
 				$fields['media_library_categories'] = array(
 					'label' => $label,
 					'input' => 'html',
@@ -295,7 +331,7 @@ if (!class_exists('mc')) {
 				foreach ($_POST['media-category'] as $attach_id => $attach_wants_cat) {
 					$termID = (empty($attach_wants_cat)) ? 1 : $attach_wants_cat;
 					$term = get_term( $termID, 'media_category' );
-					wp_set_object_terms($attach_id, $term->name, 'media_category', false); 
+					wp_set_object_terms($attach_id, $term->slug, 'media_category', false); 
 				}
 			} else {
 				if ( $attachment && (count($attachment['media-categories'])>0)) {
@@ -312,8 +348,9 @@ if (!class_exists('mc')) {
 				}
 				//push the new values for this attachment
 				wp_set_object_terms($post['ID'], $terms, 'media_category', false); 
-			}			
-			return $post;
+			}
+			//returning messes up the wp_set_object_terms of the last attach..
+			#return $post;
 		}
 		
 		
@@ -519,7 +556,7 @@ if (!class_exists('mc')) {
 									|| $mime=='image/tiff'
 									)
 								{
-									$thumb = wp_get_attachment_thumb_url( $attachment->ID );
+									$thumb = hys_get_thumbnail($attachment->guid);
 									$fullsize = $attachment->guid;
 									
 									$_array['thumb'] = $thumb;								
@@ -537,7 +574,9 @@ if (!class_exists('mc')) {
 					$array['attachments'] =$_attachments;
 					$return[] = $array;
 				
-				$return = $this->get_category_hierarchical_terms($categoria->term_id, $return, $dashes);
+				// WHY IS THIS HERE.. it cause HUGE PROBLEMS after 3.5 update...
+				// ...ARG
+				// $return = $this->get_category_hierarchical_terms($categoria->term_id, $return, $dashes);
 			}			
 			
 			return $return;
@@ -649,7 +688,7 @@ if (!class_exists('mc')) {
 										|| $mime=='image/tiff'
 										)
 									{
-										$thumb = wp_get_attachment_thumb_url( $attachment->ID );
+										$thumb = hys_get_thumbnail($attachment->guid);
 										$fullsize = $attachment->guid;
 										$return .="<li>";
 												$return .="<a href='". $fullsize ."' target='_blank'>";
@@ -845,7 +884,8 @@ function mediacategories_func($atts) {
 										$fileUrl = $row['guid'];
 										$mime = $row['post_mime_type'];
 										
-										$thumb = wp_get_attachment_image_src( $id, $thumnail_size ); 
+										//$thumb = wp_get_attachment_image_src( $id, $thumnail_size ); 
+										$thumb = hys_get_thumbnail($attachment->guid);
 										if($mime=='image/jpeg'
 									|| $mime=='image/jpg'
 									|| $mime=='image/gif'

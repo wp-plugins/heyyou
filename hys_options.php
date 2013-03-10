@@ -1254,9 +1254,14 @@ function hys_crontimes( $schedules ) {
 			        <th scope="row">"Back" text:</th>
 			        <td>
 			        	<input type="text" name="hys_options[back]" value="<?php 
-			        			echo htmlentities($hys['settings']['back']); 
+			        			// if there's only one space and a ton of characters, its because of an html specialchar insertion bug
+			        			// replace string with default to patch
+			        			$spaces = count(explode(" ",$hys['settings']['back']));
+			        			if (strlen($hys['settings']['back']) > 30 && $spaces < 3) 
+			        				$hys['settings']['back'] = '&larquo; Back';
+			        			echo htmlspecialchars($hys['settings']['back']); 
 			        	?>" class='' /> 
-			        	<span class='hys_description'>"<code>&lt; Back</code>"</span><br />
+			        	<span class='hys_description'>"<code>&larquo; Back</code>"</span><br />
 			        	<div style='height:7px'></div>
 			        </td>
 			        </tr>
