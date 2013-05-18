@@ -233,8 +233,7 @@ function hys_crontimes( $schedules ) {
 		//if there was an error, email it and kill the page
 		if ($error || !$mysqldump || $dir_error || $file_error) {
 			if (!$mysqldump) $error = "location of mysqldump is not set";
-			//EMAIL //@TODO: remove this before putting public
-			$to 		= 'heyyou@davidsword.ca';
+			$to 		=  get_option('admin_email');
 			$subject 	= 'BACKUP ERROR';
 			$headers    = 'From: heyyou <errors@hey-you.ca>' . "\r\n";
 			$message	= "<p><strong>WARNING</strong>: Backup Error for ".get_bloginfo('url')."</p> <p>: {--{ <strong>". $error ."</strong> }--} : </p> ".
@@ -283,13 +282,13 @@ function hys_crontimes( $schedules ) {
 		#$file_xml	= hys_backup_make('xml',$name_xml);
 		
 		$to 		= (isset($hys['settings']['backup_to']) && !empty($hys['settings']['backup_to'])) 
-						? $hys['settings']['backup_to'] : 'heyyou@davidsword.ca'; //heyyou_backups@gmail.com
+						? $hys['settings']['backup_to'] : get_option('admin_email');
 		$subject 	= $file_name.' backup - '.date('M j Y').'';
 		$headers  	= 'MIME-Version: 1.0' . "\r\n";
 		$headers   .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 		$headers   .= 'To: '.$name.'' . "\r\n";
-		$headers   .= 'From: heyyou <backups@hey-you.ca>' . "\r\n";
-		$headers   .= 'Cc: heyyou@davidsword.ca' . "\r\n";
+		$headers   .= 'From: Wordpress (heyyou plugin) <'.get_option('admin_email').'>' . "\r\n";
+		$headers   .= 'Cc: ' .get_option('admin_email'). "\r\n";
 		$attachs 	= '';//array($file_sql); #$file_xml
 		$message	= @"<p>{$name},</p>\n\n".
 					

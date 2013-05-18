@@ -3870,7 +3870,6 @@ add_action('admin_notices', 'showAdminMessages');
  * type, instead just a URL query like "/?hypg=711" - we need this to look like /{variable}/{id or slug}/
  *
  * @since 0.1.3
- * @author roi_davidsword
  */	
 // rewrite
 /*
