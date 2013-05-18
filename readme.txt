@@ -3,15 +3,15 @@ Contributors: davidsword, heyshauna.com
 Donate link: http://wordpress.org/donate
 Tags: custom post types for pages, Wordpress developer framework, posts in page
 Requires at least: 3.0
-Tested up to: 3.4.2
-Stable tag: 1.3.4
+Tested up to: 3.5.1
+Stable tag: 1.3.6
 
 heyyou adds unique dynamic custom post types directly in a Wordpress Page & acts as a framework that supplies options for rapid development
 
 
 == Description ==
 
-** If you expereince any issues: before rating, please contact: we will help you ** 
+** Development on this plugin will discontinue July 1, 2013 ** 
 
 This plugin (currently in beta stage) is intended as a developers framework - it's goal to turn Wordpress into more of a CMS by adding a wide range of functionalities, settings, and functions to easily:
 
@@ -20,7 +20,6 @@ This plugin (currently in beta stage) is intended as a developers framework - it
 3. Simplifying Wordpress, but adding options to cut down unneeded admin items
 
 * Visit: [hey-you.ca](http://hey-you.ca/)
-* Tweet: [@david_sword](http://twitter.com/david_sword/#)
 
 
 = Elaborating on some primary features, heyyou: =
@@ -92,8 +91,6 @@ This plugin is a *very large* framework design specifically for development of w
 
 `ALL Documentation and plugin are at BETA LEVEL, the plugin is currently being developed / written.`
 
-[hey-you.ca](http://hey-you.ca/)
-
 
 == Installation ==
 
@@ -130,11 +127,6 @@ Having a list of posts directly within a wordpress page is great for any page th
 
 Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-for-pages/).
 
-= I still don't understand what this is =
-
- * Visit: [hey-you.ca](http://hey-you.ca/)
- * Tweet: [@david_sword](http://twitter.com/david_sword/)
-
 
 == Screenshots ==
 
@@ -144,6 +136,15 @@ Once installed, follow [this 4 step tutorial](http://hey-you.ca/overview/posts-f
 4. 4-Steps to adding posts to a page ([full image here](http://hey-you.ca/overview/posts-for-pages/))
 
 == Changelog ==
+
+= 1.3.6 =
+* small changes to readme.txt
+
+= 1.3.5 =
+* April 1, 2012
+* removed: contact infomation: added note of cut-off dev date
+* changed: email address for `hys_backup_email()`, were completly wrong
+*
 
 = 1.3.4 =
 * March 10, 2012
